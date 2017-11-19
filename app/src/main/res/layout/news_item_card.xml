@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:id="@+id/card"
+                                    xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginRight="8dp"
+                                    app:cardBackgroundColor="@color/colorWhite"
+                                    app:cardCornerRadius="2dp"
+                                    app:cardElevation="5dp">
+
+    <LinearLayout
+        android:id="@+id/card_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/card_news_profile_image_view"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/avatar"
+                app:border_color="@color/colorWhite"
+                />
+
+            <TextView
+                android:id="@+id/card_news_title_text_view"
+                style="@style/news_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/card_news_time_after_update_text_view"
+                android:layout_toEndOf="@+id/card_news_profile_image_view"
+                android:layout_toRightOf="@+id/card_news_profile_image_view"
+                android:text="Author name"/>
+
+            <TextView
+                android:id="@+id/card_news_time_after_update_text_view"
+                style="@style/news_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/card_news_profile_image_view"
+                android:layout_toEndOf="@+id/card_news_profile_image_view"
+                android:layout_toRightOf="@+id/card_news_profile_image_view"
+                android:text="00:00"/>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/card_news_description_text_view"
+            style="@style/news_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/Lorem"/>
+
+        <ImageView
+            android:id="@+id/card_news_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:contentDescription="@string/images"
+            android:scaleType="centerCrop"
+            android:src="@drawable/dom_zima"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/watchers_count_text_view"
+                style="@style/news_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:drawableLeft="@drawable/ic_eye"
+                android:drawablePadding="4dp"
+                android:drawableStart="@drawable/ic_eye"
+                android:text="99"/>
+
+
+            <TextView
+
+                android:id="@+id/commend_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/likes_count_text_view"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/likes_count_text_view"
+                android:layout_toStartOf="@+id/likes_count_text_view"
+                android:drawableLeft="@drawable/ic_comment"
+                android:drawableStart="@drawable/ic_comment"/>
+
+            <TextView
+                android:id="@+id/likes_count_text_view"
+                style="@style/news_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/ic_favorite"
+                android:drawablePadding="4dp"
+                android:drawableStart="@drawable/ic_favorite"
+                android:text="99"/>
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

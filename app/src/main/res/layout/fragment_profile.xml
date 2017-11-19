@@ -1,0 +1,94 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorWhite"
+              android:orientation="vertical"
+              tools:context="com.example.myapplication.fragments.ProfileFragment">
+
+
+    <TextView
+        android:id="@+id/profile_user"
+        style="@style/profile_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Василий Петрович"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGrey"/>
+
+    <TextView
+        android:id="@+id/profile_friends"
+        style="@style/profile_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/friends"
+        android:drawableStart="@drawable/friends"
+        android:drawableTint="@color/colorGrey"
+        android:text="@string/friends"/>
+
+    <TextView
+        android:id="@+id/profile_wall"
+        style="@style/profile_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/wall"
+        android:drawableStart="@drawable/wall"
+        android:drawableTint="@color/colorGrey"
+        android:text="@string/wall"/>
+
+    <TextView
+        android:id="@+id/profile_groups"
+        style="@style/profile_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/groups"
+        android:drawableStart="@drawable/groups"
+        android:drawableTint="@color/colorGrey"
+        android:text="@string/groups"/>
+
+
+    <TextView
+        android:id="@+id/profile_image"
+        style="@style/profile_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/image"
+        android:drawableStart="@drawable/image"
+        android:drawableTint="@color/colorGrey"
+        android:text="@string/images"/>
+
+    <TextView
+        android:id="@+id/profile_audio"
+        style="@style/profile_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/music"
+        android:drawableStart="@drawable/music"
+        android:drawableTint="@color/colorGrey"
+        android:text="@string/music"/>
+
+    <TextView
+        android:id="@+id/profile_video"
+        style="@style/profile_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/video"
+        android:drawableStart="@drawable/video"
+        android:drawableTint="@color/colorGrey"
+        android:text="@string/videos"/>
+
+    <TextView
+        android:id="@+id/profile_favorite"
+        style="@style/profile_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/star"
+        android:drawableStart="@drawable/star"
+        android:drawableTint="@color/colorGrey"
+        android:text="@string/favorite"/>
+
+
+</LinearLayout>
