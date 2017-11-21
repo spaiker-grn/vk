@@ -3,6 +3,8 @@ package com.example.myapplication.clients;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 
 import com.example.myapplication.serviceclasses.Constants;
 import com.example.myapplication.tools.ParseUtils;
@@ -29,7 +31,9 @@ public class ParsingDialogsAsyncTask extends AsyncTask<String, String, List<VkMo
 
         final List<VkModelDialogs> vkModelDialogsList = new ArrayList<>();
         final Collection<Integer> usersId = new ArrayList<>();
-        final List<VkModelUser> vkModelUserList;
+        final SparseArray<VkModelUser> vkModelUserMap;
+
+
 
         try {
 
@@ -42,9 +46,10 @@ public class ParsingDialogsAsyncTask extends AsyncTask<String, String, List<VkMo
                 usersId.add(vkModelDialogs.message.user_id);
             }
 
-            vkModelUserList = getUsersById(usersId);
-            for (int i = 0; i < vkModelUserList.size(); i++) {
-                vkModelDialogsList.get(i).setUser(vkModelUserList.get(i));
+
+            vkModelUserMap = getUsersById(usersId);
+            for (int i = 0; i < vkModelDialogsList.size(); i++) {
+                vkModelDialogsList.get(i).setUser(vkModelUserMap.get(vkModelDialogsList.get(i).message.user_id));
             }
 
         } catch (final InterruptedException | ExecutionException | JSONException pE) {
@@ -55,11 +60,11 @@ public class ParsingDialogsAsyncTask extends AsyncTask<String, String, List<VkMo
         return vkModelDialogsList;
     }
 
-    private static List<VkModelUser> getUsersById(final Iterable<Integer> pList) throws JSONException, ExecutionException, InterruptedException {
+    private static SparseArray<VkModelUser> getUsersById(final Iterable<Integer> pList) throws JSONException, ExecutionException, InterruptedException {
 
         final Map<String, String> map = new HashMap<>();
         final IVkApiBuilder vkApi = new VkApiBuilder();
-        final List<VkModelUser> vkModelUserList = new ArrayList<>();
+        final SparseArray<VkModelUser> vkModelUserMap = new SparseArray<>();
         final String request = TextUtils.join(",", pList);
         final String code = (VkApiBuilder.GET_USERS_START + request) + VkApiBuilder.GET_USERS_END;
         map.put("code", code);
@@ -71,9 +76,10 @@ public class ParsingDialogsAsyncTask extends AsyncTask<String, String, List<VkMo
         assert itemsArray != null;
         for (int i = 0; i < itemsArray.length(); i++) {
             final VkModelUser modelUser = new VkModelUser(itemsArray.getJSONObject(i));
-            vkModelUserList.add(modelUser);
+            vkModelUserMap.put(modelUser.id,modelUser);
+
         }
-        return vkModelUserList;
+        return vkModelUserMap;
     }
 
 }

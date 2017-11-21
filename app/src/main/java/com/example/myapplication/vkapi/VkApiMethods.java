@@ -1,5 +1,6 @@
 package com.example.myapplication.vkapi;
 
+import android.icu.text.LocaleDisplayNames;
 import android.util.Log;
 
 import com.example.myapplication.clients.RequestAsyncTask;
@@ -10,32 +11,43 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class VkApiMethods {
+public final class VkApiMethods {
 
-    public static String getApiMethod(final String pMethod, final Map<String, String> pFields) throws ExecutionException, InterruptedException {
+    private static String getApiMethod(final String pMethod, final Map<String, String> pFields) throws ExecutionException, InterruptedException {
 
         final IVkApiBuilder vkApiBuilder = new VkApiBuilder();
         final RequestAsyncTask requestAsyncTask = new RequestAsyncTask();
         requestAsyncTask.execute(vkApiBuilder.buildUrl(pMethod, pFields));
+        Log.d(Constants.MY_TAG, vkApiBuilder.buildUrl(pMethod, pFields));
         return requestAsyncTask.get();
     }
 
-    public static String getApiMethod(final String pMethod) throws ExecutionException, InterruptedException {
+    private static String getApiMethod(final String pMethod) throws ExecutionException, InterruptedException {
 
         final IVkApiBuilder vkApiBuilder = new VkApiBuilder();
         final RequestAsyncTask requestAsyncTask = new RequestAsyncTask();
         requestAsyncTask.execute(vkApiBuilder.buildUrl(pMethod));
+        Log.d(Constants.MY_TAG, vkApiBuilder.buildUrl(pMethod));
         return requestAsyncTask.get();
     }
 
-    public static String getDialogs(final int pStartMessage) throws ExecutionException, InterruptedException {
+    public static String getDialogs(final int pOffset, final int pCount) throws ExecutionException, InterruptedException {
 
-        if (pStartMessage != 0) {
-            final Map<String, String> map = new HashMap<>();
-            map.put("start_message_id", String.valueOf(pStartMessage));
+        final Map<String, String> map = new HashMap<>();
+        map.put("count", String.valueOf(pCount));
+
+        if (pOffset != 0) {
+            map.put("offset", String.valueOf(pOffset));
             return getApiMethod(VkApiBuilder.GET_DIALOGS, map);
         }
-        return getApiMethod(VkApiBuilder.GET_DIALOGS);
+        return getApiMethod(VkApiBuilder.GET_DIALOGS, map);
+    }
+
+    public static String getUserById(final int pId) throws ExecutionException, InterruptedException {
+        Map<String, String> map = new HashMap<>();
+        map.put("user_ids", String.valueOf(pId));
+        map.put("fields", "photo_50, photo_100");
+        return getApiMethod(VkApi.GET_USER_BY_ID, map);
     }
 
     public static String getNews() {

@@ -1,12 +1,16 @@
 package com.example.myapplication.vkapi.vkapimodels;
 
 
+import com.example.myapplication.tools.ParseUtils;
+import com.example.myapplication.vkapi.VkApiMethods;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class VkModelDialogs extends VkModel {
 
@@ -39,19 +43,5 @@ public class VkModelDialogs extends VkModel {
         }
         return vkModelDialogsList;
     }
-
-/*    public VkModelUser getUserById(final int pId){
-
-        try {
-            final JSONObject jsonObject = new JSONObject(VkApiMethods.getUser(pId,"photo_50, photo_100"));
-            final JSONObject userObject  = jsonObject.getJSONArrayItems("response").getJSONObject(0);
-            return new VkModelUser(userObject);
-
-        } catch (final JSONException pE) {
-            pE.getMessage();
-
-        }
-        return null;
-    }*/
 
 }

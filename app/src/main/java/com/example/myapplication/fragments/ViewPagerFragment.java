@@ -13,10 +13,12 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 import com.example.myapplication.serviceclasses.Constants;
 import com.example.myapplication.vkapi.VkApiBuilder;
+import com.example.myapplication.vkapi.vkapimodels.VkModelUser;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Дмитрий on 04.11.2017.
@@ -47,15 +49,6 @@ public class ViewPagerFragment extends Fragment {
 
             @Override
             public void onClick(final View view) {
-                final String[] pStrings = {"157176651", "157176659", "157176654", "157176650"};
-                final Map<String, String> map = new HashMap<>();
-                final String response = Arrays.toString(pStrings).replaceAll("\\[|]", "");
-                final String code = (VkApiBuilder.GET_USERS_START + response) + VkApiBuilder.GET_USERS_END;
-                final String request;
-                final VkApiBuilder vkApiBuilder = new VkApiBuilder();
-                map.put("code", code);
-                Log.d(Constants.MY_TAG, vkApiBuilder.buildUrl(VkApiBuilder.EXECUTE, map));
-                textViewUrl.setText(vkApiBuilder.buildUrl(VkApiBuilder.EXECUTE, map));
 
 
 

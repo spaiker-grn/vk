@@ -1,7 +1,11 @@
 package com.example.myapplication.vkapi.vkapimodels;
 
+import com.example.myapplication.vkapi.VkApiMethods;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.concurrent.ExecutionException;
 
 public class VkModelUser extends VkModel {
 
@@ -15,6 +19,10 @@ public class VkModelUser extends VkModel {
         parse(from);
     }
 
+    public VkModelUser(final int pId) throws ExecutionException, InterruptedException {
+         getUserById(pId);
+    }
+
     public VkModelUser parse(final JSONObject pFrom) throws JSONException {
 
         id = pFrom.optInt("id");
@@ -26,8 +34,23 @@ public class VkModelUser extends VkModel {
         return this;
     }
 
+
     public String getFullName() {
         return first_name + " " + last_name;
     }
 
+    public VkModelUser getUserById(final int pId) throws ExecutionException, InterruptedException {
+
+        try {
+
+            final JSONObject jsonObject = new JSONObject(VkApiMethods.getUserById(pId));
+
+            return parse(jsonObject.getJSONArray("response").getJSONObject(0));
+
+        } catch (final JSONException pE) {
+            pE.getMessage();
+
+        }
+        return null;
+    }
 }

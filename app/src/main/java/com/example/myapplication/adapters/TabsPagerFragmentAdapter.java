@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.myapplication.fragments.DialogsFragment;
+import com.example.myapplication.fragments.DialogsFragment.DialogsFragment;
 import com.example.myapplication.fragments.NewsFeedFragment;
 import com.example.myapplication.fragments.ProfileFragment;
 import com.example.myapplication.fragments.ViewPagerFragment;
