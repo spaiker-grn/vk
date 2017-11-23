@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -35,6 +36,8 @@ public class NewsFeedFragment extends Fragment {
                              final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         final RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        final ProgressBar progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         final RecyclerAdapterNews adapter = new RecyclerAdapterNews();

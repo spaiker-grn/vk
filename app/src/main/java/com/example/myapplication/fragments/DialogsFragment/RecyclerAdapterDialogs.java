@@ -22,6 +22,7 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerViewHolderDial
     private int lastVisibleItem;
     private int totalItemCount;
 
+
     RecyclerAdapterDialogs(final DialogsFragment pDialogsFragment, final RecyclerView pRecyclerView, final List<VkModelDialogs> pModelDialogsList) {
         mDialogsFragment = pDialogsFragment;
         mDialogsList = pModelDialogsList;
@@ -49,6 +50,7 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerViewHolderDial
 
             }
         });
+
     }
 
     @Override

@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutionException;
 
 public class VkModelDialogs extends VkModel {
 
+    public int dialogs_count;
     public int unread;
     public VkModelMessages message;
     public VkModelUser user;
@@ -24,15 +25,15 @@ public class VkModelDialogs extends VkModel {
 
 
 
-    public VkModelDialogs(final JSONObject from) throws JSONException {
-        parse(from);
+    public VkModelDialogs(final JSONObject pObject) throws JSONException {
+        parse(pObject);
 
     }
 
-    public VkModelDialogs parse(final JSONObject pFrom) throws JSONException {
+    public VkModelDialogs parse(final JSONObject pObject) throws JSONException {
 
-        unread = pFrom.optInt("unread");
-        message = new VkModelMessages(pFrom.optJSONObject("message"));
+        unread = pObject.optInt("unread");
+        message = new VkModelMessages(pObject.optJSONObject("message"));
         return this;
     }
 
@@ -43,5 +44,6 @@ public class VkModelDialogs extends VkModel {
         }
         return vkModelDialogsList;
     }
+
 
 }

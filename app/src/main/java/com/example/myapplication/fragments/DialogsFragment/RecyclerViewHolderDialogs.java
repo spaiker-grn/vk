@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 import com.example.myapplication.serviceclasses.Constants;
 import com.example.myapplication.vkapi.vkapimodels.VkModelDialogs;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,7 @@ class RecyclerViewHolderDialogs extends RecyclerView.ViewHolder {
     private final TextView mUnread;
     private final RelativeLayout mLayout;
     private final ImageView mOut;
+    private final ImageView mProfile;
 
     RecyclerViewHolderDialogs(final DialogsFragment pDialogsFragment, final View itemView) {
         super(itemView);
@@ -35,11 +37,17 @@ class RecyclerViewHolderDialogs extends RecyclerView.ViewHolder {
         mTime = itemView.findViewById(R.id.time_dialogs_text_view);
         mUnread = itemView.findViewById(R.id.circle_text_view);
         mOut = itemView.findViewById(R.id.out_circle_image_view);
+        mProfile = itemView.findViewById(R.id.card_message_profile_image_view);
 
     }
 
 
     void bind(final VkModelDialogs pVkModelDialogs) {
+
+
+        Picasso.with(mDialogsFragment.getContext())
+                .load(pVkModelDialogs.user.photo_50)
+                .into(mProfile);
 
 
         if (pVkModelDialogs.unread != 0) {
@@ -92,6 +100,7 @@ class RecyclerViewHolderDialogs extends RecyclerView.ViewHolder {
 
         if (pVkModelDialogs.message.out) {
             mOut.setVisibility(View.VISIBLE);
+
         } else {
             mOut.setVisibility(View.GONE);
         }

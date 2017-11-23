@@ -50,6 +50,9 @@ public final class VkApiMethods {
         return getApiMethod(VkApi.GET_USER_BY_ID, map);
     }
 
+
+
+
     public static String getNews() {
 
         final Map<String, String> map = new HashMap<>();

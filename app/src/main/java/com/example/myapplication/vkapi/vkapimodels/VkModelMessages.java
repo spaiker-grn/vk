@@ -22,24 +22,24 @@ public class VkModelMessages extends VkModel {
     //public List<VkModelMessages> fwd_messages;
 
 
-    VkModelMessages(final JSONObject from) throws JSONException {
-        parse(from);
+    VkModelMessages(final JSONObject pObject) throws JSONException {
+        parse(pObject);
     }
 
-    public VkModelMessages parse(final JSONObject pSource) throws JSONException {
-        id = pSource.optInt("id");
-        user_id = pSource.optInt("user_id");
-        date = pSource.optLong("date");
-        read_state = ParseUtils.parseBoolean(pSource, "read_state");
-        out = ParseUtils.parseBoolean(pSource, "out");
-        title = pSource.optString("title");
-        body = pSource.optString("body");
+    public VkModelMessages parse(final JSONObject pObject) throws JSONException {
+        id = pObject.optInt("id");
+        user_id = pObject.optInt("user_id");
+        date = pObject.optLong("date");
+        read_state = ParseUtils.parseBoolean(pObject, "read_state");
+        out = ParseUtils.parseBoolean(pObject, "out");
+        title = pObject.optString("title");
+        body = pObject.optString("body");
         if("".equals(body)) {
-            if (pSource.optJSONArray("attachments") != null) {
-                attachments = (pSource.optJSONArray("attachments").getJSONObject(0).optString("type"));
+            if (pObject.optJSONArray("attachments") != null) {
+                attachments = (pObject.optJSONArray("attachments").getJSONObject(0).optString("type"));
             }
-            if (pSource.optJSONArray("fwd_message")!=null) {
-                fwd_messages = (pSource.optJSONArray("fwd_messages").getJSONObject(0).optString("body"));
+            if (pObject.optJSONArray("fwd_message")!=null) {
+                fwd_messages = (pObject.optJSONArray("fwd_messages").getJSONObject(0).optString("body"));
             }
         }
 

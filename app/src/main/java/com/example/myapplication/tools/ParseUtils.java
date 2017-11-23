@@ -10,8 +10,15 @@ import org.json.JSONObject;
 
 public final class ParseUtils {
 
-    public static boolean parseBoolean(final JSONObject from, final String name) {
-        return from != null && from.optInt(name, 0) == 1;
+    public static boolean parseBoolean(final JSONObject pFrom, final String pName) {
+        return pFrom != null && pFrom.optInt(pName, 0) == 1;
+    }
+
+    public static int parseInt(final JSONObject pFrom, final String pName) {
+        if (pFrom == null) {
+            return 0;
+        }
+        return pFrom.optInt(pName, 0);
     }
 
     public static JSONArray getJSONArrayItems(final String pResponse) throws JSONException {

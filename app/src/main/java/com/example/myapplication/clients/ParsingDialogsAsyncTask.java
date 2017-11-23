@@ -1,15 +1,18 @@
 package com.example.myapplication.clients;
 
-import android.os.AsyncTask;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.content.AsyncTaskLoader;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
-import android.util.SparseIntArray;
 
+import com.example.myapplication.fragments.DialogsFragment.DialogsFragment;
 import com.example.myapplication.serviceclasses.Constants;
 import com.example.myapplication.tools.ParseUtils;
 import com.example.myapplication.vkapi.IVkApiBuilder;
 import com.example.myapplication.vkapi.VkApiBuilder;
+import com.example.myapplication.vkapi.VkApiMethods;
 import com.example.myapplication.vkapi.vkapimodels.VkModelDialogs;
 import com.example.myapplication.vkapi.vkapimodels.VkModelUser;
 
@@ -24,24 +27,46 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class ParsingDialogsAsyncTask extends AsyncTask<String, String, List<VkModelDialogs>> {
+public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialogs>> {
+
+    private int DIALOGS_SIZE;
+    private String mRequest;
+    private int mOffset;
+    private int mCount;
+
+
+    public ParsingDialogsAsyncTask(final Context context, final Bundle args) {
+        super(context);
+        if (args != null){
+            //mRequest = args.getString(DialogsFragment.REQUEST);
+            mOffset = args.getInt(DialogsFragment.OFFSET_KEY);
+            mCount = args.getInt(DialogsFragment.COUNT_KEY);
+        }
+        Log.d("My_tag", "Create Loader");
+    }
 
     @Override
-    protected List<VkModelDialogs> doInBackground(final String... pStrings) {
+    public List<VkModelDialogs> loadInBackground() {
+
+        Log.d("My_tag", "Loader");
 
         final List<VkModelDialogs> vkModelDialogsList = new ArrayList<>();
         final Collection<Integer> usersId = new ArrayList<>();
         final SparseArray<VkModelUser> vkModelUserMap;
 
 
-
         try {
 
-            final JSONArray itemsArray = ParseUtils.getJSONArrayItems(pStrings[0]);
+
+            mRequest = VkApiMethods.getDialogs(mOffset, mCount);
+            DIALOGS_SIZE = getCount(mRequest);
+
+            final JSONArray itemsArray = ParseUtils.getJSONArrayItems(mRequest);
 
             assert itemsArray != null;
             for (int i = 0; i < itemsArray.length(); i++) {
                 final VkModelDialogs vkModelDialogs = new VkModelDialogs(itemsArray.getJSONObject(i));
+                vkModelDialogs.dialogs_count = DIALOGS_SIZE;
                 vkModelDialogsList.add(vkModelDialogs);
                 usersId.add(vkModelDialogs.message.user_id);
             }
@@ -58,6 +83,11 @@ public class ParsingDialogsAsyncTask extends AsyncTask<String, String, List<VkMo
         }
 
         return vkModelDialogsList;
+    }
+
+        int getCount(final String pResponse) throws JSONException {
+        final JSONObject jsonObject = new JSONObject(pResponse);
+        return jsonObject.getJSONObject("response").optInt("count");
     }
 
     private static SparseArray<VkModelUser> getUsersById(final Iterable<Integer> pList) throws JSONException, ExecutionException, InterruptedException {

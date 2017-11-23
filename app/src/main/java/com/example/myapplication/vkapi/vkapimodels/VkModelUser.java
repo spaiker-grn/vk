@@ -15,21 +15,21 @@ public class VkModelUser extends VkModel {
     public String photo_50;
     public String photo_100;
 
-    public VkModelUser(final JSONObject from) throws JSONException {
-        parse(from);
+    public VkModelUser(final JSONObject pObject) throws JSONException {
+        parse(pObject);
     }
 
     public VkModelUser(final int pId) throws ExecutionException, InterruptedException {
          getUserById(pId);
     }
 
-    public VkModelUser parse(final JSONObject pFrom) throws JSONException {
+    public VkModelUser parse(final JSONObject pObject) throws JSONException {
 
-        id = pFrom.optInt("id");
-        first_name = pFrom.optString("first_name");
-        last_name = pFrom.optString("last_name");
-        photo_50 = pFrom.optString("photo_50");
-        photo_100 = pFrom.optString("photo_100");
+        id = pObject.optInt("id");
+        first_name = pObject.optString("first_name");
+        last_name = pObject.optString("last_name");
+        photo_50 = pObject.optString("photo_50");
+        photo_100 = pObject.optString("photo_100");
 
         return this;
     }
