@@ -28,18 +28,23 @@ public class ViewPagerFragment extends Fragment {
 
     private static final int LAYOUT = R.layout.view_pager_fragment_layout;
 
+//    newInstance
     public static ViewPagerFragment getInstance() {
         final Bundle bundle = new Bundle();
         final ViewPagerFragment fragment = new ViewPagerFragment();
         fragment.setArguments(bundle);
+
         return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+//        remove static LAYOUT
         final View view = inflater.inflate(LAYOUT, container, false);
 
+
+//        initViews() method
         final Button button = view.findViewById(R.id.get);
         final TextView textViewUrl = view.findViewById(R.id.url_text_view);
         final TextView textViewResponse = view.findViewById(R.id.json_text_view);
@@ -50,7 +55,7 @@ public class ViewPagerFragment extends Fragment {
             @Override
             public void onClick(final View view) {
 
-
+//????
 
             }
         });

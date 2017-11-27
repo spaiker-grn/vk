@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.myapplication.TabModel;
 import com.example.myapplication.fragments.DialogsFragment.DialogsFragment;
 import com.example.myapplication.fragments.NewsFeedFragment;
 import com.example.myapplication.fragments.ProfileFragment;
@@ -18,9 +19,10 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
     private final String[] mTabs;
 
-
     public TabsPagerFragmentAdapter(final FragmentManager pFragmentManager) {
         super(pFragmentManager);
+
+        List<TabModel> tabModelList = .......;
         mTabs = new String[]{"ПРОФИЛЬ", "НОВОСТИ", "СООБЩЕНИЯ", "Example"};
 
     }
@@ -42,10 +44,6 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
             case 2:
                 return DialogsFragment.getInstance();
-
-            case 3:
-                return ViewPagerFragment.getInstance();
-
         }
         return null;
     }

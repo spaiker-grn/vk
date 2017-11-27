@@ -19,6 +19,8 @@ public class VkModelDialogs extends VkModel {
     public VkModelMessages message;
     public VkModelUser user;
 
+    public
+
     public void setUser(final VkModelUser pUser) {
         user = pUser;
     }

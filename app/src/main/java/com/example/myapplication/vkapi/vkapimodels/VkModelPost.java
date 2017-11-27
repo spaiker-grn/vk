@@ -10,6 +10,7 @@ import java.util.List;
 public class VkModelPost extends VkAttachments.VkModelAttachments {
 
 
+//    'm' prefix
     public int id;
     public int to_id;
     public int from_id;
@@ -50,6 +51,7 @@ public class VkModelPost extends VkAttachments.VkModelAttachments {
         reply_post_id = pObject.optInt("reply_post_id");
         friends_only = ParseUtils.parseBoolean(pObject, "friends_only");
         final JSONObject comments = pObject.optJSONObject("comments");
+
         if(comments != null) {
             comments_count = comments.optInt("count");
             can_post_comment = ParseUtils.parseBoolean(comments, "can_post");

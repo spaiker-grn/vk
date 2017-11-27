@@ -39,17 +39,14 @@ public class HttpUrlClient implements IHttpUrlClient {
 
         } catch (final MalformedURLException pE) {
             Log.e(Constants.ERROR, pE.getMessage());
-            pE.printStackTrace();
         } catch (final IOException pE) {
             Log.e(Constants.ERROR, pE.getMessage());
-            pE.printStackTrace();
         } finally {
             if (mBufferedReader != null) {
                 try {
                     mBufferedReader.close();
                 } catch (final IOException pE) {
                     Log.i(Constants.ERROR, "Error closing InputStream");
-                    pE.printStackTrace();
                 }
             }
         }

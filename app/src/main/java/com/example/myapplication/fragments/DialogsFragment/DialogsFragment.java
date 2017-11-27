@@ -8,19 +8,16 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.MessagesHistory;
+import com.example.myapplication.activity.MessagesHistoryActivity;
 import com.example.myapplication.clients.ILoadMore;
 import com.example.myapplication.clients.ParsingDialogsAsyncTask;
 import com.example.myapplication.fragments.RecyclerItemClickListener;
-import com.example.myapplication.serviceclasses.Constants;
-import com.example.myapplication.vkapi.VkApiMethods;
 import com.example.myapplication.vkapi.vkapimodels.VkModelDialogs;
 
 import org.json.JSONException;
@@ -28,12 +25,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class DialogsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<VkModelDialogs>> {
 
     public static final String REQUEST = "request";
+    public static final String OFFSET_KEY = "offset";
+    public static final String COUNT_KEY = "count";
     public static final int LOADER_ID = 1;
+
     public RecyclerView mRecyclerView;
     public RecyclerAdapterDialogs mAdapter;
     public List<VkModelDialogs> mVkModelDialogsList = new ArrayList<>();
@@ -41,8 +40,6 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     private static final int DIALOGS_COUNT = 40;
     public static final String HISTORY_ID = "history";
     public ProgressBar mProgressBar;
-    public static final String OFFSET_KEY = "offset";
-    public static final String COUNT_KEY = "count";
 
     public DialogsFragment() {
 
@@ -59,10 +56,9 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     public View onCreateView(final LayoutInflater pInflater, final ViewGroup pContainer,
                              final Bundle savedInstanceState) {
 
-        final String response;
         final View view = pInflater.inflate(R.layout.fragment_recycler_view, pContainer, false);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mProgressBar = view.findViewById(R.id.progressBar);
+        mProgressBar = view.findViewById(R.id.progress_bar);
         mProgressBar.setVisibility(View.INVISIBLE);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         final DividerItemDecoration decoration = new DividerItemDecoration(mRecyclerView.getContext(), layoutManager.getOrientation());
@@ -90,11 +86,11 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
             pE.printStackTrace();
         }*/
 
+//        RecyclerDialogsAdapter
         mAdapter = new RecyclerAdapterDialogs(this, mRecyclerView, mVkModelDialogsList);
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setLoadMore(new ILoadMore() {
-
 
             @Override
             public void onLoadMore() {
@@ -143,7 +139,7 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
             @Override
             public void onItemClick(final View pView, final int pPosition) {
                 final int id = mVkModelDialogsList.get(pPosition).message.user_id;
-                startActivity(new Intent(getContext(), MessagesHistory.class).putExtra(HISTORY_ID, id));
+                startActivity(new Intent(getContext(), MessagesHistoryActivity.class).putExtra(HISTORY_ID, id));
 
             }
 

@@ -8,6 +8,7 @@ import android.content.Context;
  * Created by Дмитрий on 06.11.2017.
  */
 
+//create ContextHolder
 public class MyApplication extends Application {
 
     @SuppressLint("StaticFieldLeak")

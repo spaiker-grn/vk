@@ -19,8 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityForLogin"/>
-        <activity android:name=".activity.MessagesHistory">
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".activity.MessagesHistoryActivity">
         </activity>
     </application>
 

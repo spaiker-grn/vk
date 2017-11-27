@@ -13,11 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Василий Петрович"/>
+    <!--tools-->
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorGrey"/>
+    <include layout="@layout/view_divider"/>
 
     <TextView
         android:id="@+id/profile_friends"
@@ -28,6 +26,7 @@
         android:drawableStart="@drawable/friends"
         android:drawableTint="@color/colorGrey"
         android:text="@string/friends"/>
+    <!--tools-->
 
     <TextView
         android:id="@+id/profile_wall"

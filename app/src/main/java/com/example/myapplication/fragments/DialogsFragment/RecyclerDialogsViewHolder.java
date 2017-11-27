@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
 
-class RecyclerViewHolderDialogs extends RecyclerView.ViewHolder {
+class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
 
     private static final int END_INDEX = 70;
     private final DialogsFragment mDialogsFragment;
@@ -28,7 +28,7 @@ class RecyclerViewHolderDialogs extends RecyclerView.ViewHolder {
     private final ImageView mOut;
     private final ImageView mProfile;
 
-    RecyclerViewHolderDialogs(final DialogsFragment pDialogsFragment, final View itemView) {
+    RecyclerDialogsViewHolder(final DialogsFragment pDialogsFragment, final View itemView) {
         super(itemView);
         mDialogsFragment = pDialogsFragment;
         mLayout = itemView.findViewById(R.id.dialogs_layout);
@@ -41,10 +41,18 @@ class RecyclerViewHolderDialogs extends RecyclerView.ViewHolder {
 
     }
 
+    void bindReader() {
+
+    }
+
+    void bindUnReaded() {
+
+    }
+
 
     void bind(final VkModelDialogs pVkModelDialogs) {
 
-
+//        remove Picasso
         Picasso.with(mDialogsFragment.getContext())
                 .load(pVkModelDialogs.user.photo_50)
                 .into(mProfile);

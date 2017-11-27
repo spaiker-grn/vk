@@ -9,7 +9,7 @@
     android:background="@color/colorVk"
     android:id="@+id/main_layout">
 
-
+    <!--move to dimens dp + sp-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,6 +34,7 @@
 
         </android.support.v4.view.ViewPager>
 
+    <!--rename id-->
         <TextView
             android:id="@+id/text"
             android:layout_width="wrap_content"

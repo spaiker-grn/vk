@@ -36,7 +36,7 @@ public class NewsFeedFragment extends Fragment {
                              final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         final RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        final ProgressBar progressBar = view.findViewById(R.id.progressBar);
+        final ProgressBar progressBar = view.findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -87,12 +87,12 @@ public class NewsFeedFragment extends Fragment {
         }
 
         void bind(final ModelItem pModelItem) {
-
-            if (pModelItem.isImg()){imageView.setImageResource(pModelItem.getImgSource());}
-            else {imageView.setVisibility(View.GONE);}
+            if (pModelItem.isImg()) {
+                imageView.setImageResource(pModelItem.getImgSource());
+            } else {
+                imageView.setVisibility(View.GONE);
+            }
             textView.setText(pModelItem.getDescription());
-
-
         }
 
     }

@@ -1,18 +1,9 @@
 package com.example.myapplication.vkapi;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.webkit.WebViewClient;
 
-import com.example.myapplication.ActivityForLogin;
 import com.example.myapplication.clients.WebViewClientLogin;
-import com.example.myapplication.serviceclasses.Constants;
 
-import java.security.PublicKey;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

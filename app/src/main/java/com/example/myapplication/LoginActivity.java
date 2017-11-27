@@ -11,12 +11,14 @@ import com.example.myapplication.serviceclasses.Constants;
  * Created by Дмитрий on 04.11.2017.
  */
 
-public class ActivityForLogin extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_for_login);
+
+//        rename
         initialization();
     }
 

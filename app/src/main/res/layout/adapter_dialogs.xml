@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:id="@+id/dialogs_layout"
-                android:layout_height="wrap_content"
+<RelativeLayout android:id="@+id/dialogs_layout"
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/colorWhite">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -12,27 +12,28 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_margin="8dp"
-        android:src="@drawable/avatar"
+        tools:src="@drawable/avatar"
         app:border_color="@color/colorWhite"
         />
+
     <TextView
         android:id="@+id/user_dialogs_text_view"
-        android:layout_marginTop="6dp"
+        style="@style/news_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         android:layout_toEndOf="@+id/card_message_profile_image_view"
         android:layout_toRightOf="@+id/card_message_profile_image_view"
-        tools:text="Василий Петров"
-        style="@style/news_text"/>
+        tools:text="Василий Петров"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/out_circle_image_view"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_below="@+id/user_dialogs_text_view"
         android:layout_toEndOf="@+id/card_message_profile_image_view"
         android:layout_toRightOf="@+id/card_message_profile_image_view"
-        android:src="@drawable/avatar"
-        android:id="@+id/out_circle_image_view"/>
+        android:src="@drawable/avatar"/>
 
     <TextView
         android:id="@+id/last_message_dialogs_text_view"
@@ -40,26 +41,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_dialogs_text_view"
-        android:layout_toEndOf="@+id/out_circle_image_view"
-        android:layout_toRightOf="@+id/out_circle_image_view"
-        tools:text="Привет как дела"
         android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
         android:padding="2dp"/>
+    <!--maxlines-->
 
     <TextView
         android:id="@+id/time_dialogs_text_view"
         style="@style/text_small_grey"
-        android:textSize="12sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/user_dialogs_text_view"
-        tools:text="12:12"
         android:layout_marginEnd="8dp"
-        tools:ignore="RelativeOverlap"/>
+        android:layout_marginRight="8dp"
+        android:textSize="12sp"
+        tools:ignore="RelativeOverlap"
+        tools:text="12:12"/>
 
     <TextView
         android:id="@+id/circle_text_view"
@@ -69,9 +68,9 @@
         android:layout_alignEnd="@+id/time_dialogs_text_view"
         android:layout_alignRight="@+id/time_dialogs_text_view"
         android:background="@drawable/round_text_view"
-        android:textSize="12sp"
+        android:gravity="center"
         android:textColor="@color/colorWhite"
-        tools:text="2"
-        android:gravity="center"/>
+        android:textSize="12sp"
+        tools:text="2"/>
 
 </RelativeLayout>

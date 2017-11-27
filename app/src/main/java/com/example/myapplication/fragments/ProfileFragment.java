@@ -23,12 +23,10 @@ public class ProfileFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
-
 }
