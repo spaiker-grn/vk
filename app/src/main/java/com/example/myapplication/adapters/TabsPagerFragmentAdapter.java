@@ -4,54 +4,48 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.myapplication.fragments.DialogsFragment.DialogsFragment;
+/*import com.example.myapplication.TabModel;*/
+import com.example.myapplication.TabModel;
+import com.example.myapplication.fragments.dialogsfragment.DialogsFragment;
 import com.example.myapplication.fragments.NewsFeedFragment;
 import com.example.myapplication.fragments.ProfileFragment;
-import com.example.myapplication.fragments.ViewPagerFragment;
 
-/**
- * Created by Дмитрий on 04.11.2017.
- */
+import java.util.ArrayList;
+import java.util.List;
 
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
-
-    private final String[] mTabs;
-
+    private final List<TabModel> mTabModelList;
 
     public TabsPagerFragmentAdapter(final FragmentManager pFragmentManager) {
         super(pFragmentManager);
-        mTabs = new String[]{"ПРОФИЛЬ", "НОВОСТИ", "СООБЩЕНИЯ", "Example"};
+
+        mTabModelList = addTabs();
 
     }
 
-
     @Override
     public CharSequence getPageTitle(final int pPosition) {
-        return mTabs[pPosition];
+        return mTabModelList.get(pPosition).getName();
     }
 
     @Override
     public Fragment getItem(final int pPosition) {
-        switch (pPosition){
-            case 0:
-                return ProfileFragment.getInstance();
 
-            case 1:
-                return NewsFeedFragment.getInstance();
+        return mTabModelList.get(pPosition).getFragment();
 
-            case 2:
-                return DialogsFragment.getInstance();
-
-            case 3:
-                return ViewPagerFragment.getInstance();
-
-        }
-        return null;
     }
 
     @Override
     public int getCount() {
-        return mTabs.length;
+        return mTabModelList.size();
+    }
+
+    private List<TabModel> addTabs() {
+        final List<TabModel> tabModelList = new ArrayList<>();
+        tabModelList.add(new TabModel("PROFILE", ProfileFragment.newInstance()));
+        tabModelList.add(new TabModel("NEWS", NewsFeedFragment.newInstance()));
+        tabModelList.add(new TabModel("MESSAGES", DialogsFragment.newInstance()));
+        return tabModelList;
     }
 }

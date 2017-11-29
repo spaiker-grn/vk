@@ -1,17 +1,13 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+
 import com.example.myapplication.adapters.TabsPagerFragmentAdapter;
 import com.example.myapplication.serviceclasses.Constants;
-
-
-/**
- * Created by Дмитрий on 04.11.2017.
- */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initTabs();
-        startActivityForResult(new Intent(this, ActivityForLogin.class), Constants.loginActivityRequestCode);
+        startActivityForResult(new Intent(this, LoginActivity.class), Constants.LOGIN_ACTIVITY_REQUEST_CODE);
 
     }
 

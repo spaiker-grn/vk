@@ -1,4 +1,4 @@
-package com.example.myapplication.fragments.DialogsFragment;
+package com.example.myapplication.fragments.dialogsfragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.R;
-import com.example.myapplication.clients.ILoadMore;
+import com.example.myapplication.fragments.recyclersutils.ILoadMore;
 import com.example.myapplication.vkapi.vkapimodels.VkModelDialogs;
 
 import java.util.List;
 
-class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerViewHolderDialogs> {
+class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHolder> {
 
     private final DialogsFragment mDialogsFragment;
     private final List<VkModelDialogs> mDialogsList;
@@ -54,13 +54,15 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerViewHolderDial
     }
 
     @Override
-    public RecyclerViewHolderDialogs onCreateViewHolder(final ViewGroup pParent, final int pViewType) {
-        final View view = LayoutInflater.from(pParent.getContext()).inflate(R.layout.dialogs_item, pParent, false);
-        return new RecyclerViewHolderDialogs(mDialogsFragment, view);
+    public RecyclerDialogsViewHolder onCreateViewHolder(final ViewGroup pParent, final int pViewType) {
+        final View view = LayoutInflater.from(pParent.getContext()).inflate(R.layout.adapter_dialogs, pParent, false);
+        return new RecyclerDialogsViewHolder(mDialogsFragment, view);
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolderDialogs pHolder, final int pPosition) {
+    public void onBindViewHolder(final RecyclerDialogsViewHolder pHolder, final int pPosition) {
+        final VkModelDialogs vkModelDialogs = mDialogsList.get(pPosition);
+
         pHolder.bind(mDialogsList.get(pPosition));
     }
 

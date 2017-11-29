@@ -1,4 +1,4 @@
-package com.example.myapplication.clients;
+package com.example.myapplication.imageloader;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

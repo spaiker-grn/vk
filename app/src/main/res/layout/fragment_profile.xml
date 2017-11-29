@@ -12,83 +12,156 @@
         style="@style/profile_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Василий Петрович"/>
+        tools:text="Василий Петрович"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorGrey"/>
+    <include layout="@layout/view_divider"/>
 
-    <TextView
-        android:id="@+id/profile_friends"
-        style="@style/profile_items"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/friends"
-        android:drawableStart="@drawable/friends"
-        android:drawableTint="@color/colorGrey"
-        android:text="@string/friends"/>
+        tools:ignore="UseCompoundDrawables">
 
-    <TextView
-        android:id="@+id/profile_wall"
-        style="@style/profile_items"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_start_dialogs"
+            android:contentDescription="@string/friends"
+            android:src="@drawable/ic_friends"/>
+
+        <TextView
+            android:id="@+id/profile_friends"
+            style="@style/profile_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/friends"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/wall"
-        android:drawableStart="@drawable/wall"
-        android:drawableTint="@color/colorGrey"
-        android:text="@string/wall"/>
+        tools:ignore="UseCompoundDrawables">
 
-    <TextView
-        android:id="@+id/profile_groups"
-        style="@style/profile_items"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_start_dialogs"
+            android:contentDescription="@string/wall"
+            android:src="@drawable/ic_wall"/>
+
+        <TextView
+            android:id="@+id/profile_wall"
+            style="@style/profile_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/wall"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/groups"
-        android:drawableStart="@drawable/groups"
-        android:drawableTint="@color/colorGrey"
-        android:text="@string/groups"/>
+        tools:ignore="UseCompoundDrawables">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_start_dialogs"
+            android:contentDescription="@string/groups"
+            android:src="@drawable/ic_groups"/>
 
-    <TextView
-        android:id="@+id/profile_image"
-        style="@style/profile_items"
+        <TextView
+            android:id="@+id/profile_groups"
+            style="@style/profile_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/groups"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/image"
-        android:drawableStart="@drawable/image"
-        android:drawableTint="@color/colorGrey"
-        android:text="@string/images"/>
+        tools:ignore="UseCompoundDrawables">
 
-    <TextView
-        android:id="@+id/profile_audio"
-        style="@style/profile_items"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_start_dialogs"
+            android:contentDescription="@string/images"
+            android:src="@drawable/ic_images"/>
+
+        <TextView
+            android:id="@+id/profile_image"
+            style="@style/profile_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/images"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/music"
-        android:drawableStart="@drawable/music"
-        android:drawableTint="@color/colorGrey"
-        android:text="@string/music"/>
+        tools:ignore="UseCompoundDrawables">
 
-    <TextView
-        android:id="@+id/profile_video"
-        style="@style/profile_items"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_start_dialogs"
+            android:contentDescription="@string/music"
+            android:src="@drawable/ic_music"/>
+
+        <TextView
+            android:id="@+id/profile_music"
+            style="@style/profile_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/music"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/video"
-        android:drawableStart="@drawable/video"
-        android:drawableTint="@color/colorGrey"
-        android:text="@string/videos"/>
+        tools:ignore="UseCompoundDrawables">
 
-    <TextView
-        android:id="@+id/profile_favorite"
-        style="@style/profile_items"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_start_dialogs"
+            android:contentDescription="@string/videos"
+            android:src="@drawable/ic_video"/>
+
+        <TextView
+            android:id="@+id/profile_video"
+            style="@style/profile_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/videos"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/star"
-        android:drawableStart="@drawable/star"
-        android:drawableTint="@color/colorGrey"
-        android:text="@string/favorite"/>
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_start_dialogs"
+            android:contentDescription="@string/favorite"
+            android:src="@drawable/ic_favorites"/>
+
+        <TextView
+            android:id="@+id/profile_favorite"
+            style="@style/profile_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/favorite"/>
+    </LinearLayout>
 
 
 </LinearLayout>

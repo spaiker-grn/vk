@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_start_dialogs">4dp</dimen>
+    <dimen name="margin_end_dialogs">8dp</dimen>
+    <dimen name="margin_app_bar">8dp</dimen>
+    <dimen name="tab_indicator_height">2dp</dimen>
+    <dimen name="progress_bar_margin">16dp</dimen>
+    <dimen name="progress_bar_height">45dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="margin_profile_image_view">8dp</dimen>
+    <dimen name="size_profile_image_view">45dp</dimen>
+    <dimen name="size_my_profile_image_view">25dp</dimen>
+    <dimen name="padding_small">2dp</dimen>
+</resources>

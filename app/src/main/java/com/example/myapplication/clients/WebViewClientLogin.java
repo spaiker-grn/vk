@@ -9,16 +9,11 @@ import com.example.myapplication.serviceclasses.Constants;
 import com.example.myapplication.serviceclasses.MyApplication;
 import com.example.myapplication.tools.URLParser;
 
-/**
- * Created by Дмитрий on 06.11.2017.
- */
-
 public class WebViewClientLogin extends WebViewClient {
-
 
     @Override
     public boolean shouldOverrideUrlLoading(final WebView pView, final String pUrl) {
-        if (pUrl.contains("https://oauth.vk.com/blank.html#access_token=")) {
+        if (pUrl.contains(Constants.URL_BUILDER.HTTPS_OAUTH_VK)) {
             final URLParser parser = new URLParser();
             saveToken(parser.parse(pUrl));
             Log.d(Constants.MY_TAG, loadToken());

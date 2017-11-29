@@ -12,10 +12,6 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-/**
- * Created by Дмитрий on 05.11.2017.
- */
-
 public class HttpUrlClient implements IHttpUrlClient {
 
     private BufferedReader mBufferedReader;
@@ -39,17 +35,14 @@ public class HttpUrlClient implements IHttpUrlClient {
 
         } catch (final MalformedURLException pE) {
             Log.e(Constants.ERROR, pE.getMessage());
-            pE.printStackTrace();
         } catch (final IOException pE) {
             Log.e(Constants.ERROR, pE.getMessage());
-            pE.printStackTrace();
         } finally {
             if (mBufferedReader != null) {
                 try {
                     mBufferedReader.close();
                 } catch (final IOException pE) {
-                    Log.i(Constants.ERROR, "Error closing InputStream");
-                    pE.printStackTrace();
+                    Log.i(Constants.ERROR, Constants.ERROR_CLOSING_INPUT_STREAM);
                 }
             }
         }
