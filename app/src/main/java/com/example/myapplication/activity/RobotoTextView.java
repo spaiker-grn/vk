@@ -1,3 +1,4 @@
+/*
 package com.example.myapplication.activity;
 
 import android.content.Context;
@@ -31,3 +32,4 @@ public class RobotoTextView extends TextView {
 
     }
 }
+*/

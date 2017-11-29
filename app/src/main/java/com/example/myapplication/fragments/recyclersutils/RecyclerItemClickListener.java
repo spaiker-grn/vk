@@ -1,4 +1,4 @@
-package com.example.myapplication.fragments;
+package com.example.myapplication.fragments.recyclersutils;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,17 +11,10 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     private final OnItemClickListener mListener;
     private final GestureDetector mGestureDetector;
 
-
-//    move to separate inteface
-    public interface OnItemClickListener {
-
-        public void onItemClick(View pView, int pPosition);
-        public void onLongItemClick(View pView, int pPosition);
-    }
-
-    public RecyclerItemClickListener(final Context pContext, final RecyclerView pRecyclerView, final OnItemClickListener pListener){
+    public RecyclerItemClickListener(final Context pContext, final RecyclerView pRecyclerView, final OnItemClickListener pListener) {
         mListener = pListener;
-        mGestureDetector = new GestureDetector(pContext, new GestureDetector.SimpleOnGestureListener(){
+        mGestureDetector = new GestureDetector(pContext, new GestureDetector.SimpleOnGestureListener() {
+
             @Override
             public boolean onSingleTapUp(final MotionEvent pE) {
                 return true;
@@ -38,8 +31,6 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
 
     }
 
-
-
     @Override
     public boolean onInterceptTouchEvent(final RecyclerView pView, final MotionEvent pE) {
         final View childView = pView.findChildViewUnder(pE.getX(), pE.getY());
@@ -49,7 +40,6 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
         }
         return false;
     }
-
 
     @Override
     public void onTouchEvent(final RecyclerView pView, final MotionEvent pE) {

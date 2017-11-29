@@ -9,14 +9,10 @@ import android.view.ViewGroup;
 
 import com.example.myapplication.R;
 
-/**
- * Created by Дмитрий on 04.11.2017.
- */
-
 public class ProfileFragment extends Fragment {
 
 
-    public static ProfileFragment getInstance() {
+    public static ProfileFragment newInstance() {
         final Bundle bundle = new Bundle();
         final ProfileFragment fragment = new ProfileFragment();
         fragment.setArguments(bundle);

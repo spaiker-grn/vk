@@ -18,13 +18,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by Дмитрий on 04.11.2017.
- */
-
 public class NewsFeedFragment extends Fragment {
 
-    public static NewsFeedFragment getInstance() {
+    public static NewsFeedFragment newInstance() {
         final Bundle bundle = new Bundle();
         final NewsFeedFragment fragment = new NewsFeedFragment();
         fragment.setArguments(bundle);

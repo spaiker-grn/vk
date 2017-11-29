@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initTabs();
-        startActivityForResult(new Intent(this, LoginActivity.class), Constants.loginActivityRequestCode);
+        startActivityForResult(new Intent(this, LoginActivity.class), Constants.LOGIN_ACTIVITY_REQUEST_CODE);
 
     }
 

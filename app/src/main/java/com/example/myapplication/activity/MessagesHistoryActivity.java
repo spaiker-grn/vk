@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.fragments.DialogsFragment.DialogsFragment;
+import com.example.myapplication.fragments.dialogsfragment.DialogsFragment;
 
 
 public class MessagesHistoryActivity extends AppCompatActivity {

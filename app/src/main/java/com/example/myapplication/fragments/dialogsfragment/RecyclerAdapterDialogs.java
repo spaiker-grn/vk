@@ -1,4 +1,4 @@
-package com.example.myapplication.fragments.DialogsFragment;
+package com.example.myapplication.fragments.dialogsfragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,8 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.R;
-import com.example.myapplication.clients.ILoadMore;
-import com.example.myapplication.vkapi.vkapimodels.VkModel;
+import com.example.myapplication.fragments.recyclersutils.ILoadMore;
 import com.example.myapplication.vkapi.vkapimodels.VkModelDialogs;
 
 import java.util.List;
@@ -63,13 +62,6 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHol
     @Override
     public void onBindViewHolder(final RecyclerDialogsViewHolder pHolder, final int pPosition) {
         final VkModelDialogs vkModelDialogs = mDialogsList.get(pPosition);
-
-//        getUnread();
-//        if (!vkModelDialogs.isUnread) {
-//            pHolder.bindReaded();
-//        } else {
-//            pHolder.bindUnReaded();
-//        }
 
         pHolder.bind(mDialogsList.get(pPosition));
     }

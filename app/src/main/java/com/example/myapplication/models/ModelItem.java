@@ -38,7 +38,7 @@ public final class ModelItem {
 
     public static List<ModelItem> getFakeItems() {
 
-        final String description = MyApplication.getAppContext().getResources().getString(R.string.Lorem);
+        final String description = MyApplication.getAppContext().getResources().getString(R.string.lorem);
         final List<ModelItem> itemList = new ArrayList<>();
         itemList.add(new ModelItem(description, R.drawable.derevo_serdce, true));
         itemList.add(new ModelItem(description, R.drawable.dom_zima, true));

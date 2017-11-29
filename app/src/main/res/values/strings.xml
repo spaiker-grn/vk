@@ -1,16 +1,13 @@
 <resources>
     <string name="app_name">Vk Client</string>
     <string name="get">Get</string>
-    <string name="friends">Друзья</string>
-    <string name="wall">Стена</string>
-    <string name="groups">Группы</string>
-    <string name="images">Фото</string>
-    <string name="music">Музыка</string>
-    <string name="videos">Видео</string>
-    <string name="favorite">Закладки</string>
-    <string name="Lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="friends">Friends</string>
+    <string name="wall">Wall</string>
+    <string name="groups">Groups</string>
+    <string name="images">Photo</string>
+    <string name="music">Musik</string>
+    <string name="videos">Video</string>
+    <string name="favorite">Favorites</string>
+    <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
 
 </resources>

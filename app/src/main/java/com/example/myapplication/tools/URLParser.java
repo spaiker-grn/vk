@@ -5,10 +5,6 @@ import com.example.myapplication.serviceclasses.Constants;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by Дмитрий on 04.11.2017.
- */
-
 public class URLParser {
 
     public String parse(final String pURL) {
@@ -27,7 +23,7 @@ public class URLParser {
             pE.getMessage();
         }
 
-        return Constants.PARSE_ERROR;
+        return Constants.PARSE_ERROR_TAG;
 
     }
 

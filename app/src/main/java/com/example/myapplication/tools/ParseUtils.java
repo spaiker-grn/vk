@@ -25,23 +25,21 @@ public final class ParseUtils {
 
         final JSONObject jsonObject = new JSONObject(pResponse);
 
-        if (jsonObject.has("response")) {
+        if (jsonObject.has(Constants.Parser.RESPONSE)) {
 
-            final JSONObject jsonResponse = jsonObject.getJSONObject("response");
-            return jsonResponse.getJSONArray("items");
+            final JSONObject jsonResponse = jsonObject.getJSONObject(Constants.Parser.RESPONSE);
+            return jsonResponse.getJSONArray(Constants.Parser.ITEMS);
 
         } else {
-            if (jsonObject.has("error")) {
-                final JSONObject jsonError = jsonObject.getJSONObject("error");
-                Log.d(Constants.MY_TAG, jsonError.optString("error_msg"));
+            if (jsonObject.has(Constants.Parser.ERROR)) {
+                final JSONObject jsonError = jsonObject.getJSONObject(Constants.Parser.ERROR);
+                Log.d(Constants.MY_TAG, jsonError.optString(Constants.Parser.ERROR_MSG));
             } else {
-                Log.d(Constants.MY_TAG, "Unknown json response ");
+                Log.d(Constants.MY_TAG, Constants.UNKNOWN_JSON_RESPONSE);
             }
 
         }
         return null;
     }
-
-
 
 }

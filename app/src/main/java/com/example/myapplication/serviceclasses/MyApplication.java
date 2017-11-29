@@ -4,10 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
-/**
- * Created by Дмитрий on 06.11.2017.
- */
-
 //create ContextHolder
 public class MyApplication extends Application {
 

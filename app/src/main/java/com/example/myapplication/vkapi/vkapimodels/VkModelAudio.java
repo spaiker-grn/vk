@@ -1,46 +1,126 @@
 package com.example.myapplication.vkapi.vkapimodels;
 
+import com.example.myapplication.serviceclasses.Constants;
+
 import org.json.JSONObject;
 
 public class VkModelAudio extends VkAttachments.VkModelAttachments {
 
+    private int mId;
+    private int mOwnerId;
+    private String mArtist;
+    private String mTitle;
+    private int mDuration;
+    private String mUrl;
+    private int mLyricsId;
+    private int mAlbumId;
+    private int mGenre;
+    private String mAccessKey;
 
-
-    public int id;
-    public int owner_id;
-    public String artist;
-    public String title;
-    public int duration;
-    public String url;
-    public int lyrics_id;
-    public int album_id;
-    public int genre;
-    public String access_key;
-
-    public VkModelAudio() {
+    VkModelAudio() {
     }
 
     public VkModelAudio(final JSONObject pObject) {
         parse(pObject);
     }
 
-
     public VkModelAudio parse(final JSONObject pObject) {
-        id = pObject.optInt("id");
-        owner_id = pObject.optInt("owner_id");
-        artist = pObject.optString("artist");
-        title = pObject.optString("title");
-        duration = pObject.optInt("duration");
-        url = pObject.optString("url");
-        lyrics_id = pObject.optInt("lyrics_id");
-        album_id = pObject.optInt("album_id");
-        genre = pObject.optInt("genre_id");
-        access_key = pObject.optString("access_key");
+        mId = pObject.optInt(Constants.Parser.ID);
+        mOwnerId = pObject.optInt(Constants.Parser.OWNER_ID);
+        mArtist = pObject.optString(Constants.Parser.ARTIST);
+        mTitle = pObject.optString(Constants.Parser.TITLE);
+        mDuration = pObject.optInt(Constants.Parser.DURATION);
+        mUrl = pObject.optString(Constants.Parser.URL);
+        mLyricsId = pObject.optInt(Constants.Parser.LYRICS_ID);
+        mAlbumId = pObject.optInt(Constants.Parser.ALBUM_ID);
+        mGenre = pObject.optInt(Constants.Parser.GENRE_ID);
+        mAccessKey = pObject.optString(Constants.Parser.ACCESS_KEY);
         return this;
     }
 
+
     @Override
     public String getType() {
-        return VkAttachments.TYPE_AUDIO;
+        return Constants.Parser.TYPE_AUDIO;
+    }
+
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(final int pId) {
+        mId = pId;
+    }
+
+    public int getOwnerId() {
+        return mOwnerId;
+    }
+
+    public void setOwnerId(final int pOwnerId) {
+        mOwnerId = pOwnerId;
+    }
+
+    public String getArtist() {
+        return mArtist;
+    }
+
+    public void setArtist(final String pArtist) {
+        mArtist = pArtist;
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setTitle(final String pTitle) {
+        mTitle = pTitle;
+    }
+
+    public int getDuration() {
+        return mDuration;
+    }
+
+    public void setDuration(final int pDuration) {
+        mDuration = pDuration;
+    }
+
+    public String getUrl() {
+        return mUrl;
+    }
+
+    public void setUrl(final String pUrl) {
+        mUrl = pUrl;
+    }
+
+    public int getLyricsId() {
+        return mLyricsId;
+    }
+
+    public void setLyricsId(final int pLyricsId) {
+        mLyricsId = pLyricsId;
+    }
+
+    public int getAlbumId() {
+        return mAlbumId;
+    }
+
+    public void setAlbumId(final int pAlbumId) {
+        mAlbumId = pAlbumId;
+    }
+
+    public int getGenre() {
+        return mGenre;
+    }
+
+    public void setGenre(final int pGenre) {
+        mGenre = pGenre;
+    }
+
+    public String getAccessKey() {
+        return mAccessKey;
+    }
+
+    public void setAccessKey(final String pAccessKey) {
+        mAccessKey = pAccessKey;
     }
 }

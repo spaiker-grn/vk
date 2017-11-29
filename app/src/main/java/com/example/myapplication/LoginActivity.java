@@ -4,12 +4,9 @@ import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
+import com.example.myapplication.clients.WebViewClientLogin;
 
 import com.example.myapplication.serviceclasses.Constants;
-
-/**
- * Created by Дмитрий on 04.11.2017.
- */
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -18,16 +15,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_for_login);
 
-//        rename
-        initialization();
+        initWebView();
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    public void initialization() {
+    public void initWebView() {
         final WebView webView = findViewById(R.id.web_view_for_login);
-        webView.loadUrl(Constants.URL);
+        webView.loadUrl(Constants.AUTHORIZATION_URL);
         webView.getSettings().setJavaScriptEnabled(true);
-        final com.example.myapplication.clients.WebViewClientLogin webViewLogin = new com.example.myapplication.clients.WebViewClientLogin();
+        final WebViewClientLogin webViewLogin = new WebViewClientLogin();
         webView.setWebViewClient(webViewLogin);
 
     }

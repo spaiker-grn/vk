@@ -1,12 +1,23 @@
 package com.example.myapplication;
 
+import android.support.v4.app.Fragment;
+
 public class TabModel {
 
     private String mName;
-    private .....
+    private Fragment mFragment;
 
-    TabModel() {
+    public TabModel(final String pName, final Fragment pFragment) {
+        mName = pName;
+        mFragment = pFragment;
+    }
 
+    public Fragment getFragment() {
+        return mFragment;
+    }
+
+    public void setFragment(final Fragment pFragment) {
+        mFragment = pFragment;
     }
 
     public void setName(final String pName) {

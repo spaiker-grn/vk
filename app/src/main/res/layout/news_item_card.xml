@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="@string/Lorem"/>
+            android:text="@string/lorem"/>
 
         <ImageView
             android:id="@+id/card_news_image_view"
