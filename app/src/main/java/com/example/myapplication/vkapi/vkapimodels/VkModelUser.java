@@ -6,6 +6,7 @@ import com.example.myapplication.vkapi.VkApiMethods;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 public class VkModelUser extends VkModel {
@@ -47,7 +48,7 @@ public class VkModelUser extends VkModel {
 
             return parse(jsonObject.getJSONArray(Constants.Parser.RESPONSE).getJSONObject(0));
 
-        } catch (final JSONException pE) {
+        } catch (final JSONException | IOException pE) {
             pE.getMessage();
 
         }

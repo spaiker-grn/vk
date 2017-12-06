@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -67,7 +68,7 @@ public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialogs
                 vkModelDialogsList.get(i).setUser(vkModelUserMap.get(vkModelDialogsList.get(i).getMessages().getUserId()));
             }
 
-        } catch (final InterruptedException | ExecutionException | JSONException pE) {
+        } catch (final InterruptedException | ExecutionException | JSONException | IOException pE) {
             Log.e(Constants.ERROR, pE.getMessage());
         }
 
@@ -79,13 +80,13 @@ public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialogs
         return jsonObject.getJSONObject(Constants.Parser.RESPONSE).optInt(Constants.Parser.COUNT);
     }
 
-    private static SparseArray<VkModelUser> getUsersById(final Iterable<Integer> pList) throws JSONException, ExecutionException, InterruptedException {
+    private static SparseArray<VkModelUser> getUsersById(final Iterable<Integer> pList) throws JSONException, ExecutionException, InterruptedException, IOException {
 
         final Map<String, String> map = new HashMap<>();
         final IVkApiBuilder vkApi = new VkApiBuilder();
         final SparseArray<VkModelUser> vkModelUserMap = new SparseArray<>();
-        final String request = TextUtils.join(",", pList);
-        final String code = (Constants.VkApiMethods.GET_USERS_START + request) + Constants.VkApiMethods.GET_USERS_END;
+        final String request = TextUtils.join(Constants.DELIMITER, pList);
+        final String code = String.format(Constants.VkApiMethods.GET_USERS, request);
         map.put(Constants.Parser.CODE, code);
         Log.d(Constants.MY_TAG, vkApi.buildUrl(Constants.VkApiMethods.EXECUTE, map));
         final IHttpUrlClient httpUrlClient = new HttpUrlClient();

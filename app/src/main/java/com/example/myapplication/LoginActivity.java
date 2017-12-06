@@ -21,10 +21,9 @@ public class LoginActivity extends AppCompatActivity {
     @SuppressLint("SetJavaScriptEnabled")
     public void initWebView() {
         final WebView webView = findViewById(R.id.web_view_for_login);
-        webView.loadUrl(Constants.AUTHORIZATION_URL);
-        webView.getSettings().setJavaScriptEnabled(true);
         final WebViewClientLogin webViewLogin = new WebViewClientLogin();
         webView.setWebViewClient(webViewLogin);
-
+        webView.loadUrl(Constants.AUTHORIZATION_URL);
+        webView.getSettings().setJavaScriptEnabled(true);
     }
 }

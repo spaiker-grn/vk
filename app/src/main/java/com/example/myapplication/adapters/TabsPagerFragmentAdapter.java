@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 /*import com.example.myapplication.TabModel;*/
 import com.example.myapplication.TabModel;
+import com.example.myapplication.fragments.ViewPagerFragment;
 import com.example.myapplication.fragments.dialogsfragment.DialogsFragment;
 import com.example.myapplication.fragments.NewsFeedFragment;
 import com.example.myapplication.fragments.ProfileFragment;
@@ -46,6 +47,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
         tabModelList.add(new TabModel("PROFILE", ProfileFragment.newInstance()));
         tabModelList.add(new TabModel("NEWS", NewsFeedFragment.newInstance()));
         tabModelList.add(new TabModel("MESSAGES", DialogsFragment.newInstance()));
+        tabModelList.add(new TabModel("EX", ViewPagerFragment.newInstance()));
         return tabModelList;
     }
 }

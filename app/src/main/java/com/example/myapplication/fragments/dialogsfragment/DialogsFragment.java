@@ -95,11 +95,12 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
                                 getLoaderManager().restartLoader(LOADER_ID, bundle, DialogsFragment.this).forceLoad();
                             }
 
-                            mAdapter.setLoaded();
+
 
                         }
                     });
                 }
+
             }
         });
 
@@ -138,6 +139,7 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
         DIALOGS_SIZE = data.get(0).getDialogsCount();
         mVkModelDialogsList.addAll(data);
         mAdapter.notifyDataSetChanged();
+        mAdapter.setLoaded();
         mProgressBar.setVisibility(View.INVISIBLE);
 
     }

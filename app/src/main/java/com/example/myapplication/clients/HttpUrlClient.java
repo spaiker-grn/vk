@@ -1,51 +1,32 @@
 package com.example.myapplication.clients;
 
-import android.util.Log;
-
 import com.example.myapplication.serviceclasses.Constants;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
+import java.io.InputStream;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class HttpUrlClient implements IHttpUrlClient {
 
-    private BufferedReader mBufferedReader;
-    private StringBuffer mStringBuffer;
+    public String getRequest(final String pRequest) throws IOException {
+
+        final InputStream inputStream = getInputStream(pRequest);
+        final ByteArrayOutputStream result = new ByteArrayOutputStream();
+        final byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer)) != -1) {
+            result.write(buffer, 0, length);
+        }
+        return result.toString(Constants.UTF_8);
+    }
 
     @Override
-    public String getRequest(final String pRequest) {
-
-        try {
-            final URL url = new URL(pRequest);
-            final HttpsURLConnection URLConnection = (HttpsURLConnection) url.openConnection();
-
-            mBufferedReader = new BufferedReader(new InputStreamReader(URLConnection.getInputStream()));
-            mStringBuffer = new StringBuffer();
-
-            String readLine;
-            while ((readLine = mBufferedReader.readLine()) != null) {
-                mStringBuffer.append(readLine);
-            }
-            mBufferedReader.close();
-
-        } catch (final MalformedURLException pE) {
-            Log.e(Constants.ERROR, pE.getMessage());
-        } catch (final IOException pE) {
-            Log.e(Constants.ERROR, pE.getMessage());
-        } finally {
-            if (mBufferedReader != null) {
-                try {
-                    mBufferedReader.close();
-                } catch (final IOException pE) {
-                    Log.i(Constants.ERROR, Constants.ERROR_CLOSING_INPUT_STREAM);
-                }
-            }
-        }
-        return mStringBuffer.toString();
+    public InputStream getInputStream(final String pRequest) throws IOException {
+        final URL url = new URL(pRequest);
+        final HttpsURLConnection URLConnection = (HttpsURLConnection) url.openConnection();
+        return URLConnection.getInputStream();
     }
 }

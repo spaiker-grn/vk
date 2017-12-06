@@ -6,22 +6,19 @@ import com.example.myapplication.serviceclasses.MyApplication;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Дмитрий on 06.11.2017.
- */
 
-//rename class
+//Class for Tests
+
 public final class ModelItem {
 
     private final String mDescription;
     private final int mImgSource;
-    //    'm' prefix
-    private final boolean img;
+    private final boolean mImg;
 
     private ModelItem(final String mDescription, final int mImgSource, final boolean img) {
         this.mDescription = mDescription;
         this.mImgSource = mImgSource;
-        this.img = img;
+        this.mImg = img;
     }
 
     public String getDescription() {
@@ -33,7 +30,7 @@ public final class ModelItem {
     }
 
     public boolean isImg() {
-        return img;
+        return mImg;
     }
 
     public static List<ModelItem> getFakeItems() {

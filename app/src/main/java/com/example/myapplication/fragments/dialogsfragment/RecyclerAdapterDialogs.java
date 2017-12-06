@@ -1,5 +1,7 @@
 package com.example.myapplication.fragments.dialogsfragment;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,10 +20,9 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHol
     private final List<VkModelDialogs> mDialogsList;
     private ILoadMore loadMore;
     private boolean isLoading;
-    //int visibleThreshold = 5;
+    private final int visibleThreshold = 15;
     private int lastVisibleItem;
     private int totalItemCount;
-
 
     RecyclerAdapterDialogs(final DialogsFragment pDialogsFragment, final RecyclerView pRecyclerView, final List<VkModelDialogs> pModelDialogsList) {
         mDialogsFragment = pDialogsFragment;
@@ -37,8 +38,8 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHol
                 totalItemCount = linearLayoutManager.getItemCount();
                 lastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
 
-                if (!isLoading) {
-                    if (totalItemCount - 1 == lastVisibleItem /*totalItemCount <= (lastVisibleItem + visibleThreshold)*/) {
+/*                if (!isLoading) {
+                    if (totalItemCount - 1 == lastVisibleItem) {
                         isLoading = true;
                         if (loadMore != null) {
                             loadMore.onLoadMore();
@@ -46,6 +47,16 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHol
                         }
 
                     }
+                }*/
+
+                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+
+                    if (loadMore != null) {
+                        isLoading = true;
+                        loadMore.onLoadMore();
+
+                    }
+
                 }
 
             }
@@ -53,15 +64,16 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHol
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public RecyclerDialogsViewHolder onCreateViewHolder(final ViewGroup pParent, final int pViewType) {
         final View view = LayoutInflater.from(pParent.getContext()).inflate(R.layout.adapter_dialogs, pParent, false);
         return new RecyclerDialogsViewHolder(mDialogsFragment, view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(final RecyclerDialogsViewHolder pHolder, final int pPosition) {
-        final VkModelDialogs vkModelDialogs = mDialogsList.get(pPosition);
 
         pHolder.bind(mDialogsList.get(pPosition));
     }

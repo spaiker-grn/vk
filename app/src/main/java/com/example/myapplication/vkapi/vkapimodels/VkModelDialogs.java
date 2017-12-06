@@ -18,7 +18,6 @@ public class VkModelDialogs extends VkModel {
 
     public VkModelDialogs(final JSONObject pObject) throws JSONException {
         parse(pObject);
-
     }
 
     public VkModelDialogs parse(final JSONObject pObject) throws JSONException {

@@ -1,18 +1,33 @@
 package com.example.myapplication.serviceclasses;
 
+import java.nio.charset.Charset;
+
 public final class Constants {
 
+
     public static final String PARSE_ERROR_TAG = "Parse Error";
-    public static final String MY_TAG = "My TAG";
+    public static final String MY_TAG = "myLog";
     public static final String AUTHORIZATION_URL = "https://oauth.vk.com/authorize?client_id=6218232&display=mobile&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,photos,audio,video,pages,status,notes,messages,wall,groups,offline&response_type=token&v=5.68&state=123456";
     public static final String ACCESS_TOKEN = "access_token";
     public static final String FWD_MESSAGE = "Forward mMessages";
     public static final String WALL_POST = "Wall post";
     public static final String ERROR = "Error";
     public static final String UNKNOWN_JSON_RESPONSE = "Unknown json response ";
-    public static final String ERROR_CLOSING_INPUT_STREAM = "Error closing InputStream";
     public static final int LOGIN_ACTIVITY_REQUEST_CODE = 1;
     public static final String LANGUAGE = "ru";
+    public static final String UTF_8 = "UTF-8";
+    public static final String DELIMITER = ",";
+
+    public interface ImgLoader{
+
+        String IMG_LOADER = "ImageLoader";
+        String TEMP_IMAGE_POSTFIX = ".tmp";
+        String HASH_ALGORITHM = "MD5";
+        String IMG_CACHE_FOLDER = "imgcache";
+        String DO_IN_BACKGROUND = "doInBackground: ";
+        String BITMAP_IS_NULL = "Bitmap is null";
+        int PERCENT_FROM_DISK_SIZE = 50;
+    }
 
     public interface VkApiMethods {
         String ONLINE_FRIENDS = "friends.getOnline";
@@ -20,8 +35,7 @@ public final class Constants {
         String GET_DIALOGS = "messages.getDialogs";
         String GET_USER_BY_ID = "users.get";
         String EXECUTE = "execute";
-        String GET_USERS_START = "return {\"items\" : API.users.get({\"user_ids\" : \"";
-        String GET_USERS_END = "\",  \"fields\" : \"photo_50, photo_100\"})} ;";
+        String GET_USERS = "return {\"items\" : API.users.get({\"user_ids\" : \"%s\",  \"fields\" : \"photo_50, photo_100\"})} ;";
     }
 
     public interface Parser {
@@ -106,6 +120,10 @@ public final class Constants {
         String ERROR = "error";
         String ERROR_MSG = "error_msg";
         String DEACTIVATED = "deactivated";
+        String KEY = "key";
+        String SERVER = "server";
+        String TS = "ts";
+        String MESSAGES_GET_LONG_POLL_SERVER = "messages.getLongPollServer";
     }
 
     public interface URL_BUILDER {

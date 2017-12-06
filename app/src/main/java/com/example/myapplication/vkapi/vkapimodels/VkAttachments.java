@@ -35,7 +35,7 @@ public class VkAttachments {
 
                 } catch (final Exception pE) {
 
-                    Log.d(Constants.ERROR, pE.getMessage());
+                    Log.e(Constants.ERROR, pE.getMessage());
                 }
 
             }

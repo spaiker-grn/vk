@@ -11,6 +11,7 @@ import com.example.myapplication.fragments.dialogsfragment.DialogsFragment;
 
 public class MessagesHistoryActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
