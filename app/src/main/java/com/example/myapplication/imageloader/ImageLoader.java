@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -15,11 +13,11 @@ import android.widget.ImageView;
 import com.example.myapplication.R;
 import com.example.myapplication.clients.HttpUrlClient;
 import com.example.myapplication.imageloader.DiskCache.BaseDiskCache;
+import com.example.myapplication.imageloader.Utils.Util;
 import com.example.myapplication.imageloader.memorycache.MemoryCache;
 import com.example.myapplication.serviceclasses.Constants;
 import com.example.myapplication.tools.IoUtils;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,7 +30,6 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 import static android.content.ContentValues.TAG;
 
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public final class ImageLoader {
 
     @SuppressLint("StaticFieldLeak")
@@ -59,7 +56,7 @@ public final class ImageLoader {
         return singleton;
     }
 
-    public static ImageLoader with(final Context pContext, final String pChildDiskCache){
+    public static ImageLoader with(final Context pContext, final String pChildDiskCache) {
         mChildDiskCache = pChildDiskCache;
         return with(pContext);
     }
@@ -76,13 +73,14 @@ public final class ImageLoader {
 
     private Drawable getPlaceHolder() {
         if (mDrawable == null) {
-            return mContext.getDrawable(R.drawable.ic_friends);
+            return mContext.getResources().getDrawable(R.drawable.ic_friends);
         }
         return mDrawable;
     }
 
     public void setPlaceHolder(final int pDrawableResource) {
-        mDrawable = mContext.getDrawable(pDrawableResource);
+        mDrawable = mContext.getResources().getDrawable(pDrawableResource);
+
     }
 
     public Request.Builder load(final String pUrl) {
@@ -224,7 +222,6 @@ public final class ImageLoader {
     @SuppressLint("StaticFieldLeak")
     private class ImageResultAsyncTask extends AsyncTask<Void, Void, Result> {
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected Result doInBackground(final Void... pVoids) {
 
@@ -246,10 +243,11 @@ public final class ImageLoader {
                     Log.e(Constants.ERROR, Constants.ImgLoader.DO_IN_BACKGROUND + pE);
                 }
 
-                try (final InputStream inputStream = new HttpUrlClient().getInputStream(request.url)) {
-                    bitmap = getScaledBitmap(inputStream, request.width, request.height);
-                    Log.d(TAG, "doInBackground: FROM NET " + request.url);
-                }
+                final InputStream inputStream = new HttpUrlClient().getInputStream(request.url);
+                bitmap = getScaledBitmap(inputStream, request.width, request.height);
+                Log.d(TAG, "doInBackground: FROM NET " + request.url);
+
+                Util.closeSilently(inputStream);
 
                 if (bitmap != null) {
 
@@ -293,9 +291,10 @@ public final class ImageLoader {
         if (!file.exists()) {
             throw new FileNotFoundException("File not exist");
         }
-        try (InputStream fileStream = IoUtils.getIsFromFile(file)) {
-            bitmap = getScaledBitmap(fileStream, pRequest.width, pRequest.height);
-        }
+        final InputStream fileStream = IoUtils.getIsFromFile(file);
+        bitmap = getScaledBitmap(fileStream, pRequest.width, pRequest.height);
+
+        Util.closeSilently(fileStream);
 
         if (bitmap != null) {
             result.setBitmap(bitmap);

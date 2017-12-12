@@ -3,9 +3,11 @@ package com.example.myapplication.vkapi.vkapimodels;
 import com.example.myapplication.serviceclasses.Constants;
 import com.example.myapplication.tools.ParseUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VkModelMessages extends VkModel {
@@ -17,14 +19,14 @@ public class VkModelMessages extends VkModel {
     private boolean mOut;
     private String mTitle;
     private String mBody;
-    private String mAttachments;
-    private String mFwdMessages;
+    private VkAttachments mAttachments;
+    private List<VkModelMessages> mFwdMessages;
     private String mPhoto50;
+    private int mCountMessagesHistory;
+    private int mChatId;
+    private VkModelUser mVkModelUser;
 
-    private VkAttachments attachments;
-
-    private List<VkModelMessages> fwd_messages;
-    VkModelMessages(final JSONObject pObject) throws JSONException {
+    public VkModelMessages(final JSONObject pObject) throws JSONException {
         parse(pObject);
     }
 
@@ -38,17 +40,63 @@ public class VkModelMessages extends VkModel {
         mBody = pObject.optString(Constants.Parser.BODY);
         if(Constants.Parser.EMPTY_STRING.equals(mBody)) {
             if (pObject.has(Constants.Parser.ATTACHMENTS)) {
-                mAttachments = (pObject.optJSONArray(Constants.Parser.ATTACHMENTS).getJSONObject(0).optString(Constants.Parser.TYPE));
+                mAttachments = new VkAttachments(pObject.getJSONArray(Constants.Parser.ATTACHMENTS));
             }
             if (pObject.has(Constants.Parser.FWD_MESSAGE)) {
-                mFwdMessages = (pObject.optJSONArray(Constants.Parser.FWD_MESSAGE).getJSONObject(0).optString(Constants.Parser.BODY));
+                mFwdMessages = new ArrayList<>();
+                final JSONArray jsonArray = pObject.getJSONArray(Constants.Parser.FWD_MESSAGE);
+                for (int i = 0; i < jsonArray.length(); i++){
+                    mFwdMessages.add(new VkModelMessages(jsonArray.getJSONObject(i)));
+                }
             }
         }
         if (pObject.has(Constants.Parser.PHOTO_50)){
             mPhoto50 = pObject.optString(Constants.Parser.PHOTO_50);
         }
+        if (pObject.has(Constants.Parser.CHAT_ID)){
+            mChatId = pObject.optInt(Constants.Parser.CHAT_ID);
+        }
 
         return this;
+    }
+
+    public VkModelUser getVkModelUser() {
+        return mVkModelUser;
+    }
+
+    public void setVkModelUser(final VkModelUser pVkModelUser) {
+        mVkModelUser = pVkModelUser;
+    }
+
+    public VkAttachments getAttachments() {
+        return mAttachments;
+    }
+    public List<VkModelMessages> getFwdMessages() {
+        return mFwdMessages;
+    }
+
+    public void setAttachments(final VkAttachments pAttachments) {
+        mAttachments = pAttachments;
+    }
+
+    public void setFwdMessages(final List<VkModelMessages> pFwdMessages) {
+        mFwdMessages = pFwdMessages;
+    }
+
+    public int getCountMessagesHistory() {
+        return mCountMessagesHistory;
+    }
+
+    public void setCountMessagesHistory(final int pCountMessagesHistory) {
+        mCountMessagesHistory = pCountMessagesHistory;
+    }
+
+    public int getChatId() {
+        return mChatId;
+    }
+
+    public void setChatId(final int pChatId) {
+        mChatId = pChatId;
     }
 
     public int getId() {
@@ -113,34 +161,6 @@ public class VkModelMessages extends VkModel {
 
     public void setBody(final String pBody) {
         mBody = pBody;
-    }
-
-    public String getAttachments() {
-        return mAttachments;
-    }
-
-    public void setAttachments(final VkAttachments pAttachments) {
-        attachments = pAttachments;
-    }
-
-    public List<VkModelMessages> getFwd_messages() {
-        return fwd_messages;
-    }
-
-    public void setFwd_messages(final List<VkModelMessages> pFwd_messages) {
-        fwd_messages = pFwd_messages;
-    }
-
-    public void setAttachments(final String pAttachments) {
-        mAttachments = pAttachments;
-    }
-
-    public String getFwdMessages() {
-        return mFwdMessages;
-    }
-
-    public void setFwdMessages(final String pFwdMessages) {
-        mFwdMessages = pFwdMessages;
     }
 
 }

@@ -7,9 +7,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.concurrent.ExecutionException;
 
-public class VkModelUser extends VkModel {
+public class VkModelUser extends VkModel implements Serializable {
 
     private int mId;
     private String mFirstName;
@@ -17,6 +18,10 @@ public class VkModelUser extends VkModel {
     private String mPhoto50;
     private String mPhoto100;
     private String mDeactivated;
+
+    public VkModelUser() {
+
+    }
 
     public VkModelUser(final JSONObject pObject) throws JSONException {
         parse(pObject);

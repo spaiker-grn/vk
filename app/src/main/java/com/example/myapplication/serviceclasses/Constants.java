@@ -9,7 +9,7 @@ public final class Constants {
     public static final String MY_TAG = "myLog";
     public static final String AUTHORIZATION_URL = "https://oauth.vk.com/authorize?client_id=6218232&display=mobile&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,photos,audio,video,pages,status,notes,messages,wall,groups,offline&response_type=token&v=5.68&state=123456";
     public static final String ACCESS_TOKEN = "access_token";
-    public static final String FWD_MESSAGE = "Forward mMessages";
+    public static final String FWD_MESSAGES = "Forward messages";
     public static final String WALL_POST = "Wall post";
     public static final String ERROR = "Error";
     public static final String UNKNOWN_JSON_RESPONSE = "Unknown json response ";
@@ -17,6 +17,7 @@ public final class Constants {
     public static final String LANGUAGE = "ru";
     public static final String UTF_8 = "UTF-8";
     public static final String DELIMITER = ",";
+    public static final String ATTACHMENT = "Attachment ";
 
     public interface ImgLoader{
 
@@ -35,7 +36,15 @@ public final class Constants {
         String GET_DIALOGS = "messages.getDialogs";
         String GET_USER_BY_ID = "users.get";
         String EXECUTE = "execute";
+
         String GET_USERS = "return {\"items\" : API.users.get({\"user_ids\" : \"%s\",  \"fields\" : \"photo_50, photo_100\"})} ;";
+        String MESSAGES_GET_HISTORY = "messages.getHistory";
+        String VALUE_20 = "20";
+        String PEER_ID = "peer_id";
+        String MESSAGES_GET_CHAT = "messages.getChat";
+        String FILTERS = "filters";
+        String START_FROM = "start_from";
+        String POST_PHOTO = "post, photo";
     }
 
     public interface Parser {
@@ -73,7 +82,7 @@ public final class Constants {
         String BODY = "body";
         String ATTACHMENTS = "attachments";
         String EMPTY_STRING = "";
-        String FWD_MESSAGE = "fwd_message";
+        String FWD_MESSAGE = "fwd_messages";
         String HEIGHT = "height";
         String WIDTH = "width";
         String TEXT = "text";
@@ -124,6 +133,15 @@ public final class Constants {
         String SERVER = "server";
         String TS = "ts";
         String MESSAGES_GET_LONG_POLL_SERVER = "messages.getLongPollServer";
+        String PHOTO_800 = "photo_800";
+        String GROUPS = "groups";
+        String PROFILES = "profiles";
+        String NEXT_FROM = "next_from";
+        String COPY_HISTORY = "copy_history";
+        String USERS = "users";
+        String ADMIN_ID = "admin_id";
+        String CHAT_ID = "chat_id";
+        int INT_FOR_CHAT_ID = 2000000000;
     }
 
     public interface URL_BUILDER {
@@ -139,11 +157,16 @@ public final class Constants {
         String USER_IDS = "user_ids";
         String FIELDS = "fields";
         String PHOTO_50_PHOTO_100 = "photo_50, photo_100";
+        String START_MESSAGE_ID = "start_message_id";
+        String USER_HISTORY = "user_history";
+        String CHAT_ID = "chat_id";
     }
 
     public interface TIME {
-        String TIME_FORMAT_H_MM = "h:mm";
+        String TIME_FORMAT_H_MM = "HH:mm";
         String TIME_FORMAT_DD_MMMM = "dd MMMM";
         String TIME_FORMAT_DD_MMMM_YYYY = "dd MMMM yyyy";
+        String DATE_FORMAT_DD_MMMM_HH_MM = "dd MMMM HH:mm";
+        String DATE_FORMAT_DD_MMMM_YYYY_HH_MM = "dd MMMM yyyy HH:mm";
     }
 }

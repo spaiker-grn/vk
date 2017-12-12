@@ -1,4 +1,5 @@
-package com.example.myapplication.fragments.dialogsfragment;
+/*
+package com.example.myapplication.fragments.newsfragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,23 +9,24 @@ import android.view.ViewGroup;
 
 import com.example.myapplication.R;
 import com.example.myapplication.fragments.recyclersutils.ILoadMore;
-import com.example.myapplication.vkapi.vkapimodels.VkModelDialogs;
+import com.example.myapplication.vkapi.vkapimodels.VkModelPost;
 
 import java.util.List;
 
-class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHolder> {
+public class RecyclerAdapterNewsFeed extends RecyclerView.Adapter<RecyclerNewsFeedViewHolder> {
 
-    private final DialogsFragment mDialogsFragment;
-    private final List<VkModelDialogs> mDialogsList;
+    private final List<VkModelPost> mVkModelPosts;
+    private final NewsFragment mNewsFragment;
     private ILoadMore mILoadMore;
     private boolean mIsLoading;
-    private final int mVisibleThreshold = 7;
+    private final int mVisibleThreshold = 10;
     private int mLastVisibleItem;
     private int mTotalItemCount;
 
-    RecyclerAdapterDialogs(final DialogsFragment pDialogsFragment, final RecyclerView pRecyclerView, final List<VkModelDialogs> pModelDialogsList) {
-        mDialogsFragment = pDialogsFragment;
-        mDialogsList = pModelDialogsList;
+
+    RecyclerAdapterNewsFeed(final NewsFragment pNewsFragment, final RecyclerView pRecyclerView, final List<VkModelPost> pVkModelPosts ){
+        mNewsFragment = pNewsFragment;
+        mVkModelPosts = pVkModelPosts;
 
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) pRecyclerView.getLayoutManager();
 
@@ -35,17 +37,6 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHol
                 super.onScrolled(recyclerView, dx, dy);
                 mTotalItemCount = linearLayoutManager.getItemCount();
                 mLastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-
-/*                if (!isLoading) {
-                    if (totalItemCount - 1 == lastVisibleItem) {
-                        isLoading = true;
-                        if (loadMore != null) {
-                            loadMore.onLoadMore();
-
-                        }
-
-                    }
-                }*/
 
                 if (!mIsLoading && mTotalItemCount <= (mLastVisibleItem + mVisibleThreshold)) {
 
@@ -63,21 +54,19 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHol
     }
 
     @Override
-    public RecyclerDialogsViewHolder onCreateViewHolder(final ViewGroup pParent, final int pViewType) {
-        final View view = LayoutInflater.from(pParent.getContext()).inflate(R.layout.item_dialogs, pParent, false);
-        return new RecyclerDialogsViewHolder(mDialogsFragment, view);
+    public RecyclerNewsFeedViewHolder onCreateViewHolder(final ViewGroup pParent, final int pViewtype) {
+        final View view = LayoutInflater.from(pParent.getContext()).inflate(R.layout.news_item_card, pParent, false);
+        return new RecyclerNewsFeedViewHolder(mNewsFragment, view);
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerDialogsViewHolder pHolder, final int pPosition) {
+    public void onBindViewHolder(final RecyclerNewsFeedViewHolder pHolder, final int pPosition) {
 
-        pHolder.bind(mDialogsList.get(pPosition));
     }
 
     @Override
     public int getItemCount() {
-
-        return mDialogsList.size();
+       return mVkModelPosts.size();
     }
 
     void setLoaded() {
@@ -88,3 +77,4 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHol
         this.mILoadMore = pILoadMore;
     }
 }
+*/

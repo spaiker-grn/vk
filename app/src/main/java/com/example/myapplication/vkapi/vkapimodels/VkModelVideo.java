@@ -19,6 +19,7 @@ public class VkModelVideo extends VkAttachments.VkModelAttachments {
     private String mPhoto130;
     private String mPhoto320;
     private String mPhoto640;
+    private String mPhoto800;
     private String mAccessKey;
     private int mComments;
     private boolean mCanComment;
@@ -56,7 +57,7 @@ public class VkModelVideo extends VkAttachments.VkModelAttachments {
         mPhoto130 = pObject.optString(Constants.Parser.PHOTO_130);
         mPhoto320 = pObject.optString(Constants.Parser.PHOTO_320);
         mPhoto640 = pObject.optString(Constants.Parser.PHOTO_640);
-
+        mPhoto800 = pObject.optString(Constants.Parser.PHOTO_800);
         return this;
     }
 

@@ -3,9 +3,11 @@ package com.example.myapplication.vkapi.vkapimodels;
 import com.example.myapplication.serviceclasses.Constants;
 import com.example.myapplication.tools.ParseUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VkModelPost extends VkAttachments.VkModelAttachments {
@@ -29,13 +31,14 @@ public class VkModelPost extends VkAttachments.VkModelAttachments {
     private String mPostType;
     private VkAttachments mAttachments = new VkAttachments();
     private int mSignerId;
-    private List<VkModelPost> mCopyHistory;
+    private List<VkModelPost> mCopyHistory = new ArrayList<>();
+
+    private VkModelUser mVkModelUser;
 
     VkModelPost() {
     }
 
-    public VkModelPost(final JSONObject pObject) throws JSONException
-    {
+    public VkModelPost(final JSONObject pObject) throws JSONException {
         parse(pObject);
     }
 
@@ -50,19 +53,19 @@ public class VkModelPost extends VkAttachments.VkModelAttachments {
         mFriendsOnly = ParseUtils.parseBoolean(pObject, Constants.Parser.FRIENDS_ONLY);
         final JSONObject comments = pObject.optJSONObject(Constants.Parser.COMMENTS);
 
-        if(comments != null) {
+        if (comments != null) {
             mCommentsCount = comments.optInt(Constants.Parser.COUNT);
             mCanPostComment = ParseUtils.parseBoolean(comments, Constants.Parser.CAN_POST);
         }
         final JSONObject likes = pObject.optJSONObject(Constants.Parser.LIKES);
-        if(likes != null) {
+        if (likes != null) {
             mLikesCount = likes.optInt(Constants.Parser.COUNT);
             mUserLikes = ParseUtils.parseBoolean(likes, Constants.Parser.USER_LIKES);
             mCanLike = ParseUtils.parseBoolean(likes, Constants.Parser.CAN_LIKE);
             mCanPublish = ParseUtils.parseBoolean(likes, Constants.Parser.CAN_PUBLISH);
         }
         final JSONObject reposts = pObject.optJSONObject(Constants.Parser.REPOSTS);
-        if(reposts != null) {
+        if (reposts != null) {
             mRepostsCount = reposts.optInt(Constants.Parser.COUNT);
             mUserReposted = ParseUtils.parseBoolean(reposts, Constants.Parser.USER_REPOSTED);
         }
@@ -71,12 +74,27 @@ public class VkModelPost extends VkAttachments.VkModelAttachments {
 
         mSignerId = pObject.optInt(Constants.Parser.SIGNER_ID);
 
+        final JSONArray copyHistory = pObject.optJSONArray(Constants.Parser.COPY_HISTORY);
+        if (copyHistory != null) {
+            for (int i = 0; i < copyHistory.length(); i++) {
+                mCopyHistory.add(new VkModelPost(copyHistory.optJSONObject(i)));
+            }
+        }
+
         return this;
     }
 
     @Override
     public String getType() {
         return Constants.Parser.TYPE_POST;
+    }
+
+    public VkModelUser getVkModelUser() {
+        return mVkModelUser;
+    }
+
+    public void setVkModelUser(final VkModelUser pVkModelUser) {
+        mVkModelUser = pVkModelUser;
     }
 
     public int getId() {

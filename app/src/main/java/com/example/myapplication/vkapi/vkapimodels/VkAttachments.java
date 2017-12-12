@@ -14,6 +14,10 @@ public class VkAttachments {
 
     private final List<VkModelAttachments> mAttachmentsList = new ArrayList<>();
 
+    public List<VkModelAttachments> getAttachmentsList() {
+        return mAttachmentsList;
+    }
+
     public VkAttachments(final JSONArray pFrom) {
         fill(pFrom);
     }
@@ -64,6 +68,7 @@ public class VkAttachments {
         } else if (Constants.Parser.TYPE_WIKI_PAGE.equals(type)) {
             return new VkModelWiki().parse(pAttachment.getJSONObject(Constants.Parser.TYPE_WIKI_PAGE));
         }
+
         return null;
     }
 

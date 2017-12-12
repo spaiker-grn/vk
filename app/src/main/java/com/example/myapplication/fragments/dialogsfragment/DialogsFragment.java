@@ -14,11 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.MessagesHistoryActivity;
+import com.example.myapplication.activity.messagehistoryactivity.ActivityMessagesHistory;
 import com.example.myapplication.fragments.recyclersutils.ILoadMore;
-import com.example.myapplication.clients.ParsingDialogsAsyncTask;
 import com.example.myapplication.fragments.recyclersutils.OnItemClickListener;
 import com.example.myapplication.fragments.recyclersutils.RecyclerItemClickListener;
+import com.example.myapplication.serviceclasses.Constants;
 import com.example.myapplication.vkapi.vkapimodels.VkModelDialogs;
 
 import java.util.ArrayList;
@@ -26,16 +26,11 @@ import java.util.List;
 
 public class DialogsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<VkModelDialogs>> {
 
-    public static final String OFFSET_KEY = "offset";
-    public static final String COUNT_KEY = "count";
     public static final int LOADER_ID = 1;
-
     public RecyclerView mRecyclerView;
     public RecyclerAdapterDialogs mAdapter;
     public List<VkModelDialogs> mVkModelDialogsList = new ArrayList<>();
     public int DIALOGS_SIZE;
-    private static final int DIALOGS_COUNT = 40;
-    public static final String HISTORY_ID = "history";
     public ProgressBar mProgressBar;
 
     public DialogsFragment() {
@@ -63,14 +58,13 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
         mRecyclerView.setLayoutManager(layoutManager);
 
         final Bundle bundle = new Bundle();
-        bundle.putInt(OFFSET_KEY, 0);
-        bundle.putInt(COUNT_KEY, DIALOGS_COUNT);
+        bundle.putInt(Constants.URL_BUILDER.START_MESSAGE_ID, 0);
         getLoaderManager().initLoader(LOADER_ID, bundle, this).forceLoad();
 
         mAdapter = new RecyclerAdapterDialogs(this, mRecyclerView, mVkModelDialogsList);
 
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setLoadMore(new ILoadMore() {
+        mAdapter.setILoadMore(new ILoadMore() {
 
             @Override
             public void onLoadMore() {
@@ -81,21 +75,9 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
                         @Override
                         public void run() {
 
-                            if (mVkModelDialogsList.size() / DIALOGS_COUNT < DIALOGS_SIZE / DIALOGS_COUNT) {
-
                                 final Bundle bundle = new Bundle();
-                                bundle.putInt(OFFSET_KEY, mVkModelDialogsList.size());
-                                bundle.putInt(COUNT_KEY, DIALOGS_COUNT);
+                                bundle.putInt(Constants.URL_BUILDER.START_MESSAGE_ID, mVkModelDialogsList.get(mVkModelDialogsList.size()-1).getMessages().getId());
                                 getLoaderManager().restartLoader(LOADER_ID, bundle, DialogsFragment.this).forceLoad();
-
-                            } else {
-                                final Bundle bundle = new Bundle();
-                                bundle.putInt(OFFSET_KEY, mVkModelDialogsList.size());
-                                bundle.putInt(COUNT_KEY, DIALOGS_SIZE % DIALOGS_COUNT);
-                                getLoaderManager().restartLoader(LOADER_ID, bundle, DialogsFragment.this).forceLoad();
-                            }
-
-
 
                         }
                     });
@@ -108,9 +90,16 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
 
             @Override
             public void onItemClick(final View pView, final int pPosition) {
-                final int id = mVkModelDialogsList.get(pPosition).getMessages().getUserId();
-                startActivity(new Intent(getContext(), MessagesHistoryActivity.class).putExtra(HISTORY_ID, id));
+                final Intent intent = new Intent(getContext(), ActivityMessagesHistory.class);
+                int chatId = mVkModelDialogsList.get(pPosition).getMessages().getChatId();
 
+                if (chatId != 0) {
+                    chatId = Constants.Parser.INT_FOR_CHAT_ID + chatId;
+                    intent.putExtra(Constants.Parser.CHAT_ID, chatId);
+                } else {
+                    intent.putExtra(Constants.URL_BUILDER.USER_HISTORY, mVkModelDialogsList.get(pPosition).getMessages().getVkModelUser());
+                }
+                startActivity(intent);
             }
 
             @Override
@@ -136,7 +125,9 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onLoadFinished(final Loader<List<VkModelDialogs>> loader, final List<VkModelDialogs> data) {
 
-        DIALOGS_SIZE = data.get(0).getDialogsCount();
+        if(DIALOGS_SIZE == 0){
+            DIALOGS_SIZE = data.get(0).getDialogsCount();
+        }
         mVkModelDialogsList.addAll(data);
         mAdapter.notifyDataSetChanged();
         mAdapter.setLoaded();

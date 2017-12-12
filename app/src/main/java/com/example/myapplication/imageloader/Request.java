@@ -32,7 +32,6 @@ public final class Request {
             return this;
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public void into(final ImageView val) {
             mTarget = new WeakReference<>(val);
             mImageLoader.enqueue(this.build());

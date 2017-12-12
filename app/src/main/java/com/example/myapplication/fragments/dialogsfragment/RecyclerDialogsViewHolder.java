@@ -1,7 +1,5 @@
 package com.example.myapplication.fragments.dialogsfragment;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +11,6 @@ import com.example.myapplication.imageloader.ImageLoader;
 import com.example.myapplication.serviceclasses.Constants;
 import com.example.myapplication.tools.TimesUtils;
 import com.example.myapplication.vkapi.vkapimodels.VkModelDialogs;
-import com.squareup.picasso.Picasso;
 
 class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
 
@@ -26,79 +23,83 @@ class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
     private final ImageView mOutImageView;
     private final ImageView mProfileImageView;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    RecyclerDialogsViewHolder(final DialogsFragment pDialogsFragment, final View itemView) {
-        super(itemView);
+    RecyclerDialogsViewHolder(final DialogsFragment pDialogsFragment, final View pItemView) {
+        super(pItemView);
         mDialogsFragment = pDialogsFragment;
-        mLayout = itemView.findViewById(R.id.dialogs_layout);
-        mUserIdTextView = itemView.findViewById(R.id.user_dialogs_text_view);
-        mLastMessageTextView = itemView.findViewById(R.id.last_message_dialogs_text_view);
-        mTimeTextView = itemView.findViewById(R.id.time_dialogs_text_view);
-        mUnreadTextView = itemView.findViewById(R.id.circle_text_view);
-        mOutImageView = itemView.findViewById(R.id.out_circle_image_view);
-        mProfileImageView = itemView.findViewById(R.id.card_message_profile_image_view);
+        mLayout = pItemView.findViewById(R.id.dialogs_layout);
+        mUserIdTextView = pItemView.findViewById(R.id.user_dialogs_text_view);
+        mLastMessageTextView = pItemView.findViewById(R.id.last_message_dialogs_text_view);
+        mTimeTextView = pItemView.findViewById(R.id.time_dialogs_text_view);
+        mUnreadTextView = pItemView.findViewById(R.id.circle_text_view);
+        mOutImageView = pItemView.findViewById(R.id.out_circle_image_view);
+        mProfileImageView = pItemView.findViewById(R.id.card_message_profile_image_view);
 
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
     void bind(final VkModelDialogs pVkModelDialogs) {
 
+        final String emptyString = Constants.Parser.EMPTY_STRING;
+        final int colorWhite = mDialogsFragment.getResources().getColor(R.color.colorWhite);
+        final int colorLightGrey = mDialogsFragment.getResources().getColor(R.color.colorLightGrey);
 
-        if (pVkModelDialogs.getMessages().getPhoto50() != null) {
-            ImageLoader.with(mDialogsFragment.getContext(), Constants.ImgLoader.IMG_CACHE_FOLDER).load(pVkModelDialogs.getMessages().getPhoto50()).into(mProfileImageView);
+        if (pVkModelDialogs.getMessages().getPhoto50() != null) {      //Check have photo or download
+            ImageLoader.with(mDialogsFragment.getContext(), Constants.ImgLoader.IMG_CACHE_FOLDER).
+                    load(pVkModelDialogs.getMessages().getPhoto50()).into(mProfileImageView);
 
         } else {
-            ImageLoader.with(mDialogsFragment.getContext(), Constants.ImgLoader.IMG_CACHE_FOLDER).load(pVkModelDialogs.getUser().getPhoto50()).into(mProfileImageView);
+            ImageLoader.with(mDialogsFragment.getContext(), Constants.ImgLoader.IMG_CACHE_FOLDER).
+                    load(pVkModelDialogs.getMessages().getVkModelUser().getPhoto50()).into(mProfileImageView);
         }
 
-        if (pVkModelDialogs.getUnread() != 0) {
+        if (pVkModelDialogs.getUnread() != 0) {    //Check, show unread_text_view or hide
             mUnreadTextView.setText(String.valueOf(pVkModelDialogs.getUnread()));
             mUnreadTextView.setVisibility(View.VISIBLE);
         } else {
             mUnreadTextView.setVisibility(View.INVISIBLE);
         }
 
-        if (!(pVkModelDialogs.getMessages().getTitle().equals(Constants.Parser.EMPTY_STRING))) {
+        if (!(pVkModelDialogs.getMessages().getTitle().equals(emptyString))) { //Check, set Tittle, Full Name or DEACTIVATED
             mUserIdTextView.setText(pVkModelDialogs.getMessages().getTitle());
         } else {
-            if (pVkModelDialogs.getUser() != null) {
-                if (pVkModelDialogs.getUser().getDeactivated() != null) {
-                    mUserIdTextView.setText(pVkModelDialogs.getUser().getDeactivated().toUpperCase());
+            if (pVkModelDialogs.getMessages().getVkModelUser() != null) {
+                if (pVkModelDialogs.getMessages().getVkModelUser().getDeactivated() != null) {
+                    mUserIdTextView.setText(pVkModelDialogs.getMessages().getVkModelUser().getDeactivated().toUpperCase());
                 } else {
-                    mUserIdTextView.setText(pVkModelDialogs.getUser().getFullName());
+                    mUserIdTextView.setText(pVkModelDialogs.getMessages().getVkModelUser().getFullName());
                 }
             } else {
                 mUserIdTextView.setText(pVkModelDialogs.getMessages().getTitle());
             }
         }
 
-        mTimeTextView.setText(TimesUtils.getTime(pVkModelDialogs.getMessages().getDate()));
+        mTimeTextView.setText(TimesUtils.getTimeDialogs(pVkModelDialogs.getMessages().getDate()));     // Set Time text_view
 
-        if ((pVkModelDialogs.getMessages().getBody()).equals(Constants.Parser.EMPTY_STRING)) {
+        if ((pVkModelDialogs.getMessages().getBody()).equals(emptyString)) {   //Check set body, attachment or fwd_messages
             if (pVkModelDialogs.getMessages().getAttachments() != null) {
                 mLastMessageTextView.setText(Constants.WALL_POST);
             } else {
-                mLastMessageTextView.setText(Constants.FWD_MESSAGE);
+                if (pVkModelDialogs.getMessages().getFwdMessages() != null) {
+                    mLastMessageTextView.setText(Constants.FWD_MESSAGES);
+                }
             }
         } else {
-            mLastMessageTextView.setText(pVkModelDialogs.getMessages().getBody());
+            mLastMessageTextView.setText(pVkModelDialogs.getMessages().getBody());   //Set empty body
         }
 
-        if (pVkModelDialogs.getMessages().isReadState()) {
-            mLayout.setBackgroundColor(mDialogsFragment.getResources().getColor(R.color.colorWhite));
-            mLastMessageTextView.setBackgroundColor(mDialogsFragment.getResources().getColor(R.color.colorWhite));
+        if (pVkModelDialogs.getMessages().isReadState()) {      //Check readied message or not and set backgrounds
+            mLayout.setBackgroundColor(colorWhite);
+            mLastMessageTextView.setBackgroundColor(colorWhite);
         } else {
             if (pVkModelDialogs.getMessages().isOut()) {
-                mLastMessageTextView.setBackgroundColor(mDialogsFragment.getResources().getColor(R.color.colorLightGrey));
-                mLayout.setBackgroundColor(mDialogsFragment.getResources().getColor(R.color.colorWhite));
+                mLastMessageTextView.setBackgroundColor(colorLightGrey);
+                mLayout.setBackgroundColor(colorWhite);
             } else {
-                mLayout.setBackgroundColor(mDialogsFragment.getResources().getColor(R.color.colorLightGrey));
-                mLastMessageTextView.setBackgroundColor(mDialogsFragment.getResources().getColor(R.color.colorLightGrey));
+                mLayout.setBackgroundColor(colorLightGrey);
+                mLastMessageTextView.setBackgroundColor(colorLightGrey);
             }
         }
 
-        if (pVkModelDialogs.getMessages().isOut()) {
+        if (pVkModelDialogs.getMessages().isOut()) {   //Check set small profile_image or not
             mOutImageView.setVisibility(View.VISIBLE);
 
         } else {

@@ -14,7 +14,6 @@ public class VkModelDialogs extends VkModel {
     private int mDialogsCount;
     private int mUnread;
     private VkModelMessages mMessages;
-    private VkModelUser mUser;
 
     public VkModelDialogs(final JSONObject pObject) throws JSONException {
         parse(pObject);
@@ -22,18 +21,20 @@ public class VkModelDialogs extends VkModel {
 
     public VkModelDialogs parse(final JSONObject pObject) throws JSONException {
 
+
         mUnread = pObject.optInt(Constants.Parser.UNREAD);
         mMessages = new VkModelMessages(pObject.optJSONObject(Constants.Parser.MESSAGE));
+
         return this;
     }
 
-    public static List<VkModelDialogs> initFromJsomArray(final JSONArray pJSONArray) throws JSONException {
+/*    public static List<VkModelDialogs> initFromJsomArray(final JSONArray pJSONArray) throws JSONException {
         final List<VkModelDialogs> vkModelDialogsList = new ArrayList<>();
         for (int i = 0; i < pJSONArray.length(); i++) {
             vkModelDialogsList.add(new VkModelDialogs(pJSONArray.getJSONObject(i)));
         }
         return vkModelDialogsList;
-    }
+    }*/
 
     public int getDialogsCount() {
         return mDialogsCount;
@@ -59,12 +60,5 @@ public class VkModelDialogs extends VkModel {
         mMessages = pMessages;
     }
 
-    public VkModelUser getUser() {
-        return mUser;
-    }
-
-    public void setUser(final VkModelUser pUser) {
-        mUser = pUser;
-    }
 
 }

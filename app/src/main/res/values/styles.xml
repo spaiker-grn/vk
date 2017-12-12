@@ -25,14 +25,19 @@
         <item name="android:textColor">@color/colorGrey</item>
     </style>
 
+    <style name="text_small_black">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
     <style name="app_bar_style">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
     <style name="text_small_white">
-        <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
 

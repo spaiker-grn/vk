@@ -21,8 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity"/>
-        <activity android:name=".activity.MessagesHistoryActivity">
-        </activity>
+        <activity android:name=".activity.messagehistoryactivity.ActivityMessagesHistory"/>
     </application>
 
 </manifest>

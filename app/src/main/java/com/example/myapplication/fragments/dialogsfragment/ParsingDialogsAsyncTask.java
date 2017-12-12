@@ -1,17 +1,13 @@
-package com.example.myapplication.clients;
+package com.example.myapplication.fragments.dialogsfragment;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.example.myapplication.fragments.dialogsfragment.DialogsFragment;
 import com.example.myapplication.serviceclasses.Constants;
 import com.example.myapplication.tools.ParseUtils;
-import com.example.myapplication.vkapi.IVkApiBuilder;
-import com.example.myapplication.vkapi.VkApiBuilder;
 import com.example.myapplication.vkapi.VkApiMethods;
 import com.example.myapplication.vkapi.vkapimodels.VkModelDialogs;
 import com.example.myapplication.vkapi.vkapimodels.VkModelUser;
@@ -23,21 +19,18 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialogs>> {
 
-    private int mOffset;
-    private int mCount;
+    private int mStartMessageId;
 
-    public ParsingDialogsAsyncTask(final Context context, final Bundle args) {
+    ParsingDialogsAsyncTask(final Context context, final Bundle args) {
         super(context);
         if (args != null) {
-            mOffset = args.getInt(DialogsFragment.OFFSET_KEY);
-            mCount = args.getInt(DialogsFragment.COUNT_KEY);
+
+           mStartMessageId = args.getInt(Constants.URL_BUILDER.START_MESSAGE_ID);
         }
     }
 
@@ -50,7 +43,7 @@ public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialogs
 
         try {
 
-            final String request = VkApiMethods.getDialogs(mOffset, mCount);
+            final String request = VkApiMethods.getDialogs(mStartMessageId);
             final int DIALOGS_SIZE = getCount(request);
 
             final JSONArray itemsArray = ParseUtils.getJSONArrayItems(request);
@@ -63,9 +56,9 @@ public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialogs
                 usersId.add(vkModelDialogs.getMessages().getUserId());
             }
 
-            vkModelUserMap = getUsersById(usersId);
+            vkModelUserMap = ParseUtils.getUsersById(usersId);
             for (int i = 0; i < vkModelDialogsList.size(); i++) {
-                vkModelDialogsList.get(i).setUser(vkModelUserMap.get(vkModelDialogsList.get(i).getMessages().getUserId()));
+                vkModelDialogsList.get(i).getMessages().setVkModelUser((vkModelUserMap.get(vkModelDialogsList.get(i).getMessages().getUserId())));
             }
 
         } catch (final InterruptedException | ExecutionException | JSONException | IOException pE) {
@@ -78,27 +71,6 @@ public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialogs
     private int getCount(final String pResponse) throws JSONException {
         final JSONObject jsonObject = new JSONObject(pResponse);
         return jsonObject.getJSONObject(Constants.Parser.RESPONSE).optInt(Constants.Parser.COUNT);
-    }
-
-    private static SparseArray<VkModelUser> getUsersById(final Iterable<Integer> pList) throws JSONException, ExecutionException, InterruptedException, IOException {
-
-        final Map<String, String> map = new HashMap<>();
-        final IVkApiBuilder vkApi = new VkApiBuilder();
-        final SparseArray<VkModelUser> vkModelUserMap = new SparseArray<>();
-        final String request = TextUtils.join(Constants.DELIMITER, pList);
-        final String code = String.format(Constants.VkApiMethods.GET_USERS, request);
-        map.put(Constants.Parser.CODE, code);
-        Log.d(Constants.MY_TAG, vkApi.buildUrl(Constants.VkApiMethods.EXECUTE, map));
-        final IHttpUrlClient httpUrlClient = new HttpUrlClient();
-        final String response = httpUrlClient.getRequest(vkApi.buildUrl(Constants.VkApiMethods.EXECUTE, map));
-        final JSONArray itemsArray = ParseUtils.getJSONArrayItems(response);
-        assert itemsArray != null;
-        for (int i = 0; i < itemsArray.length(); i++) {
-            final VkModelUser modelUser = new VkModelUser(itemsArray.getJSONObject(i));
-            vkModelUserMap.put(modelUser.getId(), modelUser);
-
-        }
-        return vkModelUserMap;
     }
 
 }
