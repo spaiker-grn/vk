@@ -1,5 +1,6 @@
 package com.example.myapplication.vkapi;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.myapplication.clients.HttpUrlClient;
@@ -19,6 +20,15 @@ public final class VkApiMethods {
         final IHttpUrlClient httpUrlClient = new HttpUrlClient();
         Log.d(Constants.MY_TAG, vkApiBuilder.buildUrl(pMethod, pFields));
         return httpUrlClient.getRequest(vkApiBuilder.buildUrl(pMethod, pFields));
+
+    }
+
+    private static String getLongPollApiMethod(final String pMethod, final Map<String, String> pFields) throws ExecutionException, InterruptedException, IOException {
+
+        final IVkApiBuilder vkApiBuilder = new VkApiBuilder();
+        final IHttpUrlClient httpUrlClient = new HttpUrlClient();
+        Log.d(Constants.MY_TAG, vkApiBuilder.buildUrl(pMethod, pFields));
+        return httpUrlClient.getLongPollRequest(vkApiBuilder.buildUrl(pMethod, pFields));
 
     }
 
@@ -62,8 +72,8 @@ public final class VkApiMethods {
         return getApiMethod(Constants.VkApiMethods.GET_USER_BY_ID, map);
     }
 
-    public static String getLongPollDate() throws ExecutionException, InterruptedException, IOException {
-        return getApiMethod(Constants.Parser.MESSAGES_GET_LONG_POLL_SERVER);
+    public static String getLongPollServer() throws ExecutionException, InterruptedException, IOException {
+        return getApiMethod(Constants.VkApiMethods.MESSAGES_GET_LONG_POLL_SERVER);
     }
 
     public static String getNews(final String pOffset) throws InterruptedException, ExecutionException, IOException {
@@ -78,14 +88,22 @@ public final class VkApiMethods {
         return getApiMethod(Constants.VkApiMethods.NEWSFEED_GET, map);
     }
 
-    public static String getMessageHistory(final int pHistoryId, final int pStartMessageId) throws InterruptedException, ExecutionException, IOException {
+    public static String getMessageHistory(final int pHistoryId, final int pStartMessageId, final int pCount) throws InterruptedException, ExecutionException, IOException {
         final Map<String, String> map = new HashMap<>();
         map.put(Constants.VkApiMethods.PEER_ID, String.valueOf(pHistoryId));
+        map.put(Constants.Parser.COUNT, String.valueOf(pCount));
         if (pStartMessageId != 0){
             map.put(Constants.URL_BUILDER.START_MESSAGE_ID, String.valueOf(pStartMessageId));
             map.put(Constants.URL_BUILDER.OFFSET, String.valueOf(1));
         }
 
+        return getApiMethod(Constants.VkApiMethods.MESSAGES_GET_HISTORY, map);
+    }
+
+    public static String getLastMessage(final int pHistoryId) throws InterruptedException, ExecutionException, IOException {
+        final Map<String, String> map = new HashMap<>();
+        map.put(Constants.VkApiMethods.PEER_ID, String.valueOf(pHistoryId));
+        map.put(Constants.URL_BUILDER.COUNT, String.valueOf(1));
         return getApiMethod(Constants.VkApiMethods.MESSAGES_GET_HISTORY, map);
     }
 
@@ -95,6 +113,25 @@ public final class VkApiMethods {
         return getApiMethod(Constants.VkApiMethods.MESSAGES_GET_CHAT, map);
     }
 
+    public static String sendMessage(final int pId, final String pMessage) throws InterruptedException, ExecutionException, IOException {
+        final Map<String, String> map = new HashMap<>();
+        map.put(Constants.VkApiMethods.PEER_ID, String.valueOf(pId));
+        map.put(Constants.Parser.MESSAGE, pMessage);
+        return getApiMethod(Constants.VkApiMethods.MESSAGES_SEND, map);
+    }
+
+    public static String getLongPollHistory(final String pTs) throws InterruptedException, ExecutionException, IOException {
+        final Map<String, String> map = new HashMap<>();
+        map.put(Constants.URL_BUILDER.FIELDS, Constants.URL_BUILDER.PHOTO_50_PHOTO_100);
+        map.put(Constants.URL_BUILDER.TS, pTs);
+        return getLongPollApiMethod(Constants.VkApiMethods.MESSAGES_GET_LONG_POLL_HISTORY, map);
+    }
+
+    public static String getLongPollRequest(final String pServer, final String pKey, final String pRequest) throws IOException {
+        final IHttpUrlClient httpUrlClient = new HttpUrlClient();
+        final String URL = String.format(Constants.URL_BUILDER.LONG_POLL_RESPONSE,pServer,pKey,pRequest);
+        return httpUrlClient.getLongPollRequest(URL);
+    }
 
     public static String getFriendsOnline() throws ExecutionException, InterruptedException, IOException {
 

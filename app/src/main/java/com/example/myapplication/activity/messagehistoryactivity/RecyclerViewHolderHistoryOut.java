@@ -41,6 +41,4 @@ class RecyclerViewHolderHistoryOut extends RecyclerView.ViewHolder {
             }
         }
     }
-
-
 }

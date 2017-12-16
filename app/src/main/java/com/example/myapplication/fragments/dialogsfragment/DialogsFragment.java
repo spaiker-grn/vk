@@ -56,57 +56,14 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
         final DividerItemDecoration decoration = new DividerItemDecoration(mRecyclerView.getContext(), layoutManager.getOrientation());
         mRecyclerView.addItemDecoration(decoration);
         mRecyclerView.setLayoutManager(layoutManager);
+        mAdapter = new RecyclerAdapterDialogs(this, mRecyclerView, mVkModelDialogsList);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), mRecyclerView, mOnItemClickListener));
+        mAdapter.setILoadMore(mScrollLoad);
 
         final Bundle bundle = new Bundle();
         bundle.putInt(Constants.URL_BUILDER.START_MESSAGE_ID, 0);
         getLoaderManager().initLoader(LOADER_ID, bundle, this).forceLoad();
-
-        mAdapter = new RecyclerAdapterDialogs(this, mRecyclerView, mVkModelDialogsList);
-
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setILoadMore(new ILoadMore() {
-
-            @Override
-            public void onLoadMore() {
-
-                if (mVkModelDialogsList.size() < DIALOGS_SIZE) {
-                    mRecyclerView.post(new Runnable() {
-
-                        @Override
-                        public void run() {
-
-                                final Bundle bundle = new Bundle();
-                                bundle.putInt(Constants.URL_BUILDER.START_MESSAGE_ID, mVkModelDialogsList.get(mVkModelDialogsList.size()-1).getMessages().getId());
-                                getLoaderManager().restartLoader(LOADER_ID, bundle, DialogsFragment.this).forceLoad();
-
-                        }
-                    });
-                }
-
-            }
-        });
-
-        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), mRecyclerView, new OnItemClickListener() {
-
-            @Override
-            public void onItemClick(final View pView, final int pPosition) {
-                final Intent intent = new Intent(getContext(), ActivityMessagesHistory.class);
-                int chatId = mVkModelDialogsList.get(pPosition).getMessages().getChatId();
-
-                if (chatId != 0) {
-                    chatId = Constants.Parser.INT_FOR_CHAT_ID + chatId;
-                    intent.putExtra(Constants.Parser.CHAT_ID, chatId);
-                } else {
-                    intent.putExtra(Constants.URL_BUILDER.USER_HISTORY, mVkModelDialogsList.get(pPosition).getMessages().getVkModelUser());
-                }
-                startActivity(intent);
-            }
-
-            @Override
-            public void onLongItemClick(final View pView, final int pPosition) {
-
-            }
-        }));
 
         return view;
     }
@@ -125,7 +82,7 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onLoadFinished(final Loader<List<VkModelDialogs>> loader, final List<VkModelDialogs> data) {
 
-        if(DIALOGS_SIZE == 0){
+        if (DIALOGS_SIZE == 0) {
             DIALOGS_SIZE = data.get(0).getDialogsCount();
         }
         mVkModelDialogsList.addAll(data);
@@ -139,5 +96,49 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     public void onLoaderReset(final Loader<List<VkModelDialogs>> loader) {
 
     }
+
+    OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
+
+        @Override
+        public void onItemClick(final View pView, final int pPosition) {
+            final Intent intent = new Intent(getContext(), ActivityMessagesHistory.class);
+            int chatId = mVkModelDialogsList.get(pPosition).getMessages().getChatId();
+
+            if (chatId != 0) {
+                chatId = Constants.Values.INT_FOR_CHAT_ID + chatId;
+                intent.putExtra(Constants.Parser.CHAT_ID, chatId);
+            } else {
+                intent.putExtra(Constants.URL_BUILDER.USER_HISTORY, mVkModelDialogsList.get(pPosition).getMessages().getVkModelUser());
+            }
+            startActivity(intent);
+        }
+
+        @Override
+        public void onLongItemClick(final View pView, final int pPosition) {
+
+        }
+    };
+
+    ILoadMore mScrollLoad = new ILoadMore() {
+
+        @Override
+        public void onLoadMore() {
+
+            if (mVkModelDialogsList.size() < DIALOGS_SIZE) {
+                mRecyclerView.post(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        final Bundle bundle = new Bundle();
+                        bundle.putInt(Constants.URL_BUILDER.START_MESSAGE_ID, mVkModelDialogsList.get(mVkModelDialogsList.size() - 1).getMessages().getId());
+                        getLoaderManager().restartLoader(LOADER_ID, bundle, DialogsFragment.this).forceLoad();
+
+                    }
+                });
+            }
+
+        }
+    };
 }
 

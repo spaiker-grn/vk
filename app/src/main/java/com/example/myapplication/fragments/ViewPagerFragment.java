@@ -69,7 +69,7 @@ public class ViewPagerFragment extends Fragment {
             VkModelLongPollServer vkModelLongPollServer = null;
             try {
 
-                final JSONObject jsonObject = new JSONObject(VkApiMethods.getLongPollDate());
+                final JSONObject jsonObject = new JSONObject(VkApiMethods.getLongPollServer());
 
                 vkModelLongPollServer = new VkModelLongPollServer(jsonObject.getJSONObject(Constants.Parser.RESPONSE));
             } catch (JSONException  pE) {

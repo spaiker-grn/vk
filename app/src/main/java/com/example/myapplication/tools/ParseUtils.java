@@ -3,10 +3,12 @@ package com.example.myapplication.tools;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
+import android.widget.Toast;
 
 import com.example.myapplication.clients.HttpUrlClient;
 import com.example.myapplication.clients.IHttpUrlClient;
 import com.example.myapplication.serviceclasses.Constants;
+import com.example.myapplication.serviceclasses.MyApplication;
 import com.example.myapplication.vkapi.IVkApiBuilder;
 import com.example.myapplication.vkapi.VkApiBuilder;
 import com.example.myapplication.vkapi.vkapimodels.VkModelUser;

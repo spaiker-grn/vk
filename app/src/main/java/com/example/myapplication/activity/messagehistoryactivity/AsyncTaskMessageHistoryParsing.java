@@ -27,7 +27,7 @@ public class AsyncTaskMessageHistoryParsing extends AsyncTaskLoader<List<VkModel
 
     private int mStartMessageId;
     private int mHistoryId;
-    private int mMessagesCount;
+    private int mCount;
     private final List<VkModelMessages> mMessagesList = new ArrayList<>();
     private SparseArray<VkModelUser> mVkModelUserSparseArray = new SparseArray<>();
 
@@ -37,6 +37,7 @@ public class AsyncTaskMessageHistoryParsing extends AsyncTaskLoader<List<VkModel
         if (pArgs != null) {
             mStartMessageId = pArgs.getInt(Constants.URL_BUILDER.START_MESSAGE_ID);
             mHistoryId = pArgs.getInt(Constants.URL_BUILDER.USER_HISTORY);
+            mCount = pArgs.getInt(Constants.Parser.COUNT);
         }
     }
 
@@ -45,15 +46,15 @@ public class AsyncTaskMessageHistoryParsing extends AsyncTaskLoader<List<VkModel
 
         try {
             String response;
-            response = VkApiMethods.getMessageHistory(mHistoryId, mStartMessageId);
+            response = VkApiMethods.getMessageHistory(mHistoryId, mStartMessageId, mCount);
             final JSONArray jsonArray;
             jsonArray = ParseUtils.getJSONArrayItems(response);
 
             if (jsonArray != null) {
-                mMessagesCount = new JSONObject(response).getJSONObject(Constants.Parser.RESPONSE).getInt(Constants.URL_BUILDER.COUNT);
+                final int messagesCount = new JSONObject(response).getJSONObject(Constants.Parser.RESPONSE).getInt(Constants.URL_BUILDER.COUNT);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     final VkModelMessages vkModelMessages = new VkModelMessages(jsonArray.getJSONObject(i));
-                    vkModelMessages.setCountMessagesHistory(mMessagesCount);
+                    vkModelMessages.setCountMessagesHistory(messagesCount);
                     mMessagesList.add(vkModelMessages);
                 }
             }

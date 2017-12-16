@@ -1,6 +1,7 @@
 package com.example.myapplication.models;
 
 import com.example.myapplication.R;
+import com.example.myapplication.serviceclasses.ContextHolder;
 import com.example.myapplication.serviceclasses.MyApplication;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public final class ModelItem {
 
     public static List<ModelItem> getFakeItems() {
 
-        final String description = MyApplication.getAppContext().getResources().getString(R.string.lorem);
+        final String description = ContextHolder.getContext().getResources().getString(R.string.lorem);
         final List<ModelItem> itemList = new ArrayList<>();
         itemList.add(new ModelItem(description, R.drawable.derevo_serdce, true));
         itemList.add(new ModelItem(description, R.drawable.dom_zima, true));

@@ -201,8 +201,8 @@ public class BaseDiskCache implements IDiskCache {
         final StatFs statFs = new StatFs(pFile.getAbsolutePath());
         final long totalSize = ((long) statFs.getBlockCount()) * statFs.getBlockSize();
 
-        Log.d(Constants.MY_TAG, "calculateCacheSize: " + totalSize / Constants.ImgLoader.PERCENT_FROM_DISK_SIZE);
-        return totalSize / Constants.ImgLoader.PERCENT_FROM_DISK_SIZE;
+        Log.d(Constants.MY_TAG, "calculateCacheSize: " + totalSize / Constants.Values.PERCENT_FROM_DISK_SIZE);
+        return totalSize / Constants.Values.PERCENT_FROM_DISK_SIZE;
     }
 
     private static long getUsedSize(final File pFile) {

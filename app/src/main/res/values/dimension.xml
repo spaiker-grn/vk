@@ -14,5 +14,6 @@
     <dimen name="size_my_profile_image_view">25dp</dimen>
     <dimen name="padding_small">2dp</dimen>
     <dimen name="cardview_default_radius">2dp</dimen>
+    <dimen name="cardview_messages_history_radius">4dp</dimen>
 
 </resources>

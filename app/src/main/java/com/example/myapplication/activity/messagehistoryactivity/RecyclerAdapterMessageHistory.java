@@ -21,36 +21,15 @@ public class RecyclerAdapterMessageHistory extends RecyclerView.Adapter<Recycler
     private final VkModelUser mVkModelUser;
     private ILoadMore mILoadMore;
     private boolean mIsLoading;
-    private final int mVisibleThreshold = 15;
-    private int mLastVisibleItem;
-    private int mTotalItemCount;
+    private final LinearLayoutManager mLinearLayoutManager;
 
-    public RecyclerAdapterMessageHistory(final RecyclerView pRecyclerView, final List<VkModelMessages> pMessagesList, final VkModelUser pVkModelUser) {
+    RecyclerAdapterMessageHistory(final RecyclerView pRecyclerView, final List<VkModelMessages> pMessagesList, final VkModelUser pVkModelUser) {
         mMessagesList = pMessagesList;
         mVkModelUser = pVkModelUser;
 
-        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) pRecyclerView.getLayoutManager();
-        linearLayoutManager.setReverseLayout(true);
-        pRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                mTotalItemCount = linearLayoutManager.getItemCount();
-                mLastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-
-                if (!mIsLoading && mTotalItemCount <= (mLastVisibleItem + mVisibleThreshold)) {
-
-                    if (mILoadMore != null) {
-                        mIsLoading = true;
-                        mILoadMore.onLoadMore();
-
-                    }
-
-                }
-
-            }
-        });
+        mLinearLayoutManager = (LinearLayoutManager) pRecyclerView.getLayoutManager();
+        mLinearLayoutManager.setReverseLayout(true);
+        pRecyclerView.addOnScrollListener(mOnScrollListener);
 
     }
 
@@ -98,6 +77,29 @@ public class RecyclerAdapterMessageHistory extends RecyclerView.Adapter<Recycler
     public int getItemCount() {
         return mMessagesList.size();
     }
+
+
+    private final RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+
+        @Override
+        public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            final int totalItemCount = mLinearLayoutManager.getItemCount();
+            final int lastVisibleItem = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
+
+            final int visibleThreshold = 5;
+            if (!mIsLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+
+                if (mILoadMore != null) {
+                    mIsLoading = true;
+                    mILoadMore.onLoadMore();
+
+                }
+
+            }
+
+        }
+    };
 
     void setLoaded() {
         mIsLoading = false;

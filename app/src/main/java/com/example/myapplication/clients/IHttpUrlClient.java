@@ -7,4 +7,5 @@ public interface IHttpUrlClient {
 
     String getRequest(String pRequest) throws IOException;
     InputStream getInputStream (String pRequest) throws IOException;
+    String getLongPollRequest(final String pRequest)throws IOException;
 }

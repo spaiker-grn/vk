@@ -1,9 +1,6 @@
 package com.example.myapplication.serviceclasses;
 
-import java.nio.charset.Charset;
-
 public final class Constants {
-
 
     public static final String PARSE_ERROR_TAG = "Parse Error";
     public static final String MY_TAG = "myLog";
@@ -18,6 +15,10 @@ public final class Constants {
     public static final String UTF_8 = "UTF-8";
     public static final String DELIMITER = ",";
     public static final String ATTACHMENT = "Attachment ";
+    public static final String ERROR_TO_SEND_MESSAGE = "Error to send message";
+    public static final int COUNT_20 = 20;
+    public static final String LONG_POLL_BROADCAST = "servicebackbroadcast";
+    public static final String MTS_KEY = "mTsKey";
 
     public interface ImgLoader{
 
@@ -27,16 +28,15 @@ public final class Constants {
         String IMG_CACHE_FOLDER = "imgcache";
         String DO_IN_BACKGROUND = "doInBackground: ";
         String BITMAP_IS_NULL = "Bitmap is null";
-        int PERCENT_FROM_DISK_SIZE = 50;
     }
 
     public interface VkApiMethods {
+
         String ONLINE_FRIENDS = "friends.getOnline";
         String NEWSFEED_GET = "newsfeed.get";
         String GET_DIALOGS = "messages.getDialogs";
         String GET_USER_BY_ID = "users.get";
         String EXECUTE = "execute";
-
         String GET_USERS = "return {\"items\" : API.users.get({\"user_ids\" : \"%s\",  \"fields\" : \"photo_50, photo_100\"})} ;";
         String MESSAGES_GET_HISTORY = "messages.getHistory";
         String VALUE_20 = "20";
@@ -45,6 +45,9 @@ public final class Constants {
         String FILTERS = "filters";
         String START_FROM = "start_from";
         String POST_PHOTO = "post, photo";
+        String MESSAGES_SEND = "messages.send";
+        String MESSAGES_GET_LONG_POLL_SERVER = "messages.getLongPollServer";
+        String MESSAGES_GET_LONG_POLL_HISTORY = "messages.getLongPollHistory";
     }
 
     public interface Parser {
@@ -132,7 +135,6 @@ public final class Constants {
         String KEY = "key";
         String SERVER = "server";
         String TS = "ts";
-        String MESSAGES_GET_LONG_POLL_SERVER = "messages.getLongPollServer";
         String PHOTO_800 = "photo_800";
         String GROUPS = "groups";
         String PROFILES = "profiles";
@@ -141,7 +143,9 @@ public final class Constants {
         String USERS = "users";
         String ADMIN_ID = "admin_id";
         String CHAT_ID = "chat_id";
-        int INT_FOR_CHAT_ID = 2000000000;
+        String FAILED = "failed";
+        String UPDATES = "updates";
+        String MESSAGES = "messages";
     }
 
     public interface URL_BUILDER {
@@ -160,6 +164,16 @@ public final class Constants {
         String START_MESSAGE_ID = "start_message_id";
         String USER_HISTORY = "user_history";
         String CHAT_ID = "chat_id";
+        String TS = "ts";
+        String LONG_POLL_RESPONSE = "https://%s?act=a_check&key=%s&ts=%s&wait=5&mode=32&version=2";
+        String POST = "POST";
+    }
+
+    public interface Values {
+
+        int INT_FOR_CHAT_ID = 2000000000;
+        int PERCENT_FROM_DISK_SIZE = 50;
+        String STRING_VALUES_FOUR = "4";
     }
 
     public interface TIME {

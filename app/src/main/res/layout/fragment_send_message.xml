@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+
+
+    <ImageView
+        android:id="@+id/add_attachment_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/add_attachment"
+        android:padding="@dimen/margin_medium"
+        android:src="@drawable/ic_plus"/>
+
+    <EditText
+        android:id="@+id/send_message_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/add_attachment_image_view"
+        android:layout_toLeftOf="@+id/send_image_view"
+        android:layout_toRightOf="@+id/add_attachment_image_view"
+        android:layout_toStartOf="@+id/send_image_view"
+        android:maxLines="6"
+        android:hint="@string/send_message"
+        android:textColorHint="@color/colorGrey"
+        style="@style/news_text"
+        android:padding="@dimen/margin_medium"
+        android:background="@android:color/transparent"/>
+
+    <ImageView
+        android:contentDescription="@string/send_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/margin_medium"
+        android:src="@drawable/ic_send"
+        android:id="@+id/send_image_view"/>
+
+</RelativeLayout>

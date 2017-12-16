@@ -15,10 +15,12 @@ public class VkModelLongPollServer extends VkModel {
 
     }
 
-    public VkModelLongPollServer parse(final JSONObject pObject) {
-        mKey = pObject.optString(Constants.Parser.KEY);
-        mServer = pObject.optString(Constants.Parser.SERVER);
-        mTs = pObject.optString(Constants.Parser.TS);
+    public VkModelLongPollServer parse(final JSONObject pJSONObject) {
+
+        final JSONObject JSONObject =  pJSONObject.optJSONObject(Constants.Parser.RESPONSE);
+        mKey = JSONObject.optString(Constants.Parser.KEY);
+        mServer = JSONObject.optString(Constants.Parser.SERVER);
+        mTs = JSONObject.optString(Constants.Parser.TS);
         return this;
     }
 

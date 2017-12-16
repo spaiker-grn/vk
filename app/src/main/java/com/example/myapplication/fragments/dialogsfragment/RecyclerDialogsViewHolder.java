@@ -11,6 +11,7 @@ import com.example.myapplication.imageloader.ImageLoader;
 import com.example.myapplication.serviceclasses.Constants;
 import com.example.myapplication.tools.TimesUtils;
 import com.example.myapplication.vkapi.vkapimodels.VkModelDialogs;
+import com.squareup.picasso.Picasso;
 
 class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
 
@@ -49,6 +50,7 @@ class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
         } else {
             ImageLoader.with(mDialogsFragment.getContext(), Constants.ImgLoader.IMG_CACHE_FOLDER).
                     load(pVkModelDialogs.getMessages().getVkModelUser().getPhoto50()).into(mProfileImageView);
+
         }
 
         if (pVkModelDialogs.getUnread() != 0) {    //Check, show unread_text_view or hide

@@ -18,47 +18,14 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHol
     private final List<VkModelDialogs> mDialogsList;
     private ILoadMore mILoadMore;
     private boolean mIsLoading;
-    private final int mVisibleThreshold = 7;
-    private int mLastVisibleItem;
-    private int mTotalItemCount;
+    private final LinearLayoutManager mLinearLayoutManager;
 
     RecyclerAdapterDialogs(final DialogsFragment pDialogsFragment, final RecyclerView pRecyclerView, final List<VkModelDialogs> pModelDialogsList) {
         mDialogsFragment = pDialogsFragment;
         mDialogsList = pModelDialogsList;
+        mLinearLayoutManager = (LinearLayoutManager) pRecyclerView.getLayoutManager();
 
-        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) pRecyclerView.getLayoutManager();
-
-        pRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                mTotalItemCount = linearLayoutManager.getItemCount();
-                mLastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-
-/*                if (!isLoading) {
-                    if (totalItemCount - 1 == lastVisibleItem) {
-                        isLoading = true;
-                        if (loadMore != null) {
-                            loadMore.onLoadMore();
-
-                        }
-
-                    }
-                }*/
-
-                if (!mIsLoading && mTotalItemCount <= (mLastVisibleItem + mVisibleThreshold)) {
-
-                    if (mILoadMore != null) {
-                        mIsLoading = true;
-                        mILoadMore.onLoadMore();
-
-                    }
-
-                }
-
-            }
-        });
+        pRecyclerView.addOnScrollListener(mOnScrollListener);
 
     }
 
@@ -79,6 +46,28 @@ class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHol
 
         return mDialogsList.size();
     }
+
+    private final RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+
+        @Override
+        public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            final int totalItemCount = mLinearLayoutManager.getItemCount();
+            final int lastVisibleItem = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
+
+            final int visibleThreshold = 7;
+            if (!mIsLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+
+                if (mILoadMore != null) {
+                    mIsLoading = true;
+                    mILoadMore.onLoadMore();
+
+                }
+
+            }
+
+        }
+    };
 
     void setLoaded() {
         mIsLoading = false;

@@ -1,9 +1,11 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
+
+import com.example.myapplication.R;
 import com.example.myapplication.clients.WebViewClientLogin;
 
 import com.example.myapplication.serviceclasses.Constants;

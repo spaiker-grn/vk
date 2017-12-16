@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorLightGrey"
+    android:background="@color/colorLightVk"
     android:orientation="horizontal">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_start_dialogs"
         app:cardBackgroundColor="@color/colorWhite"
-        app:cardCornerRadius="@dimen/cardview_default_radius">
+        app:cardCornerRadius="@dimen/cardview_messages_history_radius">
 
         <LinearLayout
             android:layout_width="wrap_content"
