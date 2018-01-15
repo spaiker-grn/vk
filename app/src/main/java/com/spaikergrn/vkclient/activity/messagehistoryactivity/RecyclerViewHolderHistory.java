@@ -62,7 +62,7 @@ class RecyclerViewHolderHistory extends RecyclerView.ViewHolder {
             mMessageTextView.setPaintFlags(0);
         }
 
-        mTimeTextView.setText(TimesUtils.getTimeHistory(pVkModelMessages.getDate()));
+        mTimeTextView.setText(TimesUtils.getTimeHistory(pVkModelMessages.getDate()));   //set time
 
         if (pVkModelMessages.getVkModelUser() != null && !pVkModelMessages.isOut()) {
             ImageLoader.with(mContext).load(pVkModelMessages.getVkModelUser().getPhoto50()).into(mImageView);
@@ -86,7 +86,7 @@ class RecyclerViewHolderHistory extends RecyclerView.ViewHolder {
         }
 
         if (pVkModelMessages.getAttachments() != null && pVkModelMessages.getAttachments().getAttachmentsList().size() >= 1) {
-            attachmentsFill.inflateAttachments(pVkModelMessages.getAttachments(), mAttachmentLayout, mWidth, mInflater, mContext, 3);
+            attachmentsFill.inflateAttachments(pVkModelMessages.getAttachments(), mAttachmentLayout, mWidth, mInflater, mContext, 3);  //fill attachments
         }
     }
 
