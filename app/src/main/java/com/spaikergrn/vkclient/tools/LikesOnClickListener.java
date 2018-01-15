@@ -1,0 +1,59 @@
+package com.spaikergrn.vk_client.tools;
+
+import android.util.Log;
+import android.view.View;
+
+import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vk_client.vkapi.VkApiMethods;
+import com.spaikergrn.vk_client.vkapi.vkapimodels.ILikeAble;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class LikesOnClickListener implements View.OnClickListener {
+
+    private final int mItemId;
+    private final int mOwnerId;
+    private final String mType;
+    private final ILikeAble mLikeAble;
+    private final ExecutorService mExecutorService;
+
+    public LikesOnClickListener(final String pType, final int pOwnerId, final int pItemId, final ILikeAble pLikeAble) {
+        mLikeAble = pLikeAble;
+        mType = pType;
+        mOwnerId = pOwnerId;
+        mItemId = pItemId;
+        mExecutorService = Executors.newFixedThreadPool(1);
+
+    }
+
+    @Override
+    public void onClick(final View pView) {
+        mExecutorService.execute(new LikesRunnable());
+    }
+
+    class LikesRunnable implements Runnable {
+
+        @Override
+        public void run() {
+
+            try {
+                if (!mLikeAble.getUserLike()) {
+                    VkApiMethods.addLike(mType, mOwnerId, mItemId);
+                    mLikeAble.setUserLike(true);
+
+                } else {
+                    VkApiMethods.deleteLike(mType, mOwnerId, mItemId);
+                    mLikeAble.setUserLike(false);
+                }
+            } catch (IOException | InterruptedException | ExecutionException | JSONException pE) {
+                Log.e(Constants.ERROR, "Likes Runnable Error: ", pE);
+            }
+
+        }
+    }
+}

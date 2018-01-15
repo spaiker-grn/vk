@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/media_player_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_play"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/media_player_play" />
+
+    <ImageView
+        android:id="@+id/media_player_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/media_player_close"
+        android:layout_marginLeft="@dimen/margin_button_media_player"
+        android:layout_marginStart="@dimen/margin_button_media_player"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/media_player_play"
+        android:layout_toRightOf="@+id/media_player_play"
+        android:contentDescription="@string/media_player_pause"
+        app:srcCompat="@drawable/ic_pause" />
+
+    <ImageView
+        android:id="@+id/media_player_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/margin_button_media_player"
+        android:layout_marginStart="@dimen/margin_button_media_player"
+        android:layout_toEndOf="@+id/media_player_pause"
+        android:layout_toRightOf="@+id/media_player_pause"
+        android:contentDescription="@string/media_player_stop"
+        app:srcCompat="@drawable/ic_stop" />
+
+    <TextView
+        android:id="@+id/media_player_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:layout_toEndOf="@+id/media_player_stop"
+        android:layout_toRightOf="@+id/media_player_stop"
+        android:layout_marginLeft="@dimen/margin_button_media_player"
+        android:layout_marginStart="@dimen/margin_button_media_player"
+        android:layout_centerVertical="true"
+        style="@style/news_text"
+        tools:ignore="RelativeOverlap"/>
+
+    <ImageView
+        android:id="@+id/media_player_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/margin_end_media_player"
+        android:layout_marginRight="@dimen/margin_end_media_player"
+        android:contentDescription="@string/media_player_close"
+        app:srcCompat="@drawable/ic_close" />
+
+</RelativeLayout>

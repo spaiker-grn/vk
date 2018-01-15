@@ -1,0 +1,121 @@
+package com.spaikergrn.vk_client.vkapi.vkapimodels;
+
+import com.spaikergrn.vk_client.db.annotations.dbInteger;
+import com.spaikergrn.vk_client.db.annotations.dbString;
+import com.spaikergrn.vk_client.db.annotations.dbTable;
+import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vk_client.vkapi.VkApiMethods;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.concurrent.ExecutionException;
+
+@dbTable("UsersDb")
+public class VkModelUser extends VkModel implements Serializable {
+
+    @dbInteger
+    private int mId;
+    @dbString
+    private String mFirstName;
+    @dbString
+    private String mLastName;
+    @dbString
+    private String mPhoto50;
+    @dbString
+    private String mPhoto100;
+    @dbString
+    private String mDeactivated;
+
+    public VkModelUser() {
+
+    }
+
+    public VkModelUser(final JSONObject pObject) throws JSONException {
+        parse(pObject);
+    }
+
+    public VkModelUser parse(final JSONObject pObject) throws JSONException {
+
+        mId = pObject.optInt(Constants.Parser.ID);
+        mFirstName = pObject.optString(Constants.Parser.FIRST_NAME);
+        mLastName = pObject.optString(Constants.Parser.LAST_NAME);
+        mPhoto50 = pObject.optString(Constants.Parser.PHOTO_50);
+        mPhoto100 = pObject.optString(Constants.Parser.PHOTO_100);
+        if (pObject.has(Constants.Parser.DEACTIVATED)) {
+            mDeactivated = pObject.optString(Constants.Parser.DEACTIVATED);
+        }
+        return this;
+    }
+
+    public String getFullName() {
+        return mFirstName + " " + mLastName;
+    }
+
+
+    public VkModelUser getUserById(final int pId) throws ExecutionException, InterruptedException {
+
+        try {
+
+            final JSONObject jsonObject = new JSONObject(VkApiMethods.getUserById(pId));
+
+            return parse(jsonObject.getJSONArray(Constants.Parser.RESPONSE).getJSONObject(0));
+
+        } catch (final JSONException | IOException pE) {
+            pE.getMessage();
+
+        }
+        return null;
+    }
+
+
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(final int pId) {
+        mId = pId;
+    }
+
+    public String getDeactivated() {
+        return mDeactivated;
+    }
+
+    public void setDeactivated(final String pDeactivated) {
+        mDeactivated = pDeactivated;
+    }
+
+    public String getFirstName() {
+        return mFirstName;
+    }
+
+    public void setFirstName(final String pFirstName) {
+        mFirstName = pFirstName;
+    }
+
+    public String getLastName() {
+        return mLastName;
+    }
+
+    public void setLastName(final String pLastName) {
+        mLastName = pLastName;
+    }
+
+    public String getPhoto50() {
+        return mPhoto50;
+    }
+
+    public void setPhoto50(final String pPhoto50) {
+        mPhoto50 = pPhoto50;
+    }
+
+    public String getPhoto100() {
+        return mPhoto100;
+    }
+
+    public void setPhoto100(final String pPhoto100) {
+        mPhoto100 = pPhoto100;
+    }
+}
