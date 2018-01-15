@@ -1,14 +1,14 @@
-package com.spaikergrn.vk_client.imageloader.DiskCache;
+package com.spaikergrn.vkclient.imageloader.DiskCache;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.StatFs;
 import android.util.Log;
 
-import com.spaikergrn.vk_client.imageloader.Utils.FileNameGenerator;
-import com.spaikergrn.vk_client.imageloader.Utils.Util;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.tools.IoUtils;
+import com.spaikergrn.vkclient.imageloader.Utils.FileNameGenerator;
+import com.spaikergrn.vkclient.imageloader.Utils.Util;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.tools.IoUtils;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -118,7 +118,6 @@ public class BaseDiskCache implements IDiskCache {
                 tmpFile.delete();
             }
         }
-        //pBitmap.recycle();
 
         return savedSuccessfully;
     }
@@ -150,7 +149,7 @@ public class BaseDiskCache implements IDiskCache {
                 }
 
             } catch (final Exception pE) {
-                Log.e(Constants.ERROR, "Error clear: " + pE);
+                Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
             }
             index++;
         }
@@ -160,7 +159,6 @@ public class BaseDiskCache implements IDiskCache {
 
     private void fileListSort(final File[] pFiles) {
         Arrays.sort(pFiles, new Comparator<File>() {
-
             public int compare(final File f1, final File f2) {
                 return Long.valueOf(f1.lastModified()).compareTo(f2.lastModified());
             }
@@ -176,7 +174,6 @@ public class BaseDiskCache implements IDiskCache {
 
         final StatFs statFs = new StatFs(pFile.getAbsolutePath());
         final long totalSize = ((long) statFs.getBlockCount()) * statFs.getBlockSize();
-
         Log.d(Constants.MY_TAG, "calculateCacheSize: " + totalSize / Constants.Values.PERCENT_FROM_DISK_SIZE);
         return totalSize / Constants.Values.PERCENT_FROM_DISK_SIZE;
     }
@@ -195,7 +192,7 @@ public class BaseDiskCache implements IDiskCache {
                     }
                 }
             } catch (final Exception pE) {
-                Log.e(Constants.ERROR, "Get used size: " + pE);
+                Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
             }
         }
         return length;

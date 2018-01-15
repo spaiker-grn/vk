@@ -1,7 +1,7 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.tools.ParseUtils;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.tools.ParseUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VkModelNewsPost extends VkModel implements ILikeAble {
+public class VkModelNewsPost implements ILikeAble, VkModel {
 
     private int mSourceID;
     private long mDate;
@@ -31,7 +31,7 @@ public class VkModelNewsPost extends VkModel implements ILikeAble {
     private VkModelUser mVkModelUser;
     private List<VkModelCopyHistoryPost> mCopyHistory;
 
-    public VkModelNewsPost(final JSONObject pJSONObject) throws JSONException {
+    VkModelNewsPost(final JSONObject pJSONObject) throws JSONException {
         parse(pJSONObject);
     }
 
@@ -42,32 +42,27 @@ public class VkModelNewsPost extends VkModel implements ILikeAble {
         mPostID = pJSONObject.getInt(Constants.Parser.POST_ID);
         mPostType = pJSONObject.getString(Constants.Parser.POST_TYPE);
         mText = pJSONObject.getString(Constants.Parser.TEXT);
-        if (pJSONObject.has(Constants.Parser.ATTACHMENTS)){
+        if (pJSONObject.has(Constants.Parser.ATTACHMENTS)) {
             mVkAttachments = new VkAttachments(pJSONObject.getJSONArray(Constants.Parser.ATTACHMENTS));
         }
 
         final JSONObject comments = pJSONObject.optJSONObject(Constants.Parser.COMMENTS);
+        mCommentsCount = ParseUtils.parseInt(comments, Constants.Parser.COUNT);
+        mCanPostComment = ParseUtils.parseBoolean(comments, Constants.Parser.CAN_POST);
 
-        if (comments != null) {
-            mCommentsCount = comments.optInt(Constants.Parser.COUNT);
-            mCanPostComment = ParseUtils.parseBoolean(comments, Constants.Parser.CAN_POST);
-        }
         final JSONObject likes = pJSONObject.optJSONObject(Constants.Parser.LIKES);
-        if (likes != null) {
-            mLikesCount = likes.optInt(Constants.Parser.COUNT);
-            mUserLikes = ParseUtils.parseBoolean(likes, Constants.Parser.USER_LIKES);
-            mCanLike = ParseUtils.parseBoolean(likes, Constants.Parser.CAN_LIKE);
-            mCanPublish = ParseUtils.parseBoolean(likes, Constants.Parser.CAN_PUBLISH);
-        }
+        mLikesCount = likes.optInt(Constants.Parser.COUNT);
+        mLikesCount = ParseUtils.parseInt(likes, Constants.Parser.COUNT);
+        mUserLikes = ParseUtils.parseBoolean(likes, Constants.Parser.USER_LIKES);
+        mCanLike = ParseUtils.parseBoolean(likes, Constants.Parser.CAN_LIKE);
+        mCanPublish = ParseUtils.parseBoolean(likes, Constants.Parser.CAN_PUBLISH);
+
         final JSONObject reposts = pJSONObject.optJSONObject(Constants.Parser.REPOSTS);
-        if (reposts != null) {
-            mRepostsCount = reposts.optInt(Constants.Parser.COUNT);
-            mUserReposted = ParseUtils.parseBoolean(reposts, Constants.Parser.USER_REPOSTED);
-        }
+        mRepostsCount = ParseUtils.parseInt(reposts, Constants.Parser.COUNT);
+        mUserReposted = ParseUtils.parseBoolean(reposts, Constants.Parser.USER_REPOSTED);
+
         final JSONObject views = pJSONObject.optJSONObject(Constants.Parser.VIEWS);
-        if (views != null) {
-            mViewsCount = views.optInt(Constants.Parser.COUNT);
-        }
+        mViewsCount = ParseUtils.parseInt(views, Constants.Parser.COUNT);
 
         final JSONArray copyHistory = pJSONObject.optJSONArray(Constants.Parser.COPY_HISTORY);
         if (copyHistory != null) {
@@ -76,7 +71,6 @@ public class VkModelNewsPost extends VkModel implements ILikeAble {
                 mCopyHistory.add(new VkModelCopyHistoryPost(copyHistory.optJSONObject(i)));
             }
         }
-
         return this;
     }
 

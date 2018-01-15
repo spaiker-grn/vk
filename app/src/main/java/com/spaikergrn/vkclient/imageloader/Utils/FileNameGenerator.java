@@ -1,8 +1,8 @@
-package com.spaikergrn.vk_client.imageloader.Utils;
+package com.spaikergrn.vkclient.imageloader.Utils;
 
 import android.util.Log;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

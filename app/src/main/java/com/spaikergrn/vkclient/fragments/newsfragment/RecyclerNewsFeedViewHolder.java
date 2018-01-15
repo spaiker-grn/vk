@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.fragments.newsfragment;
+package com.spaikergrn.vkclient.fragments.newsfragment;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,18 +12,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.spaikergrn.vk_client.R;
-import com.spaikergrn.vk_client.imageloader.ImageLoader;
-import com.spaikergrn.vk_client.serviceclasses.AttachmentsFill;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.tools.LikesOnClickListener;
-import com.spaikergrn.vk_client.tools.TimesUtils;
+import com.spaikergrn.vkclient.R;
+import com.spaikergrn.vkclient.imageloader.ImageLoader;
+import com.spaikergrn.vkclient.serviceclasses.AttachmentsFill;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.tools.LikesOnClickListener;
+import com.spaikergrn.vkclient.tools.TimesUtils;
 
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelCopyHistoryPost;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelGroup;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelNewsFeeds;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelNewsPost;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelUser;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelCopyHistoryPost;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelGroup;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsFeeds;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsPost;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelUser;
 
 class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
 
@@ -65,6 +65,7 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
         mContext = mNewsFragment.getContext();
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mWidth = getWidthCardView(mContext);
+        ImageLoader.with(mContext).setPlaceHolder(R.drawable.ic_images);
     }
 
     void bind(final VkModelNewsPost pVkModelNewsPost) {
@@ -74,6 +75,8 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
         mCopyHistoryLLAttachments.removeAllViews();
         mLikesToggleButton.setOnClickListener(new LikesOnClickListener(pVkModelNewsPost.getPostType(),
                 pVkModelNewsPost.getSourceID(), pVkModelNewsPost.getPostID(), pVkModelNewsPost));
+
+        mLikesToggleButton.setBackgroundResource(R.drawable.favorite_selector);
 
         if (pVkModelNewsPost.getVkModelUser() != null) {
             ImageLoader.with(mContext).load(pVkModelNewsPost.getVkModelUser().getPhoto50()).into(mProfileImageView);
@@ -125,5 +128,4 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
         wm.getDefaultDisplay().getMetrics(metrics);
         return (int) (metrics.widthPixels - pContext.getResources().getDimension(R.dimen.margin_card_views_news) * 2);
     }
-
 }

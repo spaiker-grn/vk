@@ -1,12 +1,12 @@
-package com.spaikergrn.vk_client.tools;
+package com.spaikergrn.vkclient.tools;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.spaikergrn.vk_client.activity.ForwardMessagesActivity;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelMessages;
+import com.spaikergrn.vkclient.activity.ForwardMessagesActivity;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelMessages;
 
 public class ForwardMessagesOnClickListener implements View.OnClickListener {
 

@@ -1,8 +1,8 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
 import android.util.SparseArray;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,7 +62,7 @@ public class VkModelNewsFeeds implements Serializable {
          return this;
     }
 
-    public VkModelNewsFeeds addNew(final VkModelNewsFeeds pVkModelNewsFeeds){
+    public void addNew(final VkModelNewsFeeds pVkModelNewsFeeds){
 
         if (pVkModelNewsFeeds != null){
             for(int i = 0; i < pVkModelNewsFeeds.getUserMap().size(); i++){
@@ -73,9 +73,7 @@ public class VkModelNewsFeeds implements Serializable {
             }
             this.mVkModelNewsPosts.addAll(pVkModelNewsFeeds.getVkModelNewsPosts());
             this.setNextFrom(pVkModelNewsFeeds.mNextFrom);
-            return this;
         }
-        return null;
     }
 
     public List<VkModelNewsPost> getVkModelNewsPosts() {

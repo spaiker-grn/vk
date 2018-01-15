@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.clients;
+package com.spaikergrn.vkclient.clients;
 
 import java.io.IOException;
 import java.io.InputStream;

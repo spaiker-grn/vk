@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.clients;
+package com.spaikergrn.vkclient.clients;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -6,9 +6,10 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.serviceclasses.ContextHolder;
-import com.spaikergrn.vk_client.tools.URLParser;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.ContextHolder;
+import com.spaikergrn.vkclient.serviceclasses.ProfileInfoHolder;
+import com.spaikergrn.vkclient.tools.URLParser;
 
 public class WebViewClientLogin extends WebViewClient {
 
@@ -18,6 +19,7 @@ public class WebViewClientLogin extends WebViewClient {
             final URLParser parser = new URLParser();
             saveToken(parser.parse(pUrl));
             Log.d(Constants.MY_TAG, loadToken());
+            ProfileInfoHolder.initVkModelUser();
         }
         return false;
     }

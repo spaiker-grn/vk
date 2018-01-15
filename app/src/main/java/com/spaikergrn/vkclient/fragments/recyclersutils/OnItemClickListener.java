@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.fragments.recyclersutils;
+package com.spaikergrn.vkclient.fragments.recyclersutils;
 
 import android.view.View;
 

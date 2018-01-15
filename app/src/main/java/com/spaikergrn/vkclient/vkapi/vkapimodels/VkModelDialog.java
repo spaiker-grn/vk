@@ -1,11 +1,11 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VkModelDialog extends VkModel {
+public class VkModelDialog implements VkModel {
 
     private int mDialogsCount;
     private int mUnread;
@@ -17,20 +17,10 @@ public class VkModelDialog extends VkModel {
 
     public VkModelDialog parse(final JSONObject pObject) throws JSONException {
 
-
         mUnread = pObject.optInt(Constants.Parser.UNREAD);
         mMessages = new VkModelMessages(pObject.optJSONObject(Constants.Parser.MESSAGE));
-
         return this;
     }
-
-/*    public static List<VkModelDialog> initFromJsomArray(final JSONArray pJSONArray) throws JSONException {
-        final List<VkModelDialog> vkModelDialogsList = new ArrayList<>();
-        for (int i = 0; i < pJSONArray.length(); i++) {
-            vkModelDialogsList.add(new VkModelDialog(pJSONArray.getJSONObject(i)));
-        }
-        return vkModelDialogsList;
-    }*/
 
     public int getDialogsCount() {
         return mDialogsCount;

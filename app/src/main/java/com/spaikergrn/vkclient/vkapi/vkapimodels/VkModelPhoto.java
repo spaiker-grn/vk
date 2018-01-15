@@ -1,17 +1,15 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
 import android.text.TextUtils;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONObject;
 
-import java.io.Serializable;
+import static com.spaikergrn.vkclient.tools.ParseUtils.parseBoolean;
+import static com.spaikergrn.vkclient.tools.ParseUtils.parseInt;
 
-import static com.spaikergrn.vk_client.tools.ParseUtils.parseBoolean;
-import static com.spaikergrn.vk_client.tools.ParseUtils.parseInt;
-
-public class VkModelPhoto extends VkAttachments.VkModelAttachments implements Serializable, ILikeAble {
+public class VkModelPhoto implements ILikeAble, VkAttachments.VkModelAttachments {
 
     private int mId;
     private int mAlbumId;
@@ -63,7 +61,6 @@ public class VkModelPhoto extends VkAttachments.VkModelAttachments implements Se
         mComments = parseInt(pObject.optJSONObject(Constants.Parser.COMMENTS), Constants.Parser.COUNT);
         mTags = parseInt(pObject.optJSONObject(Constants.Parser.TAGS), Constants.Parser.COUNT);
         mCanComment = parseBoolean(pObject, Constants.Parser.CAN_COMMENT);
-
         return this;
     }
 
@@ -106,7 +103,6 @@ public class VkModelPhoto extends VkAttachments.VkModelAttachments implements Se
         } else if (!mPhoto130.equals(Constants.Parser.EMPTY_STRING)) {
             return mPhoto130;
         }
-
         return null;
     }
 

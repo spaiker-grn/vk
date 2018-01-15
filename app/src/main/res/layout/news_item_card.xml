@@ -2,21 +2,21 @@
 <android.support.v7.widget.CardView android:id="@+id/card"
                                     xmlns:android="http://schemas.android.com/apk/res/android"
                                     xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    xmlns:tools="http://schemas.android.com/tools"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="8dp"
-                                    android:layout_marginLeft="8dp"
-                                    android:layout_marginRight="8dp"
+                                    android:layout_marginBottom="@dimen/margin_card_views_news"
+                                    android:layout_marginLeft="@dimen/margin_card_views_news"
+                                    android:layout_marginRight="@dimen/margin_card_views_news"
                                     app:cardBackgroundColor="@color/colorWhite"
-                                    app:cardCornerRadius="2dp"
-                                    app:cardElevation="5dp">
+                                    app:cardCornerRadius="@dimen/cardview_default_radius"
+                                    app:cardElevation="@dimen/card_view_elevation">
 
     <LinearLayout
         android:id="@+id/card_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -26,22 +26,22 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/card_news_profile_image_view"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_margin="8dp"
-                android:src="@drawable/avatar"
+                android:layout_width="@dimen/size_profile_image_view_history"
+                android:layout_height="@dimen/size_profile_image_view_history"
+                android:layout_margin="@dimen/margin_card_views_news"
                 app:border_color="@color/colorWhite"
-                />
+                tools:src="@drawable/avatar"/>
 
             <TextView
-                android:id="@+id/card_news_title_text_view"
+                android:id="@+id/card_news_name_text_view"
                 style="@style/news_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/card_news_time_after_update_text_view"
                 android:layout_toEndOf="@+id/card_news_profile_image_view"
                 android:layout_toRightOf="@+id/card_news_profile_image_view"
-                android:text="Author name"/>
+                android:maxLines="1"
+                tools:text="@tools:sample/lorem"/>
 
             <TextView
                 android:id="@+id/card_news_time_after_update_text_view"
@@ -51,72 +51,93 @@
                 android:layout_alignBottom="@+id/card_news_profile_image_view"
                 android:layout_toEndOf="@+id/card_news_profile_image_view"
                 android:layout_toRightOf="@+id/card_news_profile_image_view"
-                android:text="00:00"/>
-
+                tools:text="@tools:sample/date/hhmm"/>
 
         </RelativeLayout>
+
+        <include
+            android:id="@+id/copy_history_layout"
+            layout="@layout/copy_history_layout"
+            android:visibility="gone"
+            />
 
         <TextView
             android:id="@+id/card_news_description_text_view"
             style="@style/news_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/lorem"/>
+            android:maxLines="10"
+            android:paddingLeft="@dimen/padding_card_views_news"
+            android:paddingRight="@dimen/padding_card_views_news"
+            tools:text="@tools:sample/lorem"/>
 
-        <ImageView
-            android:id="@+id/card_news_image_view"
+        <LinearLayout
+            android:id="@+id/attachment_fragment"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:contentDescription="@string/images"
-            android:scaleType="centerCrop"
-            android:src="@drawable/dom_zima"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
 
         <RelativeLayout
+            android:id="@+id/news_bottom_bar_relative_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/new_bottom_news_bar_width">
+
+            <ImageView
+                android:id="@+id/watchers_count_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/watchers_count_text_view"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="@dimen/margin_card_views_news"
+                android:layout_marginStart="@dimen/margin_card_views_news"
+                android:contentDescription="@string/watchers_count"
+                app:srcCompat="@drawable/ic_eye"/>
 
             <TextView
                 android:id="@+id/watchers_count_text_view"
                 style="@style/news_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:drawableLeft="@drawable/ic_eye"
-                android:drawablePadding="4dp"
-                android:drawableStart="@drawable/ic_eye"
-                android:text="99"/>
+                android:layout_toRightOf="@+id/watchers_count_image_view"
+                android:layout_toEndOf="@+id/watchers_count_image_view"
+                android:layout_margin="@dimen/margin_card_views_news"
+                tools:text="@tools:sample/us_zipcodes"
+                tools:ignore="RelativeOverlap"/>
 
+            <ImageView
+                android:id="@+id/commend_image_view"
+                android:layout_width="@dimen/news_image_view_size"
+                android:layout_height="@dimen/news_image_view_size"
+                android:layout_alignBottom="@+id/likes_count_text_view"
+                android:layout_marginEnd="@dimen/margin_drawable_bottom_news_bar"
+                android:layout_marginRight="@dimen/margin_drawable_bottom_news_bar"
+                android:layout_toLeftOf="@+id/likes_count_toggle_button"
+                android:layout_toStartOf="@+id/likes_count_toggle_button"
+                app:srcCompat="@drawable/ic_comment"
+                android:contentDescription="@string/comments_image_view"/>
 
-            <TextView
-
-                android:id="@+id/commend_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/likes_count_text_view"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
+            <ToggleButton
+                android:id="@+id/likes_count_toggle_button"
+                android:layout_width="@dimen/news_image_view_size"
+                android:layout_height="@dimen/news_image_view_size"
+                android:layout_alignBottom="@+id/likes_count_text_view"
                 android:layout_toLeftOf="@+id/likes_count_text_view"
                 android:layout_toStartOf="@+id/likes_count_text_view"
-                android:drawableLeft="@drawable/ic_comment"
-                android:drawableStart="@drawable/ic_comment"/>
+                android:textOff=""
+                android:textOn=""/>
 
             <TextView
                 android:id="@+id/likes_count_text_view"
                 style="@style/news_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:drawableLeft="@drawable/ic_favorite"
-                android:drawablePadding="4dp"
-                android:drawableStart="@drawable/ic_favorite"
-                android:text="99"/>
-
+                android:layout_margin="@dimen/margin_card_views_news"
+                tools:text="@tools:sample/us_zipcodes"/>
 
         </RelativeLayout>
-
 
     </LinearLayout>
 

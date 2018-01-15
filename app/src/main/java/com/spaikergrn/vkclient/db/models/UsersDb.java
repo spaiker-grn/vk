@@ -1,8 +1,8 @@
-package com.spaikergrn.vk_client.db.models;
+package com.spaikergrn.vkclient.db.models;
 
-import com.spaikergrn.vk_client.db.annotations.dbString;
-import com.spaikergrn.vk_client.db.annotations.dbTable;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.db.annotations.dbString;
+import com.spaikergrn.vkclient.db.annotations.dbTable;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 @dbTable(Constants.USERS_DB)
 public final class UsersDb {
@@ -23,5 +23,4 @@ public final class UsersDb {
 
     @dbString
     public static final String DEACTIVATED = Constants.Parser.DEACTIVATED;
-
 }

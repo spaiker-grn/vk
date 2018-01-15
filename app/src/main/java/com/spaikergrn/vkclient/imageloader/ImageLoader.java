@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.imageloader;
+package com.spaikergrn.vkclient.imageloader;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,13 +10,12 @@ import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
-import com.spaikergrn.vk_client.R;
-import com.spaikergrn.vk_client.clients.HttpUrlClient;
-import com.spaikergrn.vk_client.imageloader.DiskCache.BaseDiskCache;
-import com.spaikergrn.vk_client.imageloader.Utils.Util;
-import com.spaikergrn.vk_client.imageloader.memorycache.MemoryCache;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.tools.IoUtils;
+import com.spaikergrn.vkclient.clients.HttpUrlClient;
+import com.spaikergrn.vkclient.imageloader.DiskCache.BaseDiskCache;
+import com.spaikergrn.vkclient.imageloader.Utils.Util;
+import com.spaikergrn.vkclient.imageloader.memorycache.MemoryCache;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.tools.IoUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -27,8 +26,6 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
-
-import static android.content.ContentValues.TAG;
 
 public final class ImageLoader {
 
@@ -72,9 +69,6 @@ public final class ImageLoader {
     }
 
     private Drawable getPlaceHolder() {
-        if (mDrawable == null) {
-            return mContext.getResources().getDrawable(R.drawable.ic_friends);
-        }
         return mDrawable;
     }
 
@@ -210,7 +204,6 @@ public final class ImageLoader {
 
             inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
         }
-        Log.d(TAG, "calculateInSampleSize: " + inSampleSize);
         return inSampleSize;
     }
 
@@ -235,13 +228,11 @@ public final class ImageLoader {
                         }
                     }
                 } catch (final FileNotFoundException pE) {
-                    Log.e(Constants.ERROR, Constants.ImgLoader.DO_IN_BACKGROUND + pE);
+                    Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
                 }
 
                 final InputStream inputStream = new HttpUrlClient().getInputStream(request.url);
                 bitmap = getScaledBitmap(inputStream, request.width, request.height);
-                Log.d(TAG, "doInBackground: FROM NET " + request.url);
-
                 Util.closeSilently(inputStream);
 
                 if (bitmap != null) {
@@ -264,10 +255,8 @@ public final class ImageLoader {
 
                 return result;
             } catch (final Exception pE) {
-                Log.e(Constants.ERROR, Constants.ImgLoader.DO_IN_BACKGROUND, pE);
-                if (result != null) {
-                    result.setException(pE);
-                }
+                Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
+
                 return result;
             }
         }
@@ -284,7 +273,7 @@ public final class ImageLoader {
         final Bitmap bitmap;
         final File file = mBaseDiskCache.get(pRequest.url);
         if (!file.exists()) {
-            throw new FileNotFoundException("File not exist");
+            throw new FileNotFoundException(Constants.FILE_NOT_EXIST);
         }
         final InputStream fileStream = IoUtils.getIsFromFile(file);
         bitmap = getScaledBitmap(fileStream, pRequest.width, pRequest.height);
@@ -293,7 +282,6 @@ public final class ImageLoader {
 
         if (bitmap != null) {
             result.setBitmap(bitmap);
-            Log.d(TAG, "doInBackground: from disk cache " + pRequest.url);
         }
         return result;
     }

@@ -1,9 +1,9 @@
-package com.spaikergrn.vk_client.vkapi;
+package com.spaikergrn.vkclient.vkapi;
 
 import android.net.Uri;
 
-import com.spaikergrn.vk_client.clients.WebViewClientLogin;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.clients.WebViewClientLogin;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import java.util.Map;
 

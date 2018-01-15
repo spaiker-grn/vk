@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.fragments.recyclersutils;
+package com.spaikergrn.vkclient.fragments.recyclersutils;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -43,11 +43,9 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
 
     @Override
     public void onTouchEvent(final RecyclerView pView, final MotionEvent pE) {
-
     }
 
     @Override
     public void onRequestDisallowInterceptTouchEvent(final boolean disallowIntercept) {
-
     }
 }

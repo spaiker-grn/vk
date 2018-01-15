@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.db.models;
+package com.spaikergrn.vkclient.db.models;
 
 public final class DbModels {
 

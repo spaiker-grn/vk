@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.vkapi;
+package com.spaikergrn.vkclient.vkapi;
 
 import java.util.Map;
 

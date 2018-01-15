@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.activity.messagehistoryactivity;
+package com.spaikergrn.vkclient.activity.messagehistoryactivity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,12 +6,13 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.tools.ParseUtils;
-import com.spaikergrn.vk_client.vkapi.VkApiMethods;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelChat;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelMessages;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelUser;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.tools.GetUsersHelper;
+import com.spaikergrn.vkclient.tools.ParseUtils;
+import com.spaikergrn.vkclient.vkapi.VkApiMethods;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelChat;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelMessages;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +31,7 @@ public class AsyncTaskMessageHistoryParsing extends AsyncTaskLoader<List<VkModel
     private int mHistoryId;
     private int mCount;
     private final List<VkModelMessages> mMessagesList = new ArrayList<>();
+    private final GetUsersHelper mGetUsersHelper = new GetUsersHelper();
 
     AsyncTaskMessageHistoryParsing(final Context pContext, final Bundle pArgs) {
         super(pContext);
@@ -65,7 +67,7 @@ public class AsyncTaskMessageHistoryParsing extends AsyncTaskLoader<List<VkModel
                         hashSetUsers.add(vkModelMessages.getUserId());
                     }
                 }
-                vkModelUserMap = ParseUtils.getUsersById(new ArrayList<>(hashSetUsers));
+                vkModelUserMap = mGetUsersHelper.getUsersById(new ArrayList<>(hashSetUsers));
                 for (int i = 0; i < mMessagesList.size(); i++) {
                     final int userId;
                     if (mMessagesList.get(i).getFromId() != 0 ){
@@ -80,14 +82,14 @@ public class AsyncTaskMessageHistoryParsing extends AsyncTaskLoader<List<VkModel
             if (mMessagesList.get(0).getChatId() != 0) {
                 response = VkApiMethods.getChatById(mMessagesList.get(0).getChatId());
                 final VkModelChat chat = new VkModelChat(new JSONObject(response).getJSONObject(Constants.Parser.RESPONSE));
-                final SparseArray<VkModelUser> vkModelUserSparseArray = ParseUtils.getUsersById(Arrays.asList(chat.getUsers()));
+                final SparseArray<VkModelUser> vkModelUserSparseArray = mGetUsersHelper.getUsersById(Arrays.asList(chat.getUsers()));
                 for (int i = 0; i < mMessagesList.size(); i++){
                     mMessagesList.get(i).setVkModelUser(vkModelUserSparseArray.get(mMessagesList.get(i).getUserId()));
                 }
             }
 
         } catch (IOException | JSONException | ExecutionException | InterruptedException pE) {
-            Log.e(Constants.MY_TAG, "loadInBackground: ", pE);
+            Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         }
         return mMessagesList;
     }

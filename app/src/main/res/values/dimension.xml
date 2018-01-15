@@ -14,6 +14,20 @@
     <dimen name="size_my_profile_image_view">25dp</dimen>
     <dimen name="padding_small">2dp</dimen>
     <dimen name="cardview_default_radius">2dp</dimen>
-    <dimen name="cardview_messages_history_radius">4dp</dimen>
-
+    <dimen name="card_view_messages_history_radius">4dp</dimen>
+    <dimen name="card_view_elevation">4dp</dimen>
+    <dimen name="margin_card_views_news">8dp</dimen>
+    <dimen name="padding_card_views_news">8dp</dimen>
+    <dimen name="drawable_padding">4dp</dimen>
+    <dimen name="margin_drawable_bottom_news_bar">20dp</dimen>
+    <dimen name="margin_end_media_player">10dp</dimen>
+    <dimen name="margin_button_media_player">10dp</dimen>
+    <dimen name="news_image_view_size">16dp</dimen>
+    <dimen name="news_big_icons_size">24dp</dimen>
+    <dimen name="news_small_icons_size">16dp</dimen>
+    <dimen name="profile_icons_size">32dp</dimen>
+    <dimen name="settings_icons_size">24dp</dimen>
+    <dimen name="user_forward_message_text_size">20sp</dimen>
+    <dimen name="new_bottom_news_bar_width">34dp</dimen>
+    <dimen name="last_message_width">270dp</dimen>
 </resources>

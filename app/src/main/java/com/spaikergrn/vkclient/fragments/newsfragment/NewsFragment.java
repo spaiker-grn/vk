@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.fragments.newsfragment;
+package com.spaikergrn.vkclient.fragments.newsfragment;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -14,15 +14,14 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.spaikergrn.vk_client.R;
-import com.spaikergrn.vk_client.fragments.IAdapterRefresh;
-import com.spaikergrn.vk_client.fragments.recyclersutils.ILoadMore;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelNewsFeeds;
+import com.spaikergrn.vkclient.R;
+import com.spaikergrn.vkclient.fragments.IFragmentAdapterRefresh;
+import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsFeeds;
 
-public class NewsFragment extends Fragment implements IAdapterRefresh {
+public class NewsFragment extends Fragment implements IFragmentAdapterRefresh {
 
-    public static final int LOADER_ID = 1;
     public RecyclerView mRecyclerView;
     public RecyclerAdapterNewsFeed mAdapter;
     public ProgressBar mProgressBar;
@@ -48,11 +47,10 @@ public class NewsFragment extends Fragment implements IAdapterRefresh {
         mAdapter = new RecyclerAdapterNewsFeed(this, mRecyclerView, mVkModelNewsFeeds);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setILoadMore(mScrollLoad);
-        //mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), mRecyclerView, mOnItemClickListener));
 
         final Bundle bundle = new Bundle();
         bundle.putString(Constants.Parser.NEXT_FROM, null);
-        getLoaderManager().initLoader(LOADER_ID, bundle, mLoaderCallbacks).forceLoad();
+        getLoaderManager().initLoader(Constants.LoadersKeys.NEWS_LOADER_ID, bundle, mLoaderCallbacks).forceLoad();
         return view;
     }
 
@@ -61,7 +59,7 @@ public class NewsFragment extends Fragment implements IAdapterRefresh {
         @Override
         public Loader<VkModelNewsFeeds> onCreateLoader(final int pId, final Bundle pArgs) {
             Loader<VkModelNewsFeeds> listLoader = null;
-            if (pId == LOADER_ID) {
+            if (pId == Constants.LoadersKeys.NEWS_LOADER_ID) {
                 listLoader = new ParsingNewsAsyncTask(getContext(), pArgs);
             }
             mProgressBar.setVisibility(View.VISIBLE);
@@ -94,7 +92,7 @@ public class NewsFragment extends Fragment implements IAdapterRefresh {
                 public void run() {
                     final Bundle bundle = new Bundle();
                     bundle.putString(Constants.Parser.NEXT_FROM, mVkModelNewsFeeds.getNextFrom());
-                    getLoaderManager().restartLoader(LOADER_ID, bundle, mLoaderCallbacks).forceLoad();
+                    getLoaderManager().restartLoader(Constants.LoadersKeys.NEWS_LOADER_ID, bundle, mLoaderCallbacks).forceLoad();
                 }
             });
         }
@@ -117,8 +115,8 @@ public class NewsFragment extends Fragment implements IAdapterRefresh {
 
         final Bundle bundle = new Bundle();
         bundle.putString(Constants.Parser.NEXT_FROM, null);
-        getLoaderManager().restartLoader(LOADER_ID, bundle, mLoaderCallbacks).forceLoad();
+        getLoaderManager().restartLoader(Constants.LoadersKeys.NEWS_LOADER_ID, bundle, mLoaderCallbacks).forceLoad();
 
-        Toast.makeText(getContext(), "Refresh News", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), Constants.REFRESH_NEWS, Toast.LENGTH_SHORT).show();
     }
 }

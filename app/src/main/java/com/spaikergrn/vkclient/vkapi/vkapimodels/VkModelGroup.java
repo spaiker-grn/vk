@@ -1,12 +1,12 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.tools.ParseUtils;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.tools.ParseUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VkModelGroup extends VkModel {
+public class VkModelGroup implements VkModel {
 
     private int mId;
     private String mName;
@@ -17,7 +17,7 @@ public class VkModelGroup extends VkModel {
     private boolean mIsAdmin;
     private String mDeactivated;
 
-    public VkModelGroup(final JSONObject pObject) throws JSONException {
+    VkModelGroup(final JSONObject pObject) throws JSONException {
         parse(pObject);
     }
 

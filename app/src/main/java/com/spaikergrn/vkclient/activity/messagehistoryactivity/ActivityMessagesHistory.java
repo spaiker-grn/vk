@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.activity.messagehistoryactivity;
+package com.spaikergrn.vkclient.activity.messagehistoryactivity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,12 +18,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.spaikergrn.vk_client.R;
-import com.spaikergrn.vk_client.fragments.recyclersutils.ILoadMore;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.tools.ParseUtils;
-import com.spaikergrn.vk_client.vkapi.VkApiMethods;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelMessages;
+import com.spaikergrn.vkclient.R;
+import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.vkapi.VkApiMethods;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelMessages;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +35,6 @@ import java.util.concurrent.ExecutionException;
 
 public class ActivityMessagesHistory extends AppCompatActivity {
 
-    public static final int HISTORY_MESSAGE_LOADER = 0;
     public RecyclerView mRecyclerView;
     public RecyclerAdapterMessageHistory mAdapter;
     public List<VkModelMessages> mVkModelMessagesList = new ArrayList<>();
@@ -43,7 +42,6 @@ public class ActivityMessagesHistory extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private int mRequestId;
     private ImageView mSendImageView;
-    private ImageView mAddAttachmentImageView;
     private EditText mMessageEditText;
     private int mChatId;
     private final Object mLock = new Object();
@@ -66,7 +64,7 @@ public class ActivityMessagesHistory extends AppCompatActivity {
 
         final Bundle bundle = setBundle(0, Constants.COUNT_20);
 
-        getSupportLoaderManager().initLoader(HISTORY_MESSAGE_LOADER, bundle, mListLoaderCallbacks).forceLoad();
+        getSupportLoaderManager().initLoader(Constants.LoadersKeys.HISTORY_MESSAGE_LOADER_ID, bundle, mListLoaderCallbacks).forceLoad();
 
         mAdapter = new RecyclerAdapterMessageHistory(mRecyclerView, mVkModelMessagesList);
         mRecyclerView.setAdapter(mAdapter);
@@ -109,7 +107,6 @@ public class ActivityMessagesHistory extends AppCompatActivity {
         mProgressBar = findViewById(R.id.progress_bar);
         mProgressBar.setVisibility(View.INVISIBLE);
         mMessageEditText = findViewById(R.id.send_message_edit_text);
-        mAddAttachmentImageView = findViewById(R.id.add_attachment_image_view);
         mSendImageView = findViewById(R.id.send_image_view);
     }
 
@@ -141,7 +138,7 @@ public class ActivityMessagesHistory extends AppCompatActivity {
                     public void run() {
 
                         final Bundle bundle = setBundle(mVkModelMessagesList.get(mVkModelMessagesList.size() - 1).getId(), Constants.COUNT_20);
-                        getSupportLoaderManager().restartLoader(HISTORY_MESSAGE_LOADER, bundle, mListLoaderCallbacks).forceLoad();
+                        getSupportLoaderManager().restartLoader(Constants.LoadersKeys.HISTORY_MESSAGE_LOADER_ID, bundle, mListLoaderCallbacks).forceLoad();
                     }
                 });
             }
@@ -153,7 +150,7 @@ public class ActivityMessagesHistory extends AppCompatActivity {
         @Override
         public Loader<List<VkModelMessages>> onCreateLoader(final int pId, final Bundle pArgs) {
             Loader<List<VkModelMessages>> messagesLoader = null;
-            if (pId == HISTORY_MESSAGE_LOADER) {
+            if (pId == Constants.LoadersKeys.HISTORY_MESSAGE_LOADER_ID) {
                 messagesLoader = new AsyncTaskMessageHistoryParsing(ActivityMessagesHistory.this, pArgs);
             }
             mProgressBar.setVisibility(View.VISIBLE);
@@ -210,7 +207,7 @@ public class ActivityMessagesHistory extends AppCompatActivity {
                                 Toast.makeText(ActivityMessagesHistory.this, Constants.ERROR_TO_SEND_MESSAGE, Toast.LENGTH_SHORT).show();
                             }
                         } catch (InterruptedException | ExecutionException | IOException | JSONException pE) {
-                            Log.e(Constants.MY_TAG, Constants.ERROR_TO_SEND_MESSAGE, pE);
+                            Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
                         }
                     }
                 });
@@ -232,20 +229,31 @@ public class ActivityMessagesHistory extends AppCompatActivity {
         public void run() {
 
             try {
-                mVkModelMessages = ParseUtils.getLongPollMessage(mTsKey);
+                mVkModelMessages = getLongPollMessage(mTsKey);
             } catch (JSONException | InterruptedException | ExecutionException | IOException pE) {
-                Log.e(Constants.ERROR, "LoadLongPollMessageRun: ", pE);
+                Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
             }
 
             runOnUiThread(new Runnable() {
 
                 @Override
                 public void run() {
-                    mVkModelMessagesList.add(0, mVkModelMessages);
-                    mAdapter.notifyDataSetChanged();
-
+                    synchronized (mLock){
+                        mVkModelMessagesList.add(0, mVkModelMessages);
+                        mAdapter.notifyDataSetChanged();
+                    }
                 }
             });
+        }
+
+        VkModelMessages getLongPollMessage(final String pTsKey) throws JSONException, InterruptedException, ExecutionException, IOException {
+            final VkModelMessages vkModelMessages;
+            final JSONObject jsonObject = new JSONObject(VkApiMethods.getLongPollHistory(pTsKey));
+            vkModelMessages = new VkModelMessages(jsonObject.getJSONObject(Constants.Parser.RESPONSE).
+                    getJSONObject(Constants.Parser.MESSAGES).getJSONArray(Constants.Parser.ITEMS).getJSONObject(0));
+            vkModelMessages.setVkModelUser(new VkModelUser(jsonObject.getJSONObject(Constants.Parser.RESPONSE).
+                    getJSONArray(Constants.Parser.PROFILES).getJSONObject(0)));
+            return vkModelMessages;
         }
     }
 }

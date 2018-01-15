@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.db.annotations;
+package com.spaikergrn.vkclient.db.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

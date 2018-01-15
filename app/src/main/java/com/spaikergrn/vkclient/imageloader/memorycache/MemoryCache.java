@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.imageloader.memorycache;
+package com.spaikergrn.vkclient.imageloader.memorycache;
 
 import android.graphics.Bitmap;
 
@@ -106,5 +106,4 @@ public class MemoryCache implements IMemoryCache {
     private int sizeOf(final Bitmap pValue) {
         return pValue.getRowBytes() * pValue.getHeight();
     }
-
 }

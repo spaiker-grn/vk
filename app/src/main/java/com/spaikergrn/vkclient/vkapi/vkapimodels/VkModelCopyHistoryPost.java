@@ -1,11 +1,11 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VkModelCopyHistoryPost extends VkModel {
+public class VkModelCopyHistoryPost implements VkModel {
 
     private int mId;
     private int mOwnerId;
@@ -15,7 +15,7 @@ public class VkModelCopyHistoryPost extends VkModel {
     private String mType;
     private VkAttachments mVkAttachments;
 
-    public VkModelCopyHistoryPost(final JSONObject pJSONObject) throws JSONException {
+    VkModelCopyHistoryPost(final JSONObject pJSONObject) throws JSONException {
         parse(pJSONObject);
     }
 
@@ -31,7 +31,6 @@ public class VkModelCopyHistoryPost extends VkModel {
         if (pJSONObject.has(Constants.Parser.ATTACHMENTS)) {
             mVkAttachments = new VkAttachments(pJSONObject.getJSONArray(Constants.Parser.ATTACHMENTS));
         }
-
         return this;
     }
 

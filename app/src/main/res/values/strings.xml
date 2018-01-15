@@ -5,14 +5,44 @@
     <string name="wall">Wall</string>
     <string name="groups">Groups</string>
     <string name="images">Photo</string>
-    <string name="music">Musik</string>
+    <string name="music">Music</string>
     <string name="videos">Video</string>
     <string name="favorite">Favorites</string>
-    <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_attachment">add attachment</string>
     <string name="send_message">send message</string>
+    <string name="play_image_view">play image view</string>
+    <string name="media_player_play">media player play</string>
+    <string name="media_player_close">media player close</string>
+    <string name="media_player_stop">media player stop</string>
+    <string name="media_player_pause">media player pause</string>
+    <string name="refresh">refresh</string>
+    <string name="reLogin">reLogin</string>
+    <string name="settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_header_photo">Photo News</string>
+    <string name="pref_title_photo_size">Photo size</string>
+    <string name="pref_title_enable_photo">Enable download photo</string>
+    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="comments_image_view">comments image view</string>
+    <string name="key_tag_photo">key tag photo</string>
+    <string name="clear_users_db">Clear UsersDB</string>
+    <string name="forward_image_view">forward image view</string>
+    <string name="watchers_count">watchers count</string>
 
+    <string-array name="pref_photo_size_titles">
+        <item>Photo 130</item>
+        <item>Photo 604</item>
+        <item>Photo 807</item>
+        <item>Photo 1280</item>
+    </string-array>
+    <string-array name="pref_photo_size_values">
+        <item>photo_130</item>
+        <item>photo_604</item>
+        <item>photo_807</item>
+        <item>photo_1280</item>
+    </string-array>
 </resources>

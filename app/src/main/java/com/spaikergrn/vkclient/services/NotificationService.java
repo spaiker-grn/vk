@@ -34,16 +34,16 @@ public class NotificationService extends Service {
             final Uri uri = Uri.parse(PreferenceManager
                     .getDefaultSharedPreferences(getApplicationContext())
                     .getString(Constants.PreferencesKeys.NOTIFICATIONS_NEW_MESSAGE_RINGTONE, Constants.Parser.EMPTY_STRING));
-
+            Log.d(Constants.MY_TAG, "ringtone path " + uri);
             mMediaPlayer = new MediaPlayer();
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
             try {
                 mMediaPlayer.setDataSource(getApplicationContext(), uri);
                 mMediaPlayer.prepare();
+                mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
                 mMediaPlayer.start();
             } catch (final IOException pE) {
-                Log.e(Constants.ERROR, pE.getMessage(), pE.getCause());
+                Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
             }
 
             final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -56,7 +56,6 @@ public class NotificationService extends Service {
             }
         }
         return super.onStartCommand(pIntent, pFlags, pStartId);
-
     }
 
     @Nullable
@@ -79,4 +78,11 @@ public class NotificationService extends Service {
             mMediaPlayer = null;
         }
     }
+    MediaPlayer.OnCompletionListener mOnCompletionListener = new MediaPlayer.OnCompletionListener() {
+
+        @Override
+        public void onCompletion(final MediaPlayer pMediaPlayer) {
+            stopSelf();
+        }
+    };
 }

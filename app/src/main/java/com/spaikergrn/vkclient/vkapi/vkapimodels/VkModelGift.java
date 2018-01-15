@@ -1,18 +1,18 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VkModelGift extends VkAttachments.VkModelAttachments {
+public class VkModelGift implements VkAttachments.VkModelAttachments {
 
     private int mId;
     private String mThumb48;
     private String mThumb96;
     private String mThumb256;
 
-    public VkModelGift(final JSONObject pJSONObject) throws JSONException {
+    VkModelGift(final JSONObject pJSONObject) throws JSONException {
         parse(pJSONObject);
     }
 

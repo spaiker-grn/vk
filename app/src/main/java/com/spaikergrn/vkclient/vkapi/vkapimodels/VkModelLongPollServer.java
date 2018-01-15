@@ -1,10 +1,10 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONObject;
 
-public class VkModelLongPollServer extends VkModel {
+public class VkModelLongPollServer implements VkModel {
 
     private String mKey;
     private String mServer;
@@ -12,7 +12,6 @@ public class VkModelLongPollServer extends VkModel {
 
     public VkModelLongPollServer(final JSONObject pObject) {
         parse(pObject);
-
     }
 
     public VkModelLongPollServer parse(final JSONObject pJSONObject) {

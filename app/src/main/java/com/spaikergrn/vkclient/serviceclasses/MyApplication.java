@@ -1,16 +1,16 @@
-package com.spaikergrn.vk_client.serviceclasses;
+package com.spaikergrn.vkclient.serviceclasses;
 
 import android.app.Application;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatDelegate;
 
 public class MyApplication extends Application {
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onCreate() {
         super.onCreate();
         ContextHolder.setContext(getApplicationContext());
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        ProfileInfoHolder.initVkModelUser();
     }
 }
 

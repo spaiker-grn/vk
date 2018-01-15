@@ -1,11 +1,11 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VkModelWiki extends VkAttachments.VkModelAttachments {
+public class VkModelWiki implements VkAttachments.VkModelAttachments {
 
     private int mId;
     private int mGroupId;
@@ -16,10 +16,7 @@ public class VkModelWiki extends VkAttachments.VkModelAttachments {
     private long mEdited;
     private long mCreated;
 
-    public VkModelWiki() {
-    }
-
-    public VkModelWiki(final JSONObject pObject) throws JSONException {
+    VkModelWiki(final JSONObject pObject) throws JSONException {
         parse(pObject);
     }
 
@@ -32,9 +29,7 @@ public class VkModelWiki extends VkAttachments.VkModelAttachments {
         mEditorId = pObject.optInt(Constants.Parser.EDITOR_ID);
         mEdited = pObject.optLong(Constants.Parser.EDITED);
         mCreated = pObject.optLong(Constants.Parser.CREATED);
-
         return this;
-
     }
 
     @Override

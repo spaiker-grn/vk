@@ -1,6 +1,8 @@
-package com.spaikergrn.vk_client.tools;
+package com.spaikergrn.vkclient.tools;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import android.util.Log;
+
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,11 +22,9 @@ public class URLParser {
             return parts[1];
 
         } catch (final MalformedURLException pE) {
-            pE.getMessage();
+            Log.e(Constants.ERROR, pE.getMessage(), pE.getCause());
         }
-
         return Constants.PARSE_ERROR_TAG;
-
     }
 
 }

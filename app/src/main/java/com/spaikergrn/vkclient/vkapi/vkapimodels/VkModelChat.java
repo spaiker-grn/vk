@@ -1,11 +1,11 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class VkModelChat extends VkModel {
+public class VkModelChat implements VkModel {
 
     private int mId;
     private String mType;

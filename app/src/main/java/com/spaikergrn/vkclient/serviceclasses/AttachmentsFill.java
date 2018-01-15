@@ -1,11 +1,11 @@
-package com.spaikergrn.vk_client.serviceclasses;
+package com.spaikergrn.vkclient.serviceclasses;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
@@ -17,22 +17,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.spaikergrn.vk_client.R;
-import com.spaikergrn.vk_client.activity.fullscreenimageactivity.FullScreenImageViewActivity;
-import com.spaikergrn.vk_client.imageloader.ImageLoader;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkAttachments;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelAudio;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelGift;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelLink;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelPhoto;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelSticker;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelVideo;
+import com.spaikergrn.vkclient.R;
+import com.spaikergrn.vkclient.activity.fullscreenimageactivity.FullScreenImageViewActivity;
+import com.spaikergrn.vkclient.imageloader.ImageLoader;
+import com.spaikergrn.vkclient.services.MediaPlayerService;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkAttachments;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelAudio;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelGift;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelLink;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelPhoto;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelSticker;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelVideo;
 
 import java.util.List;
 
 public final class AttachmentsFill {
 
+    public static final int GIFT_SIZE_IN_DP = 120;
     private final boolean sIsLoadPhoto;
     private final String sPhotoSize;
 
@@ -47,10 +50,8 @@ public final class AttachmentsFill {
     }
 
     public void inflateAttachments(final VkAttachments pVkModelAttachment,
-                                          final LinearLayout pParentLinearLayout, final int pWidth,
-                                          final LayoutInflater pInflater, final Context pContext, final int pScale) {
-
-
+                                   final LinearLayout pParentLinearLayout, final int pWidth,
+                                   final LayoutInflater pInflater, final Context pContext, final int pScale) {
 
         if (pVkModelAttachment == null) {
             return;
@@ -97,14 +98,14 @@ public final class AttachmentsFill {
         for (int i = 0; i < pVkAttachmentsList.size(); i++) {
             type = pVkAttachmentsList.get(i).getType();
             if (Constants.Parser.TYPE_STICKER.equals(type)) {
-                inflateSticker(pVkAttachmentsList.get(i),pParentLinearLayout,pContext);
+                inflateSticker(pVkAttachmentsList.get(i), pParentLinearLayout, pContext);
             }
         }
 
         for (int i = 0; i < pVkAttachmentsList.size(); i++) {
             type = pVkAttachmentsList.get(i).getType();
             if (Constants.Parser.TYPE_GIFT.equals(type)) {
-                inflateGift(pVkAttachmentsList.get(i),pParentLinearLayout,pContext);
+                inflateGift(pVkAttachmentsList.get(i), pParentLinearLayout, pContext);
             }
         }
 
@@ -124,14 +125,13 @@ public final class AttachmentsFill {
     }
 
     private static void inflateSticker(final VkAttachments.VkModelAttachments pVkModelAttachments,
-                                       final LinearLayout mParentLinearLayout,  final Context pContext){
+                                       final LinearLayout mParentLinearLayout, final Context pContext) {
 
         final VkModelSticker vkModelSticker = (VkModelSticker) pVkModelAttachments;
         final int width = 120;
-        final int height = width * vkModelSticker.getHeight()/vkModelSticker.getWidth();
+        final int height = width * vkModelSticker.getHeight() / vkModelSticker.getWidth();
         final ImageView imageView = new ImageView(pContext);
-        //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        final LinearLayout.LayoutParams paramsImageView = new LinearLayout.LayoutParams(convertDpToPixel(width,pContext), convertDpToPixel(height,pContext));
+        final LinearLayout.LayoutParams paramsImageView = new LinearLayout.LayoutParams(convertDpToPixel(width, pContext), convertDpToPixel(height, pContext));
         imageView.setLayoutParams(paramsImageView);
         imageView.setBackgroundColor(Color.TRANSPARENT);
         mParentLinearLayout.addView(imageView);
@@ -139,13 +139,12 @@ public final class AttachmentsFill {
     }
 
     private static void inflateGift(final VkAttachments.VkModelAttachments pVkModelAttachments,
-                                       final LinearLayout mParentLinearLayout,  final Context pContext){
+                                    final LinearLayout mParentLinearLayout, final Context pContext) {
 
         final VkModelGift vkModelGift = (VkModelGift) pVkModelAttachments;
-        final int size = 120;
+        final int size = GIFT_SIZE_IN_DP;
         final ImageView imageView = new ImageView(pContext);
-        //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        final LinearLayout.LayoutParams paramsImageView = new LinearLayout.LayoutParams(convertDpToPixel(size,pContext), convertDpToPixel(size,pContext));
+        final LinearLayout.LayoutParams paramsImageView = new LinearLayout.LayoutParams(convertDpToPixel(size, pContext), convertDpToPixel(size, pContext));
         imageView.setLayoutParams(paramsImageView);
         imageView.setBackgroundColor(Color.TRANSPARENT);
         mParentLinearLayout.addView(imageView);
@@ -153,9 +152,11 @@ public final class AttachmentsFill {
     }
 
     private void inflateImage(final VkAttachments.VkModelAttachments pVkModelAttachments,
-                                     final LinearLayout mParentLinearLayout, final int pWidth, final Context pContext, final int pScale) {
+                              final LinearLayout mParentLinearLayout, final int pWidth, final Context pContext, final int pScale) {
 
-        if (!sIsLoadPhoto){return;}
+        if (!sIsLoadPhoto) {
+            return;
+        }
 
         final VkModelPhoto vkModelPhoto = (VkModelPhoto) pVkModelAttachments;
         final ImageView imageView;
@@ -184,14 +185,16 @@ public final class AttachmentsFill {
     }
 
     private void inflateVideo(final VkAttachments.VkModelAttachments pVkModelAttachments,
-                                     final LinearLayout mParentLinearLayout, final int pWidth, final Context pContext, final int pScale) {
+                              final LinearLayout mParentLinearLayout, final int pWidth, final Context pContext, final int pScale) {
 
         final VkModelVideo vkModelVideo = (VkModelVideo) pVkModelAttachments;
         final LinearLayout.LayoutParams paramsImageView;
         final ImageView imageView;
         LinearLayout linearLayoutForPhotos;
 
-        if (!sIsLoadPhoto){return;}
+        if (!sIsLoadPhoto) {
+            return;
+        }
 
         if (mParentLinearLayout.getChildCount() == 0) {
             mParentLinearLayout.setGravity(Gravity.CENTER);
@@ -223,7 +226,7 @@ public final class AttachmentsFill {
     }
 
     private void inflateAudio(final VkAttachments.VkModelAttachments pVkModelAttachments, final LinearLayout mParentLinearLayout,
-                                     final LayoutInflater pInflater, final Context pContext) {
+                              final LayoutInflater pInflater, final Context pContext) {
 
         final VkModelAudio vkModelAudio = (VkModelAudio) pVkModelAttachments;
         final View view = pInflater.inflate(R.layout.audio_layout, mParentLinearLayout, false);
@@ -237,8 +240,9 @@ public final class AttachmentsFill {
             @Override
             public void onClick(final View pView) {
                 Log.d(Constants.MY_TAG, "onClickPlay: " + vkModelAudio.getUrl());
-                if (!vkModelAudio.getUrl().equals(Constants.Parser.EMPTY_STRING)){
-                    pContext.startService(new Intent(pContext, MediaPlayer.class).putExtra(Constants.AUDIO_URL, vkModelAudio.getUrl()));
+                Toast.makeText(pContext, "Start to play " + vkModelAudio.getUrl(), Toast.LENGTH_LONG).show();
+                if (!vkModelAudio.getUrl().equals(Constants.Parser.EMPTY_STRING)) {
+                    pContext.startService(new Intent(pContext, MediaPlayerService.class).putExtra(Constants.AUDIO_URL, vkModelAudio.getUrl()));
 
                 }
             }
@@ -247,7 +251,7 @@ public final class AttachmentsFill {
     }
 
     private void inflateLink(final VkAttachments.VkModelAttachments pVkModelAttachments,
-                                    final LinearLayout mParentLinearLayout, final int pWidth, final Context pContext) {
+                             final LinearLayout mParentLinearLayout, final int pWidth, final Context pContext) {
 
         final VkModelLink vkModelLink = (VkModelLink) pVkModelAttachments;
         if (mParentLinearLayout.getChildCount() == 0 && vkModelLink.getVkModelPhoto() != null) {
@@ -268,19 +272,28 @@ public final class AttachmentsFill {
         linkTextView.setMaxLines(1);
         linkTextView.setPaintFlags(linkTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         linkTextView.setLayoutParams(layoutParams);
+        linkTextView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(final View pView) {
+                final Uri uri = Uri.parse(vkModelLink.getUrl());
+                final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                pContext.startActivity(intent);
+            }
+        });
         mParentLinearLayout.addView(linkTextView);
     }
 
     private void inflateDoc(final VkAttachments.VkModelAttachments pVkModelAttachments,
-                            final LinearLayout mParentLinearLayout, final Context pContext){
+                            final LinearLayout mParentLinearLayout, final Context pContext) {
         final TextView textView = new TextView(pContext);
         final LinearLayout.LayoutParams paramsTextView = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsTextView.setMargins(0, 0, 0, 4);
         textView.setLayoutParams(paramsTextView);
         final String textAttachments = Constants.ATTACHMENT + pVkModelAttachments.getType();
-        if (Build.VERSION.SDK_INT < 23) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             textView.setTextAppearance(pContext, R.style.news_text);
-        } else{
+        } else {
             textView.setTextAppearance(R.style.news_text);
         }
         textView.setText(textAttachments);
@@ -288,25 +301,31 @@ public final class AttachmentsFill {
     }
 
     private void inflateWall(final VkAttachments.VkModelAttachments pVkModelAttachments,
-                            final LinearLayout mParentLinearLayout, final Context pContext){
+                             final LinearLayout mParentLinearLayout, final Context pContext) {
         final TextView textView = new TextView(pContext);
         final LinearLayout.LayoutParams paramsTextView = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsTextView.setMargins(0, 0, 0, 4);
         textView.setLayoutParams(paramsTextView);
         final String textAttachments = Constants.ATTACHMENT + pVkModelAttachments.getType();
-        if (Build.VERSION.SDK_INT < 23) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             textView.setTextAppearance(pContext, R.style.news_text);
-        } else{
+        } else {
             textView.setTextAppearance(R.style.news_text);
         }
         textView.setText(textAttachments);
         mParentLinearLayout.addView(textView);
+
     }
 
     private static ImageView initMainImageView(final LinearLayout mParentLinearLayout,
                                                final VkModelPhoto pVkModelPhoto, final int pWidth, final Context pContext) {
         final ImageView imageView = new ImageView(pContext);
-        final int height = pWidth * pVkModelPhoto.getHeight() / pVkModelPhoto.getWidth();
+        final int height;
+        if (pVkModelPhoto.getWidth() != 0 && pVkModelPhoto.getHeight() != 0){
+            height = pWidth * pVkModelPhoto.getHeight() / pVkModelPhoto.getWidth();
+        } else {
+            height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        }
         final LinearLayout.LayoutParams paramsImageView = new LinearLayout.LayoutParams(pWidth, height);
         paramsImageView.setMargins(0, 0, 0, 4);
         imageView.setLayoutParams(paramsImageView);
@@ -326,7 +345,7 @@ public final class AttachmentsFill {
         final LinearLayout.LayoutParams paramsImageView = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.MATCH_PARENT);
         paramsImageView.setMargins(0, 0, 2, 0);
         imageView.setLayoutParams(paramsImageView);
-        if (pVkModelPhoto != null){
+        if (pVkModelPhoto != null) {
             final String photoId = pVkModelPhoto.getOwnerId() + "_" + pVkModelPhoto.getId() + "_" + pVkModelPhoto.getAccessKey();
             imageView.setTag(R.string.key_tag_photo, photoId);
             imageView.setOnClickListener(onClickListenerImageView);
@@ -345,13 +364,7 @@ public final class AttachmentsFill {
         return linearLayoutForPhotos;
     }
 
-    public static int convertPixelsToDp(final float pPx, final Context pContext){
-        final Resources resources = pContext.getResources();
-        final DisplayMetrics metrics = resources.getDisplayMetrics();
-        return (int) pPx / metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT;
-    }
-
-    private static int convertDpToPixel(final float pDp, final Context pContext){
+    private static int convertDpToPixel(final float pDp, final Context pContext) {
         final Resources resources = pContext.getResources();
         final DisplayMetrics metrics = resources.getDisplayMetrics();
         return (int) pDp * metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT;
@@ -361,7 +374,8 @@ public final class AttachmentsFill {
 
         @Override
         public void onClick(final View pView) {
-            ContextHolder.getContext().startActivity(new Intent(ContextHolder.getContext(), FullScreenImageViewActivity.class)
+            ContextHolder.getContext().startActivity(new Intent(ContextHolder.getContext(),
+                    FullScreenImageViewActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .putExtra(Constants.FULL_SCREEN_IMAGE_VIEW, (String) pView.getTag(R.string.key_tag_photo)));
         }
     };

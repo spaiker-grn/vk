@@ -1,11 +1,11 @@
-package com.spaikergrn.vk_client;
+package com.spaikergrn.vkclient;
 
 import android.support.v4.app.Fragment;
 
 public class TabModel {
 
     private String mName;
-    private Fragment mFragment;
+    private final Fragment mFragment;
 
     public TabModel(final String pName, final Fragment pFragment) {
         mName = pName;
@@ -14,10 +14,6 @@ public class TabModel {
 
     public Fragment getFragment() {
         return mFragment;
-    }
-
-    public void setFragment(final Fragment pFragment) {
-        mFragment = pFragment;
     }
 
     public void setName(final String pName) {

@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.fragments.dialogsfragment;
+package com.spaikergrn.vkclient.fragments.dialogsfragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,27 +17,26 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.spaikergrn.vk_client.R;
-import com.spaikergrn.vk_client.activity.messagehistoryactivity.ActivityMessagesHistory;
-import com.spaikergrn.vk_client.fragments.IAdapterRefresh;
-import com.spaikergrn.vk_client.fragments.recyclersutils.ILoadMore;
-import com.spaikergrn.vk_client.fragments.recyclersutils.OnItemClickListener;
-import com.spaikergrn.vk_client.fragments.recyclersutils.RecyclerItemClickListener;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelDialog;
+import com.spaikergrn.vkclient.R;
+import com.spaikergrn.vkclient.activity.messagehistoryactivity.ActivityMessagesHistory;
+import com.spaikergrn.vkclient.fragments.IFragmentAdapterRefresh;
+import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
+import com.spaikergrn.vkclient.fragments.recyclersutils.OnItemClickListener;
+import com.spaikergrn.vkclient.fragments.recyclersutils.RecyclerItemClickListener;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DialogsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<VkModelDialog>>, IAdapterRefresh {
+public class DialogsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<VkModelDialog>>, IFragmentAdapterRefresh {
 
-    public static final int LOADER_ID = 1;
-    public static final int VALUE_40 = 40;
     public RecyclerView mRecyclerView;
     public RecyclerAdapterDialogs mAdapter;
     public List<VkModelDialog> mVkModelDialogList = new ArrayList<>();
     public int DIALOGS_SIZE;
     public ProgressBar mProgressBar;
+    private final Object mLock = new Object();
 
     public DialogsFragment() {
 
@@ -62,15 +61,15 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
         final DividerItemDecoration decoration = new DividerItemDecoration(mRecyclerView.getContext(), layoutManager.getOrientation());
         mRecyclerView.addItemDecoration(decoration);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new RecyclerAdapterDialogs(this, mRecyclerView, mVkModelDialogList);
+        mAdapter = new RecyclerAdapterDialogs(mRecyclerView, mVkModelDialogList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), mRecyclerView, mOnItemClickListener));
         mAdapter.setILoadMore(mScrollLoad);
 
         final Bundle bundle = new Bundle();
         bundle.putInt(Constants.URL_BUILDER.START_MESSAGE_ID, 0);
-        bundle.putInt(Constants.URL_BUILDER.COUNT, VALUE_40);
-        getLoaderManager().initLoader(LOADER_ID, bundle, this).forceLoad();
+        bundle.putInt(Constants.URL_BUILDER.COUNT, Constants.Values.VALUE_40);
+        getLoaderManager().initLoader(Constants.LoadersKeys.DIALOGS_LOADER_ID, bundle, this).forceLoad();
 
         final IntentFilter intentFilter = new IntentFilter(Constants.LONG_POLL_BROADCAST);
         getContext().registerReceiver(broadcastReceiver, intentFilter);
@@ -87,12 +86,11 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public Loader<List<VkModelDialog>> onCreateLoader(final int id, final Bundle args) {
         Loader<List<VkModelDialog>> listLoader = null;
-        if (id == LOADER_ID) {
+        if (id == Constants.LoadersKeys.DIALOGS_LOADER_ID) {
             listLoader = new ParsingDialogsAsyncTask(getContext(), args);
         }
         mProgressBar.setVisibility(View.VISIBLE);
         return listLoader;
-
     }
 
     @Override
@@ -102,8 +100,10 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
             if (DIALOGS_SIZE == 0) {
                 DIALOGS_SIZE = data.get(0).getDialogsCount();
             }
-            mVkModelDialogList.addAll(data);
-            mAdapter.notifyDataSetChanged();
+            synchronized (mLock){
+                mVkModelDialogList.addAll(data);
+                mAdapter.notifyDataSetChanged();
+            }
             mAdapter.setLoaded();
             mProgressBar.setVisibility(View.INVISIBLE);
         }
@@ -158,8 +158,8 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
 
                         final Bundle bundle = new Bundle();
                         bundle.putInt(Constants.URL_BUILDER.START_MESSAGE_ID, mVkModelDialogList.get(mVkModelDialogList.size() - 1).getMessages().getId());
-                        bundle.putInt(Constants.URL_BUILDER.COUNT, VALUE_40);
-                        getLoaderManager().restartLoader(LOADER_ID, bundle, DialogsFragment.this).forceLoad();
+                        bundle.putInt(Constants.URL_BUILDER.COUNT, Constants.Values.VALUE_40);
+                        getLoaderManager().restartLoader(Constants.LoadersKeys.DIALOGS_LOADER_ID, bundle, DialogsFragment.this).forceLoad();
                     }
                 });
             }
@@ -170,9 +170,9 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     public void refresh() {
         final Bundle bundle = new Bundle();
         bundle.putInt(Constants.URL_BUILDER.START_MESSAGE_ID, 0);
-        bundle.putInt(Constants.URL_BUILDER.COUNT, VALUE_40);
-        getLoaderManager().restartLoader(LOADER_ID, bundle, this).forceLoad();
-        Toast.makeText(getContext(),"Refresh Dialogs",Toast.LENGTH_SHORT).show();
+        bundle.putInt(Constants.URL_BUILDER.COUNT, Constants.Values.VALUE_40);
+        getLoaderManager().restartLoader(Constants.LoadersKeys.DIALOGS_LOADER_ID, bundle, this).forceLoad();
+        Toast.makeText(getContext(), Constants.REFRESH_DIALOGS,Toast.LENGTH_SHORT).show();
     }
 
     class LoadLongPollMessage implements Runnable {
@@ -181,7 +181,6 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
         boolean mIsChat;
 
         LoadLongPollMessage() {
-
         }
 
         @Override
@@ -199,19 +198,21 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
                 for (int i = 0; i < mVkModelDialogList.size(); i++) {
                     if (mVkModelDialogList.get(i).getMessages().getChatId() == mVkModelDialog.getMessages().getChatId()) {
                         mVkModelDialogList.remove(i);
-                        break;
+                        return;
                     }
                 }
             } else {
                 for (int i = 0; i < mVkModelDialogList.size(); i++) {
                     if (mVkModelDialogList.get(i).getMessages().getUserId() == mVkModelDialog.getMessages().getUserId()) {
                         mVkModelDialogList.remove(i);
-                        break;
+                        return;
                     }
                 }
             }
 
-            mVkModelDialogList.add(0, vkModelDialogs.get(0));
+            synchronized (mLock){
+                mVkModelDialogList.add(0, vkModelDialogs.get(0));
+            }
             getActivity().runOnUiThread(new Runnable() {
 
                 @Override

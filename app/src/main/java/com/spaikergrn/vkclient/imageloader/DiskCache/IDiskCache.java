@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.imageloader.DiskCache;
+package com.spaikergrn.vkclient.imageloader.DiskCache;
 
 import android.graphics.Bitmap;
 

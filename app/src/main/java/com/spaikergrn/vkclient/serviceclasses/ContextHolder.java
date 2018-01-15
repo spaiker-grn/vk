@@ -1,9 +1,11 @@
-package com.spaikergrn.vk_client.serviceclasses;
+package com.spaikergrn.vkclient.serviceclasses;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 public final class ContextHolder {
 
+    @SuppressLint("StaticFieldLeak")
     private static Context sContext;
 
     public static Context getContext() {

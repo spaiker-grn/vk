@@ -1,16 +1,16 @@
-package com.spaikergrn.vk_client.adapters;
+package com.spaikergrn.vkclient.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
-import com.spaikergrn.vk_client.TabModel;
-import com.spaikergrn.vk_client.fragments.IAdapterRefresh;
-import com.spaikergrn.vk_client.fragments.ViewPagerFragment;
-import com.spaikergrn.vk_client.fragments.dialogsfragment.DialogsFragment;
-import com.spaikergrn.vk_client.fragments.ProfileFragment;
-import com.spaikergrn.vk_client.fragments.newsfragment.NewsFragment;
+import com.spaikergrn.vkclient.TabModel;
+import com.spaikergrn.vkclient.fragments.IFragmentAdapterRefresh;
+import com.spaikergrn.vkclient.fragments.dialogsfragment.DialogsFragment;
+import com.spaikergrn.vkclient.fragments.profilefragment.ProfileFragment;
+import com.spaikergrn.vkclient.fragments.newsfragment.NewsFragment;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
     private final List<TabModel> mTabModelList;
-    private IAdapterRefresh mCurrentFragment;
+    private IFragmentAdapterRefresh mCurrentFragment;
 
     public TabsPagerFragmentAdapter(final FragmentManager pFragmentManager) {
         super(pFragmentManager);
@@ -34,7 +34,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public void setPrimaryItem(final ViewGroup pContainer, final int pPosition, final Object pObject) {
         if (getCurrentFragment() != pObject) {
-            mCurrentFragment = ((IAdapterRefresh) pObject);
+            mCurrentFragment = ((IFragmentAdapterRefresh) pObject);
         }
         super.setPrimaryItem(pContainer, pPosition, pObject);
     }
@@ -52,13 +52,12 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
     private List<TabModel> addTabs() {
         final List<TabModel> tabModelList = new ArrayList<>();
-        tabModelList.add(new TabModel("PROFILE", ProfileFragment.newInstance()));
-        tabModelList.add(new TabModel("NEWS", NewsFragment.newInstance()));
-        tabModelList.add(new TabModel("MESSAGES", DialogsFragment.newInstance()));
-        tabModelList.add(new TabModel("EX", ViewPagerFragment.newInstance()));
+        tabModelList.add(new TabModel(Constants.Tabs.PROFILE, ProfileFragment.newInstance()));
+        tabModelList.add(new TabModel(Constants.Tabs.NEWS, NewsFragment.newInstance()));
+        tabModelList.add(new TabModel(Constants.Tabs.MESSAGES, DialogsFragment.newInstance()));
         return tabModelList;
     }
-    public IAdapterRefresh getCurrentFragment() {
+    public IFragmentAdapterRefresh getCurrentFragment() {
         return mCurrentFragment;
     }
 }

@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.tools;
+package com.spaikergrn.vkclient.tools;
 
 import java.io.BufferedInputStream;
 import java.io.File;

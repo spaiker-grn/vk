@@ -1,12 +1,11 @@
-package com.spaikergrn.vk_client.imageloader;
+package com.spaikergrn.vkclient.imageloader;
 
 import android.graphics.Bitmap;
 
-public class Result {
+class Result {
 
     private final Request mRequest;
     private Bitmap mBitmap;
-    private Exception mException;
 
     Result(final Request pRequest) {
         this.mRequest = pRequest;
@@ -16,10 +15,6 @@ public class Result {
         this.mBitmap = pBitmap;
     }
 
-    void setException(final Exception pException) {
-        this.mException = pException;
-    }
-
     Request getRequest() {
         return mRequest;
     }
@@ -27,9 +22,4 @@ public class Result {
     Bitmap getBitmap() {
         return mBitmap;
     }
-
-    public Exception getException() {
-        return mException;
-    }
-
 }

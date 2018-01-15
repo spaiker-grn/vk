@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/refresh_options_menu"
+        android:title="@string/refresh"
+        android:icon="@android:drawable/ic_menu_rotate"
+        app:showAsAction = "ifRoom">
+    </item>
+
+    <item
+        android:id="@+id/reLogin_options_menu"
+        android:title="@string/reLogin"
+        app:showAsAction = "never">
+    </item>
+    <item
+        android:id="@+id/settings_options_menu"
+        android:title="@string/settings"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/clear_db_options_menu"
+        android:title="@string/clear_users_db"
+        app:showAsAction="never">
+    </item>
 
 </menu>

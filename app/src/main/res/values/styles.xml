@@ -1,7 +1,13 @@
 <resources>
 
+    <style name="VkTheme" parent="Theme.AppCompat">
 
-    <style name="VkTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="VkTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -12,7 +18,11 @@
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textSize">18sp</item>
         <item name="android:padding">12dp</item>
+    </style>
 
+    <style name="full_screen_image_view_text">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
     <style name="news_text">
@@ -30,7 +40,7 @@
         <item name="android:textColor">@color/colorBlack</item>
     </style>
 
-    <style name="app_bar_style">
+    <style name="app_bar_style_text">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
@@ -40,5 +50,10 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
+    <style name="text_link">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorBlue</item>
+
+    </style>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.activity;
+package com.spaikergrn.vkclient.activity;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -19,8 +19,8 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
-import com.spaikergrn.vk_client.R;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.R;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import java.util.List;
 
@@ -45,27 +45,20 @@ public class SettingsActivity extends PreferenceActivity {
                                 : null);
 
             } else if (pPreference instanceof RingtonePreference) {
-
                 if (TextUtils.isEmpty(stringValue)) {
-
                     pPreference.setSummary(R.string.pref_ringtone_silent);
-
                 } else {
                     final Ringtone ringtone = RingtoneManager.getRingtone(
                             pPreference.getContext(), Uri.parse(stringValue));
 
                     if (ringtone == null) {
-
                         pPreference.setSummary(null);
                     } else {
-
                         final String name = ringtone.getTitle(pPreference.getContext());
                         pPreference.setSummary(name);
                     }
                 }
-
             } else {
-
                 pPreference.setSummary(stringValue);
             }
             return true;

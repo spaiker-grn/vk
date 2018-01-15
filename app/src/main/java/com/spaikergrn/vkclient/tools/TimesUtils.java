@@ -1,8 +1,8 @@
-package com.spaikergrn.vk_client.tools;
+package com.spaikergrn.vkclient.tools;
 
 import android.text.format.DateUtils;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;

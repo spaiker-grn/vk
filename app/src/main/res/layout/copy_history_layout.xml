@@ -1,7 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/copy_history_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_card_views_news"
+        android:layout_marginStart="@dimen/margin_card_views_news"
+        app:srcCompat="@drawable/ic_subdirectory_arrow_right"
+        android:layout_alignParentStart="true"
+        android:contentDescription="@string/forward_image_view"/>
+
+    <TextView
+        android:id="@+id/card_news_name_copy_history_text_view"
+        style="@style/news_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_card_views_news"
+        android:layout_marginStart="@dimen/margin_card_views_news"
+        android:layout_toEndOf="@+id/arrow"
+        android:layout_toRightOf="@+id/arrow"
+        tools:text="@tools:sample/full_names"/>
+
+    <TextView
+        android:id="@+id/text_copy_history_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/card_news_name_copy_history_text_view"
+        android:maxLines="10"
+        android:paddingLeft="@dimen/padding_card_views_news"
+        android:paddingRight="@dimen/padding_card_views_news"
+        style="@style/news_text"
+       />
+
+    <LinearLayout
+        android:id="@+id/attachment_copy_history"
+        android:layout_below="@+id/text_copy_history_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_card_views_news"
+        android:orientation="vertical"/>
+
+</RelativeLayout>
+

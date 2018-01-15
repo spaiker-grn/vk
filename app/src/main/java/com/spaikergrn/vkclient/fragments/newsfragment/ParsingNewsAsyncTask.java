@@ -1,13 +1,13 @@
-package com.spaikergrn.vk_client.fragments.newsfragment;
+package com.spaikergrn.vkclient.fragments.newsfragment;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.vkapi.VkApiMethods;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelNewsFeeds;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.vkapi.VkApiMethods;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsFeeds;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +23,6 @@ public class ParsingNewsAsyncTask extends AsyncTaskLoader<VkModelNewsFeeds> {
     ParsingNewsAsyncTask(final Context pContext, final Bundle pBundle) {
         super(pContext);
 
-        /*if (pBundle.getString(Constants.Parser.NEXT_FROM) != null)*/
         mStartFrom = pBundle.getString(Constants.Parser.NEXT_FROM);
     }
 
@@ -35,7 +34,7 @@ public class ParsingNewsAsyncTask extends AsyncTaskLoader<VkModelNewsFeeds> {
             final String request = VkApiMethods.getNews(mStartFrom);
             mVkModelNewsFeeds = new VkModelNewsFeeds(new JSONObject(request));
         } catch (InterruptedException | ExecutionException | IOException | JSONException pE) {
-            Log.e(Constants.ERROR, "loadInBackground News Feed: ", pE);
+            Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         }
         return mVkModelNewsFeeds;
     }

@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VkModelWallPost extends VkAttachments.VkModelAttachments {
+public class VkModelWallPost implements VkAttachments.VkModelAttachments {
 
     private int mId;
     private int mToId;
@@ -30,12 +30,10 @@ public class VkModelWallPost extends VkAttachments.VkModelAttachments {
     private boolean mUserReposted;
     private String mPostType;
     private int mViewsCount;
-    private VkAttachments mAttachments = new VkAttachments();
+    private VkAttachments mAttachments;
     private int mSignerId;
     private List<VkModelWallPost> mCopyHistory = new ArrayList<>();
-
     private VkModelGroup mVkModelGroup;
-
     private VkModelUser mVkModelUser;
 
     VkModelWallPost() {
@@ -54,27 +52,26 @@ public class VkModelWallPost extends VkAttachments.VkModelAttachments {
         mReplyOwnerId = pObject.optInt(Constants.Parser.REPLY_OWNER_ID);
         mReplyPostId = pObject.optInt(Constants.Parser.REPLY_POST_ID);
         mFriendsOnly = ParseUtils.parseBoolean(pObject, Constants.Parser.FRIENDS_ONLY);
+
         final JSONObject comments = pObject.optJSONObject(Constants.Parser.COMMENTS);
+        ParseUtils.parseInt(comments, Constants.Parser.COUNT);
+        mCanPostComment = ParseUtils.parseBoolean(comments, Constants.Parser.CAN_POST);
 
-        if (comments != null) {
-            mCommentsCount = comments.optInt(Constants.Parser.COUNT);
-            mCanPostComment = ParseUtils.parseBoolean(comments, Constants.Parser.CAN_POST);
-        }
         final JSONObject likes = pObject.optJSONObject(Constants.Parser.LIKES);
-        if (likes != null) {
-            mLikesCount = likes.optInt(Constants.Parser.COUNT);
-            mUserLikes = ParseUtils.parseBoolean(likes, Constants.Parser.USER_LIKES);
-            mCanLike = ParseUtils.parseBoolean(likes, Constants.Parser.CAN_LIKE);
-            mCanPublish = ParseUtils.parseBoolean(likes, Constants.Parser.CAN_PUBLISH);
-        }
-        final JSONObject reposts = pObject.optJSONObject(Constants.Parser.REPOSTS);
-        if (reposts != null) {
-            mRepostsCount = reposts.optInt(Constants.Parser.COUNT);
-            mUserReposted = ParseUtils.parseBoolean(reposts, Constants.Parser.USER_REPOSTED);
-        }
-        mPostType = pObject.optString(Constants.Parser.POST_TYPE);
-        mAttachments.fill(pObject.optJSONArray(Constants.Parser.ATTACHMENTS));
+        mLikesCount = ParseUtils.parseInt(likes, Constants.Parser.COUNT);
+        mUserLikes = ParseUtils.parseBoolean(likes, Constants.Parser.USER_LIKES);
+        mCanLike = ParseUtils.parseBoolean(likes, Constants.Parser.CAN_LIKE);
+        mCanPublish = ParseUtils.parseBoolean(likes, Constants.Parser.CAN_PUBLISH);
 
+        final JSONObject reposts = pObject.optJSONObject(Constants.Parser.REPOSTS);
+        mRepostsCount = ParseUtils.parseInt(reposts, Constants.Parser.COUNT);
+        mUserReposted = ParseUtils.parseBoolean(reposts, Constants.Parser.USER_REPOSTED);
+
+        mPostType = pObject.optString(Constants.Parser.POST_TYPE);
+
+        if (pObject.has(Constants.Parser.ATTACHMENTS)){
+            mAttachments = new VkAttachments(pObject.optJSONArray(Constants.Parser.ATTACHMENTS));
+        }
         mSignerId = pObject.optInt(Constants.Parser.SIGNER_ID);
 
         final JSONArray copyHistory = pObject.optJSONArray(Constants.Parser.COPY_HISTORY);
@@ -83,8 +80,6 @@ public class VkModelWallPost extends VkAttachments.VkModelAttachments {
                 mCopyHistory.add(new VkModelWallPost(copyHistory.optJSONObject(i)));
             }
         }
-
-
         return this;
     }
 

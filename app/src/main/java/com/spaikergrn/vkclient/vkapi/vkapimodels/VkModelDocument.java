@@ -1,14 +1,13 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VkModelDocument extends VkAttachments.VkModelAttachments {
+public class VkModelDocument implements VkAttachments.VkModelAttachments {
 
     private int mId;
-
     private int mOwnerId;
     private String mTitle;
     private long mSize;
@@ -18,10 +17,7 @@ public class VkModelDocument extends VkAttachments.VkModelAttachments {
     private String mPhoto130;
     private String mAccessKey;
 
-    public VkModelDocument() {
-    }
-
-    public VkModelDocument(final JSONObject pObject) throws JSONException
+    VkModelDocument(final JSONObject pObject) throws JSONException
     {
         parse(pObject);
     }

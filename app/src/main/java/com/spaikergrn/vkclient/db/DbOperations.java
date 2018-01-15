@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.db;
+package com.spaikergrn.vkclient.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 public class DbOperations {
 
@@ -29,7 +29,7 @@ public class DbOperations {
 
             database.setTransactionSuccessful();
         } catch (final Exception pE) {
-            Log.e(this.getClass().getSimpleName(), pE.getLocalizedMessage());
+            Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         } finally {
             database.endTransaction();
         }
@@ -51,7 +51,7 @@ public class DbOperations {
 
             database.setTransactionSuccessful();
         } catch (final Exception pE) {
-            Log.e(this.getClass().getSimpleName(), pE.getLocalizedMessage());
+            Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         } finally {
             database.endTransaction();
         }
@@ -74,7 +74,7 @@ public class DbOperations {
 
             database.setTransactionSuccessful();
         } catch (final Exception pE) {
-            Log.e(this.getClass().getSimpleName(), pE.getLocalizedMessage());
+            Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         } finally {
             database.endTransaction();
         }
@@ -93,7 +93,7 @@ public class DbOperations {
 
             database.setTransactionSuccessful();
         } catch (final Exception pE) {
-            Log.e(this.getClass().getSimpleName(), pE.getLocalizedMessage());
+            Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         } finally {
             database.endTransaction();
         }

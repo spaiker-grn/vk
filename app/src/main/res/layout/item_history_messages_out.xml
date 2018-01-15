@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_start_dialogs"
         app:cardBackgroundColor="@color/colorWhite"
-        app:cardCornerRadius="@dimen/cardview_messages_history_radius"
+        app:cardCornerRadius="@dimen/card_view_messages_history_radius"
         android:layout_toLeftOf="@id/user_history_image_view"
         android:layout_toStartOf="@id/user_history_image_view">
 
@@ -29,14 +29,21 @@
                 style="@style/news_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@tools:sample/lorem/random"/>
+                tools:text="@tools:sample/lorem"/>
+
+            <LinearLayout
+                android:id="@+id/attachment_message_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/time_history_text_view"
                 style="@style/text_small_grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity=""
                 tools:text="@tools:sample/date/ddmmyy"/>
 
         </LinearLayout>
@@ -50,8 +57,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/margin_start_dialogs"
-
         android:src="@drawable/avatar"/>
-
 
 </RelativeLayout>

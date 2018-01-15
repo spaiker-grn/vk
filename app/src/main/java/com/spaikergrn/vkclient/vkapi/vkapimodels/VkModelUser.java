@@ -1,10 +1,11 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.db.annotations.dbInteger;
-import com.spaikergrn.vk_client.db.annotations.dbString;
-import com.spaikergrn.vk_client.db.annotations.dbTable;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.vkapi.VkApiMethods;
+import com.google.firebase.database.IgnoreExtraProperties;
+import com.spaikergrn.vkclient.db.annotations.dbInteger;
+import com.spaikergrn.vkclient.db.annotations.dbString;
+import com.spaikergrn.vkclient.db.annotations.dbTable;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.vkapi.VkApiMethods;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,9 +13,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.concurrent.ExecutionException;
-
+@IgnoreExtraProperties
 @dbTable("UsersDb")
-public class VkModelUser extends VkModel implements Serializable {
+public class VkModelUser implements Serializable, VkModel {
 
     @dbInteger
     private int mId;
@@ -53,23 +54,6 @@ public class VkModelUser extends VkModel implements Serializable {
     public String getFullName() {
         return mFirstName + " " + mLastName;
     }
-
-
-    public VkModelUser getUserById(final int pId) throws ExecutionException, InterruptedException {
-
-        try {
-
-            final JSONObject jsonObject = new JSONObject(VkApiMethods.getUserById(pId));
-
-            return parse(jsonObject.getJSONArray(Constants.Parser.RESPONSE).getJSONObject(0));
-
-        } catch (final JSONException | IOException pE) {
-            pE.getMessage();
-
-        }
-        return null;
-    }
-
 
     public int getId() {
         return mId;

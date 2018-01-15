@@ -1,5 +1,5 @@
 package com.spaikergrn.vkclient.fragments;
 
-public interface IAdapterRefresh {
+public interface IFragmentAdapterRefresh {
     void refresh();
 }

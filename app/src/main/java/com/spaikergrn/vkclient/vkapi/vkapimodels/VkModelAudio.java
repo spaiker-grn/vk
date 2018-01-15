@@ -1,10 +1,10 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONObject;
 
-public class VkModelAudio extends VkAttachments.VkModelAttachments {
+public class VkModelAudio implements VkAttachments.VkModelAttachments {
 
     private int mId;
     private int mOwnerId;
@@ -17,7 +17,7 @@ public class VkModelAudio extends VkAttachments.VkModelAttachments {
     private int mGenre;
     private String mAccessKey;
 
-    public VkModelAudio(final JSONObject pObject) {
+    VkModelAudio(final JSONObject pObject) {
         parse(pObject);
     }
 

@@ -1,11 +1,10 @@
-package com.spaikergrn.vk_client.imageloader.memorycache;
+package com.spaikergrn.vkclient.imageloader.memorycache;
 
 import android.graphics.Bitmap;
 
 import java.util.Collection;
 
 public interface IMemoryCache {
-
 
     boolean put(String pKey, Bitmap pValue);
 

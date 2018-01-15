@@ -1,11 +1,11 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VkModelSticker extends VkAttachments.VkModelAttachments {
+public class VkModelSticker implements VkAttachments.VkModelAttachments {
 
     private int mId;
     private int mProductId;
@@ -17,7 +17,7 @@ public class VkModelSticker extends VkAttachments.VkModelAttachments {
     private int mWidth;
     private int mHeight;
 
-    public VkModelSticker(final JSONObject pJSONObject) throws JSONException {
+    VkModelSticker(final JSONObject pJSONObject) throws JSONException {
         parse(pJSONObject);
     }
 
@@ -32,7 +32,6 @@ public class VkModelSticker extends VkAttachments.VkModelAttachments {
         mPhoto512 = pJSONObject.optString(Constants.Parser.PHOTO_512);
         mWidth = pJSONObject.optInt(Constants.Parser.WIDTH);
         mHeight = pJSONObject.optInt(Constants.Parser.HEIGHT);
-
         return this;
     }
 

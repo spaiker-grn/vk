@@ -1,20 +1,21 @@
-package com.spaikergrn.vk_client.fragments.dialogsfragment;
+package com.spaikergrn.vkclient.fragments.dialogsfragment;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.spaikergrn.vk_client.R;
-import com.spaikergrn.vk_client.imageloader.ImageLoader;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.tools.TimesUtils;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelDialog;
+import com.spaikergrn.vkclient.R;
+import com.spaikergrn.vkclient.imageloader.ImageLoader;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.ProfileInfoHolder;
+import com.spaikergrn.vkclient.tools.TimesUtils;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelDialog;
 
 class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
 
-    private final DialogsFragment mDialogsFragment;
     private final TextView mUserIdTextView;
     private final TextView mLastMessageTextView;
     private final TextView mTimeTextView;
@@ -22,10 +23,11 @@ class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
     private final RelativeLayout mLayout;
     private final ImageView mOutImageView;
     private final ImageView mProfileImageView;
+    private final Context mContext;
 
-    RecyclerDialogsViewHolder(final DialogsFragment pDialogsFragment, final View pItemView) {
+    RecyclerDialogsViewHolder(final Context pContext, final View pItemView) {
         super(pItemView);
-        mDialogsFragment = pDialogsFragment;
+        mContext = pContext;
         mLayout = pItemView.findViewById(R.id.dialogs_layout);
         mUserIdTextView = pItemView.findViewById(R.id.user_dialogs_text_view);
         mLastMessageTextView = pItemView.findViewById(R.id.last_message_dialogs_text_view);
@@ -33,21 +35,20 @@ class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
         mUnreadTextView = pItemView.findViewById(R.id.circle_text_view);
         mOutImageView = pItemView.findViewById(R.id.out_circle_image_view);
         mProfileImageView = pItemView.findViewById(R.id.card_message_profile_image_view);
-
     }
 
     void bind(final VkModelDialog pVkModelDialog) {
 
         final String emptyString = Constants.Parser.EMPTY_STRING;
-        final int colorWhite = mDialogsFragment.getResources().getColor(R.color.colorWhite);
-        final int colorLightGrey = mDialogsFragment.getResources().getColor(R.color.colorLightGrey);
+        final int colorWhite = mContext.getResources().getColor(R.color.colorWhite);
+        final int colorLightGrey = mContext.getResources().getColor(R.color.colorLightGrey);
 
         if (pVkModelDialog.getMessages().getPhoto50() != null) {      //Check have photo group or users
-            ImageLoader.with(mDialogsFragment.getContext(), Constants.ImgLoader.IMG_CACHE_FOLDER).
+            ImageLoader.with(mContext, Constants.ImgLoader.IMG_CACHE_FOLDER).
                     load(pVkModelDialog.getMessages().getPhoto50()).into(mProfileImageView);
 
         } else {
-            ImageLoader.with(mDialogsFragment.getContext(), Constants.ImgLoader.IMG_CACHE_FOLDER).
+            ImageLoader.with(mContext, Constants.ImgLoader.IMG_CACHE_FOLDER).
                     load(pVkModelDialog.getMessages().getVkModelUser().getPhoto50()).into(mProfileImageView);
 
         }
@@ -100,11 +101,9 @@ class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
 
         if (pVkModelDialog.getMessages().isOut()) {   //Check set small profile_image or not
             mOutImageView.setVisibility(View.VISIBLE);
-
+            ImageLoader.with(mContext).load(ProfileInfoHolder.getVkModelUser().getPhoto50()).into(mOutImageView);
         } else {
             mOutImageView.setVisibility(View.GONE);
         }
-
     }
-
 }

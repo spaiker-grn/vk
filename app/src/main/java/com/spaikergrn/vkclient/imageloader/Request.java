@@ -1,10 +1,10 @@
-package com.spaikergrn.vk_client.imageloader;
+package com.spaikergrn.vkclient.imageloader;
 
 import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
 
-public final class Request {
+final class Request {
 
     String url;
     WeakReference<ImageView> target;
@@ -39,5 +39,4 @@ public final class Request {
             return new Request(this);
         }
     }
-
 }

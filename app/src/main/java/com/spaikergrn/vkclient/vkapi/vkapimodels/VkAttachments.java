@@ -1,8 +1,8 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
 import android.util.Log;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,7 +26,7 @@ public class VkAttachments implements Serializable {
     public VkAttachments() {
     }
 
-    void fill(final JSONArray pArray) {
+    private void fill(final JSONArray pArray) {
 
         if (pArray != null) {
             mAttachmentsList = new ArrayList<>();
@@ -74,10 +74,8 @@ public class VkAttachments implements Serializable {
         return null;
     }
 
-    public abstract static class VkModelAttachments extends VkModel implements Serializable {
-
-        public abstract String getType();
-
+    public interface VkModelAttachments extends Serializable, VkModel {
+         String getType();
     }
 
 }

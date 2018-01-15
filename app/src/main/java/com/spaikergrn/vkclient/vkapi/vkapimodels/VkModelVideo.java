@@ -1,13 +1,14 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.tools.ParseUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.spaikergrn.vk_client.tools.ParseUtils.parseBoolean;
+import static com.spaikergrn.vkclient.tools.ParseUtils.parseBoolean;
 
-public class VkModelVideo extends VkAttachments.VkModelAttachments {
+public class VkModelVideo implements VkAttachments.VkModelAttachments {
 
     private int mId;
     private int mOwnerId;
@@ -34,7 +35,7 @@ public class VkModelVideo extends VkAttachments.VkModelAttachments {
     public VkModelVideo() {
     }
 
-    public VkModelVideo(final JSONObject pObject) throws JSONException {
+    VkModelVideo(final JSONObject pObject) throws JSONException {
         parse(pObject);
     }
 
@@ -52,10 +53,9 @@ public class VkModelVideo extends VkAttachments.VkModelAttachments {
         mWidth = pObject.optInt(Constants.Parser.WIDTH);
 
         final JSONObject likes = pObject.optJSONObject(Constants.Parser.LIKES);
-        if (likes != null) {
-            this.mLikes = likes.optInt(Constants.Parser.COUNT);
-            mUserLikes = parseBoolean(likes, Constants.Parser.USER_LIKES);
-        }
+        mLikes = ParseUtils.parseInt(likes, Constants.Parser.COUNT);
+        mUserLikes = parseBoolean(likes, Constants.Parser.USER_LIKES);
+
         mCanComment = parseBoolean(pObject, Constants.Parser.CAN_COMMENT);
         mCanRepost = parseBoolean(pObject, Constants.Parser.CAN_REPOST);
         mPhoto130 = pObject.optString(Constants.Parser.PHOTO_130);
@@ -67,7 +67,7 @@ public class VkModelVideo extends VkAttachments.VkModelAttachments {
         return this;
     }
 
-    public String getFirstFrameForNews() {
+    private String getFirstFrameForNews() {
 
         if (!mFirstFrame800.equals(Constants.Parser.EMPTY_STRING)) {
             return mFirstFrame800;
@@ -76,7 +76,6 @@ public class VkModelVideo extends VkAttachments.VkModelAttachments {
         } else if (!mFirstFrame130.equals(Constants.Parser.EMPTY_STRING)) {
             return mFirstFrame130;
         }
-
         return null;
     }
 
@@ -89,7 +88,6 @@ public class VkModelVideo extends VkAttachments.VkModelAttachments {
         } else if (!mPhoto130.equals(Constants.Parser.EMPTY_STRING)) {
             return mPhoto130;
         }
-
         return getFirstFrameForNews();
     }
 
@@ -100,7 +98,6 @@ public class VkModelVideo extends VkAttachments.VkModelAttachments {
         } else if (!mPhoto130.equals(Constants.Parser.EMPTY_STRING)) {
             return mPhoto130;
         }
-
         return getFirstFrameForNews();
     }
 

@@ -1,11 +1,11 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VkModelLink extends VkAttachments.VkModelAttachments {
+public class VkModelLink implements VkAttachments.VkModelAttachments {
 
     private String mUrl;
     private String mTitle;
@@ -14,11 +14,7 @@ public class VkModelLink extends VkAttachments.VkModelAttachments {
     private String mPreviewPage;
     private VkModelPhoto mVkModelPhoto;
 
-    public VkModelLink() {
-
-    }
-
-    public VkModelLink(final JSONObject pObject) throws JSONException {
+    VkModelLink(final JSONObject pObject) throws JSONException {
         parse(pObject);
     }
 
@@ -28,11 +24,9 @@ public class VkModelLink extends VkAttachments.VkModelAttachments {
         mDescription = pObject.optString(Constants.Parser.DESCRIPTION);
         mImageSrc = pObject.optString(Constants.Parser.IMAGE_SRC);
         mPreviewPage = pObject.optString(Constants.Parser.PREVIEW_PAGE);
-
         if (pObject.has(Constants.Parser.PHOTO)){
             mVkModelPhoto = new VkModelPhoto(pObject.getJSONObject(Constants.Parser.PHOTO));
         }
-
         return this;
     }
 

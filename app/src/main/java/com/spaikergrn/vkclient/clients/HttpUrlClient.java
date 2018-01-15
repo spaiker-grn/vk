@@ -1,6 +1,6 @@
-package com.spaikergrn.vk_client.clients;
+package com.spaikergrn.vkclient.clients;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client;
+package com.spaikergrn.vkclient;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,7 +1,7 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.tools.ParseUtils;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.tools.ParseUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VkModelMessages extends VkModel implements Serializable {
+public class VkModelMessages implements Serializable, VkModel {
 
     private int mId;
     private int mUserId;
@@ -59,7 +59,6 @@ public class VkModelMessages extends VkModel implements Serializable {
         if (pObject.has(Constants.Parser.CHAT_ID)) {
             mChatId = pObject.optInt(Constants.Parser.CHAT_ID);
         }
-
         return this;
     }
 

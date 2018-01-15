@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.activity.fullscreenimageactivity;
+package com.spaikergrn.vkclient.activity.fullscreenimageactivity;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,15 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
-import com.spaikergrn.vk_client.R;
-import com.spaikergrn.vk_client.imageloader.ImageLoader;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.tools.LikesOnClickListener;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelPhoto;
+import com.spaikergrn.vkclient.R;
+import com.spaikergrn.vkclient.imageloader.ImageLoader;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.tools.LikesOnClickListener;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelPhoto;
 
 public class FullScreenImageViewActivity extends AppCompatActivity {
 
-    int PHOTO_LOADER = 1;
     ToggleButton mLikesToggleButton;
     ImageView mCommentsImageView;
     ImageView mFullScreenImageView;
@@ -28,7 +27,7 @@ public class FullScreenImageViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable final Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
-        setContentView(R.layout.full_sreen_image_view_activity);
+        setContentView(R.layout.activity_full_sreen_image_view);
 
         mPhotoSize = PreferenceManager
                 .getDefaultSharedPreferences(this)
@@ -39,8 +38,8 @@ public class FullScreenImageViewActivity extends AppCompatActivity {
         mFullScreenImageView = findViewById(R.id.full_screen_image_view);
 
         final Bundle bundle = new Bundle();
-        bundle.putString(Constants.PHOTO_LOADER, mPhotoId);
-        getSupportLoaderManager().initLoader(PHOTO_LOADER, bundle, mLoaderCallbacks).forceLoad();
+        bundle.putString(Constants.LoadersKeys.PHOTO_LOADER_BUNDLE, mPhotoId);
+        getSupportLoaderManager().initLoader(Constants.LoadersKeys.PHOTO_LOADER_ID, bundle, mLoaderCallbacks).forceLoad();
 
     }
 
@@ -50,7 +49,7 @@ public class FullScreenImageViewActivity extends AppCompatActivity {
         public Loader<VkModelPhoto> onCreateLoader(final int pId, final Bundle pArgs) {
 
             Loader<VkModelPhoto> photoLoader = null;
-            if (pId == PHOTO_LOADER) {
+            if (pId == Constants.LoadersKeys.PHOTO_LOADER_ID) {
                 photoLoader = new PhotoLoaderAsyncTask(FullScreenImageViewActivity.this, pArgs);
             }
             return photoLoader;

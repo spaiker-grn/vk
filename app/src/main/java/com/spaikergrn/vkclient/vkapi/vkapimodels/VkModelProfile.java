@@ -1,11 +1,11 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VkModelProfile extends VkModel {
+public class VkModelProfile implements VkModel {
 
     private String mFirstName;
     private String mLastName;
@@ -38,6 +38,7 @@ public class VkModelProfile extends VkModel {
         mBDateVisibility = pObject.optInt(Constants.Parser.BDATE_VISIBILITY);
         mHomeTown = pObject.optString(Constants.Parser.HOME_TOWN);
         final JSONObject country = pObject.optJSONObject(Constants.Parser.COUNTRY);
+
         if (country != null){
             mCountryId = country.optInt(Constants.Parser.ID);
             mCountryTitle = country.optString(Constants.Parser.TITLE);

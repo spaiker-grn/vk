@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.fragments.newsfragment;
+package com.spaikergrn.vkclient.fragments.newsfragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.spaikergrn.vk_client.R;
-import com.spaikergrn.vk_client.fragments.recyclersutils.ILoadMore;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelNewsFeeds;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelNewsPost;
+import com.spaikergrn.vkclient.R;
+import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsFeeds;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsPost;
 
 import java.util.List;
 

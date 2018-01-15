@@ -1,7 +1,6 @@
-package com.spaikergrn.vk_client.fragments.recyclersutils;
+package com.spaikergrn.vkclient.fragments.recyclersutils;
 
 public interface ILoadMore {
 
     void onLoadMore();
-
 }

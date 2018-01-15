@@ -1,10 +1,10 @@
-package com.spaikergrn.vk_client.vkapi.vkapimodels;
+package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public abstract class  VkModel {
+public interface VkModel {
 
-    public abstract VkModel parse(JSONObject pJSONObject) throws JSONException;
+    VkModel parse(JSONObject pJSONObject) throws JSONException;
 
 }

@@ -1,13 +1,13 @@
-package com.spaikergrn.vk_client.activity.fullscreenimageactivity;
+package com.spaikergrn.vkclient.activity.fullscreenimageactivity;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.vkapi.VkApiMethods;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelPhoto;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.vkapi.VkApiMethods;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelPhoto;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +21,7 @@ public class PhotoLoaderAsyncTask extends AsyncTaskLoader<VkModelPhoto> {
 
     PhotoLoaderAsyncTask(final Context pContext, final Bundle pBundle) {
         super(pContext);
-        mPhotoId = pBundle.getString(Constants.PHOTO_LOADER);
+        mPhotoId = pBundle.getString(Constants.LoadersKeys.PHOTO_LOADER_BUNDLE);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class PhotoLoaderAsyncTask extends AsyncTaskLoader<VkModelPhoto> {
             final JSONObject jsonObject = new JSONObject(string).getJSONArray(Constants.Parser.RESPONSE).getJSONObject(0);
             return new VkModelPhoto(jsonObject);
         } catch (InterruptedException | ExecutionException | JSONException | IOException pE) {
-            Log.e(Constants.ERROR, "Get photo byId run: ", pE);
+            Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         }
         return null;
     }

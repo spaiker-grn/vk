@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.activity;
+package com.spaikergrn.vkclient.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,12 +11,12 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.spaikergrn.vk_client.R;
-import com.spaikergrn.vk_client.activity.messagehistoryactivity.RecyclerAdapterMessageHistory;
-import com.spaikergrn.vk_client.loaders.LoaderUsersById;
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelMessages;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelUser;
+import com.spaikergrn.vkclient.R;
+import com.spaikergrn.vkclient.activity.messagehistoryactivity.RecyclerAdapterMessageHistory;
+import com.spaikergrn.vkclient.loaders.UsersByIdLoader;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelMessages;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelUser;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -47,15 +47,15 @@ public class ForwardMessagesActivity extends AppCompatActivity implements Loader
 
         final Bundle bundle = new Bundle();
         bundle.putIntegerArrayList(Constants.USERS_LIST_BUNDLE, usersList);
-        getSupportLoaderManager().initLoader(Constants.USERS_LOADER_BY_ID, bundle,this).forceLoad();
+        getSupportLoaderManager().initLoader(Constants.LoadersKeys.LOADER_USERS_BY_ID, bundle,this).forceLoad();
 
     }
 
     @Override
     public Loader<SparseArray<VkModelUser>> onCreateLoader(final int pId, final Bundle pArgs) {
         Loader<SparseArray<VkModelUser>> usersLoader = null;
-        if (pId == Constants.USERS_LOADER_BY_ID) {
-            usersLoader = new LoaderUsersById(this, pArgs);
+        if (pId == Constants.LoadersKeys.LOADER_USERS_BY_ID) {
+            usersLoader = new UsersByIdLoader(this, pArgs);
         }
         return usersLoader;
     }

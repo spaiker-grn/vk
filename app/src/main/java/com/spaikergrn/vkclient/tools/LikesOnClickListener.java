@@ -1,11 +1,11 @@
-package com.spaikergrn.vk_client.tools;
+package com.spaikergrn.vkclient.tools;
 
 import android.util.Log;
 import android.view.View;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.vkapi.VkApiMethods;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.ILikeAble;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.vkapi.VkApiMethods;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.ILikeAble;
 
 import org.json.JSONException;
 
@@ -28,7 +28,6 @@ public class LikesOnClickListener implements View.OnClickListener {
         mOwnerId = pOwnerId;
         mItemId = pItemId;
         mExecutorService = Executors.newFixedThreadPool(1);
-
     }
 
     @Override
@@ -51,7 +50,7 @@ public class LikesOnClickListener implements View.OnClickListener {
                     mLikeAble.setUserLike(false);
                 }
             } catch (IOException | InterruptedException | ExecutionException | JSONException pE) {
-                Log.e(Constants.ERROR, "Likes Runnable Error: ", pE);
+                Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
             }
 
         }

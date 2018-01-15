@@ -1,4 +1,4 @@
-package com.spaikergrn.vk_client.services;
+package com.spaikergrn.vkclient.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,9 +6,12 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.spaikergrn.vk_client.serviceclasses.Constants;
-import com.spaikergrn.vk_client.vkapi.VkApiMethods;
-import com.spaikergrn.vk_client.vkapi.vkapimodels.VkModelLongPollServer;
+import com.spaikergrn.vkclient.clients.HttpUrlClient;
+import com.spaikergrn.vkclient.clients.IHttpUrlClient;
+import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.tools.NetworkUtil;
+import com.spaikergrn.vkclient.vkapi.VkApiMethods;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelLongPollServer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,7 +63,7 @@ public class LongPollService extends Service {
                 final VkModelLongPollServer longPollServer = new VkModelLongPollServer(jsonObjectServer);
                 mTs = longPollServer.getTs();
                 do {
-                    s = VkApiMethods.getLongPollRequest(longPollServer.getServer(), longPollServer.getKey(), mTs);
+                    s = getLongPollRequest(longPollServer.getServer(), longPollServer.getKey(), mTs);
                     mJsonObjectPollRequest = new JSONObject(s);
                     mUpdatesArray = mJsonObjectPollRequest.getJSONArray(Constants.Parser.UPDATES);
 
@@ -75,7 +78,7 @@ public class LongPollService extends Service {
                             if (inOutFlag != OUT_FLAG) {
                                 getApplicationContext().startService(new Intent(getApplicationContext(), NotificationService.class));
                             }
-                            break;
+                            return;
                         }
                     }
                     mTs = mJsonObjectPollRequest.getString(Constants.Parser.TS);
@@ -84,10 +87,22 @@ public class LongPollService extends Service {
                 } while (!mJsonObjectPollRequest.has(Constants.Parser.FAILED));
 
             } catch (ExecutionException | IOException | InterruptedException | JSONException pE) {
-                Log.e(Constants.ERROR, "Long Poll Service ", pE);
-                //Todo: Check internet connection
-                startService(new Intent(getApplicationContext(), LongPollService.class));
+                Log.e(Constants.ERROR, "Long Poll Service: ", pE.getCause());
+                try {
+                    Thread.sleep(Constants.SLEEP_TIME);
+                } catch (final InterruptedException pEs) {
+                    Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
+                }
+                if (NetworkUtil.getConnectivityStatus(getApplicationContext())){
+                    startService(new Intent(getApplicationContext(), LongPollService.class));
+                }
             }
+        }
+
+        String getLongPollRequest(final String pServer, final String pKey, final String pRequest) throws IOException {
+            final IHttpUrlClient httpUrlClient = new HttpUrlClient();
+            final String URL = String.format(Constants.URL_BUILDER.LONG_POLL_RESPONSE, pServer, pKey, pRequest);
+            return httpUrlClient.getLongPollRequest(URL);
         }
     }
 }

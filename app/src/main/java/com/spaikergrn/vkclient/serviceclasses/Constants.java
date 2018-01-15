@@ -1,10 +1,12 @@
-package com.spaikergrn.vk_client.serviceclasses;
+package com.spaikergrn.vkclient.serviceclasses;
 
 public final class Constants {
 
     public static final String PARSE_ERROR_TAG = "Parse Error";
     public static final String MY_TAG = "myLog";
-    public static final String AUTHORIZATION_URL = "https://oauth.vk.com/authorize?client_id=6241224&display=mobile&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,photos,audio,video,pages,status,notes,messages,wall,groups,offline&response_type=token&v=5.68&state=123456";
+    public static final String AUTHORIZATION_URL = "https://oauth.vk.com/authorize?client_id=6241224&display=" +
+            "mobile&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,photos,audio,video,pages,status," +
+            "notes,messages,wall,groups,offline&response_type=token&v=5.68&state=123456";
     public static final String ACCESS_TOKEN = "access_token";
     public static final String FWD_MESSAGES = "Forward messages";
     public static final String WALL_POST = "Wall post";
@@ -13,12 +15,12 @@ public final class Constants {
     public static final String LANGUAGE = "ru";
     public static final String UTF_8 = "UTF-8";
     public static final String DELIMITER = ",";
-    public static final String ATTACHMENT = "Attachment ";
+    static final String ATTACHMENT = "Attachment ";
     public static final String ERROR_TO_SEND_MESSAGE = "Error to send message";
     public static final int COUNT_20 = 20;
     public static final String LONG_POLL_BROADCAST = "servicebackbroadcast";
     public static final String MTS_KEY = "mTsKey";
-    static final String AUDIO_URL = "audio_url";
+    public static final String AUDIO_URL = "audio_url";
     public static final String USERS_DB = "UsersDb";
     public static final String VK_CLIENT_DB = "vk_client.db";
     public static final String TABLE_TEMPLATE =
@@ -28,12 +30,17 @@ public final class Constants {
     public static final String HTTPS_VK_COM = "https://vk.com";
     public static final int VIBRATION_DURATIONS = 400;
     public static final String FULL_SCREEN_IMAGE_VIEW = "Image URL";
-    public static final String PHOTO_LOADER = "photo loader";
     public static final int HTTP_CLIENT_TIMEOUT = 40000;
     public static final String FORWARD_MESSAGES_INTENT = "forward messages intent";
-    public static final int USERS_LOADER_BY_ID = 1;
     public static final String USERS_LIST_BUNDLE = "Users list bundle";
-    public static final String ATTACHMENTS_DOC = "Attachments Doc";
+    public static final int SLEEP_TIME = 10000;
+    public static final String ANDROID_NET_CONN_CONNECTIVITY_CHANGE = "android.net.conn.CONNECTIVITY_CHANGE";
+    public static final String ANDROID_NET_WIFI_WIFI_STATE_CHANGED = "android.net.wifi.WIFI_STATE_CHANGED";
+    public static final String COULD_NOT_CONNECT_TO_INTERNET = "Could not Connect to internet";
+    public static final String VKMODELUSER_FIREBASE = "VkModelUser";
+    public static final String FILE_NOT_EXIST = "File not exist";
+    public static final String REFRESH_NEWS = "Refresh News";
+    public static final String REFRESH_DIALOGS = "Refresh Dialogs";
 
     public interface PreferencesKeys {
 
@@ -42,6 +49,30 @@ public final class Constants {
         String NOTIFICATIONS_NEW_MESSAGE_RINGTONE = "notifications_new_message_ringtone";
         String NOTIFICATIONS_NEW_MESSAGE_VIBRATE = "notifications_new_message_vibrate";
         String ENABLE_PHOTO = "enable_photo";
+        String PREFERENCES_PROFILE_INFO = "Preferences profile info";
+    }
+    public interface Db{
+
+        String TEXT = "TEXT";
+        String BIGINT = "BIGINT";
+        String INTEGER = "INTEGER";
+    }
+
+    public interface Tabs{
+
+        String PROFILE = "PROFILE";
+        String NEWS = "NEWS";
+        String MESSAGES = "MESSAGES";
+    }
+
+    public interface LoadersKeys{
+
+        String PHOTO_LOADER_BUNDLE = "photo loader bundle";
+        int LOADER_USERS_BY_ID = 1;
+        int NEWS_LOADER_ID = 2;
+        int DIALOGS_LOADER_ID = 3;
+        int HISTORY_MESSAGE_LOADER_ID = 4;
+        int PHOTO_LOADER_ID = 5;
     }
 
     public interface ImgLoader{
@@ -49,12 +80,10 @@ public final class Constants {
         String TEMP_IMAGE_POSTFIX = ".tmp";
         String HASH_ALGORITHM = "MD5";
         String IMG_CACHE_FOLDER = "imgcache";
-        String DO_IN_BACKGROUND = "doInBackground: ";
         String BITMAP_IS_NULL = "Bitmap is null";
     }
 
     public interface VkApiMethods {
-        String ONLINE_FRIENDS = "friends.getOnline";
         String NEWSFEED_GET = "newsfeed.get";
         String GET_DIALOGS = "messages.getDialogs";
         String GET_USER_BY_ID = "users.get";
@@ -216,7 +245,6 @@ public final class Constants {
         String HTTPS_OAUTH_VK = "https://oauth.vk.com/blank.html#access_token=";
         String COUNT = "count";
         String OFFSET = "offset";
-        String USER_IDS = "user_ids";
         String FIELDS = "fields";
         String PHOTO_50_PHOTO_100 = "photo_50, photo_100";
         String START_MESSAGE_ID = "start_message_id";
@@ -232,6 +260,7 @@ public final class Constants {
         int PERCENT_FROM_DISK_SIZE = 50;
         String STRING_VALUES_FOUR = "4";
         String STRING_VALUE_ONE = "1";
+        int VALUE_40 = 40;
     }
 
     public interface TIME {
