@@ -1,1 +1,1 @@
-# vk
+# vk-client
