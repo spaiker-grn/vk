@@ -21,7 +21,7 @@ public class VkModelMessages implements Serializable, VkModel {
     private boolean mOut;
     private String mTitle;
     private String mBody;
-    private VkAttachments mAttachments;
+    private VkAttachmentsI mAttachments;
     private List<VkModelMessages> mFwdMessages;
     private String mPhoto50;
     private int mCountMessagesHistory;
@@ -70,7 +70,7 @@ public class VkModelMessages implements Serializable, VkModel {
         mVkModelUser = pVkModelUser;
     }
 
-    public VkAttachments getAttachments() {
+    public VkAttachmentsI getAttachments() {
         return mAttachments;
     }
 
@@ -78,7 +78,7 @@ public class VkModelMessages implements Serializable, VkModel {
         return mFwdMessages;
     }
 
-    public void setAttachments(final VkAttachments pAttachments) {
+    public void setAttachments(final VkAttachmentsI pAttachments) {
         mAttachments = pAttachments;
     }
 

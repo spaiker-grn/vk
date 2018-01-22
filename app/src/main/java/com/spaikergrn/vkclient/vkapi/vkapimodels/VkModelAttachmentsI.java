@@ -1,5 +1,8 @@
 package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
-interface VkModelAttachmentsI {
+import java.io.Serializable;
 
+public interface VkModelAttachmentsI extends Serializable, VkModel {
+
+    String getType();
 }

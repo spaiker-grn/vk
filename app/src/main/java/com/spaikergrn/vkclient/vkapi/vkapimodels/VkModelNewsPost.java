@@ -2,6 +2,8 @@ package com.spaikergrn.vkclient.vkapi.vkapimodels;
 
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.ParseUtils;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkAttachmentsK;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelCopyHistoryPostK;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,7 +19,8 @@ public class VkModelNewsPost implements ILikeAble, VkModel {
     private int mPostID;
     private String mPostType;
     private String mText;
-    private VkAttachments mVkAttachments;
+    //private VkAttachments mVkAttachments;
+    private VkAttachmentsK mVkAttachments;
     private int mCommentsCount;
     private boolean mCanPostComment;
     private int mLikesCount;
@@ -29,7 +32,7 @@ public class VkModelNewsPost implements ILikeAble, VkModel {
     private int mViewsCount;
     private VkModelGroup mVkModelGroup;
     private VkModelUser mVkModelUser;
-    private List<VkModelCopyHistoryPost> mCopyHistory;
+    private List<VkModelCopyHistoryPostK> mCopyHistory;
 
     VkModelNewsPost(final JSONObject pJSONObject) throws JSONException {
         parse(pJSONObject);
@@ -43,7 +46,8 @@ public class VkModelNewsPost implements ILikeAble, VkModel {
         mPostType = pJSONObject.getString(Constants.Parser.POST_TYPE);
         mText = pJSONObject.getString(Constants.Parser.TEXT);
         if (pJSONObject.has(Constants.Parser.ATTACHMENTS)) {
-            mVkAttachments = new VkAttachments(pJSONObject.getJSONArray(Constants.Parser.ATTACHMENTS));
+            mVkAttachments = new VkAttachmentsK(pJSONObject.getJSONArray(Constants.Parser.ATTACHMENTS));
+            //mVkAttachments = new VkAttachments(pJSONObject.getJSONArray(Constants.Parser.ATTACHMENTS));
         }
 
         final JSONObject comments = pJSONObject.optJSONObject(Constants.Parser.COMMENTS);
@@ -68,7 +72,7 @@ public class VkModelNewsPost implements ILikeAble, VkModel {
         if (copyHistory != null) {
             mCopyHistory = new ArrayList<>();
             for (int i = 0; i < copyHistory.length(); i++) {
-                mCopyHistory.add(new VkModelCopyHistoryPost(copyHistory.optJSONObject(i)));
+                mCopyHistory.add(new VkModelCopyHistoryPostK(copyHistory.optJSONObject(i)));
             }
         }
         return this;
@@ -114,11 +118,11 @@ public class VkModelNewsPost implements ILikeAble, VkModel {
         mText = pText;
     }
 
-    public VkAttachments getVkAttachments() {
+    public VkAttachmentsK getVkAttachments() {
         return mVkAttachments;
     }
 
-    public void setVkAttachments(final VkAttachments pVkAttachments) {
+    public void setVkAttachments(final VkAttachmentsK pVkAttachments) {
         mVkAttachments = pVkAttachments;
     }
 
@@ -210,11 +214,11 @@ public class VkModelNewsPost implements ILikeAble, VkModel {
         mViewsCount = pViewsCount;
     }
 
-    public List<VkModelCopyHistoryPost> getCopyHistory() {
+    public List<VkModelCopyHistoryPostK> getCopyHistory() {
         return mCopyHistory;
     }
 
-    public void setCopyHistory(final List<VkModelCopyHistoryPost> pCopyHistory) {
+    public void setCopyHistory(final List<VkModelCopyHistoryPostK> pCopyHistory) {
         mCopyHistory = pCopyHistory;
     }
 

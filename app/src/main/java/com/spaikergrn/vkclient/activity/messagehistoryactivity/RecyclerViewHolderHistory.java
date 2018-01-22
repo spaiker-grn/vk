@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.imageloader.ImageLoader;
 import com.spaikergrn.vkclient.serviceclasses.AttachmentsFill;
+import com.spaikergrn.vkclient.serviceclasses.AttachmentsFillK;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.serviceclasses.ProfileInfoHolder;
 import com.spaikergrn.vkclient.tools.ForwardMessagesOnClickListener;

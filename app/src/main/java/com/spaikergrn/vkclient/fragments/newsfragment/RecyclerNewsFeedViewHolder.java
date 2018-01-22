@@ -15,6 +15,7 @@ import android.widget.ToggleButton;
 import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.imageloader.ImageLoader;
 import com.spaikergrn.vkclient.serviceclasses.AttachmentsFill;
+import com.spaikergrn.vkclient.serviceclasses.AttachmentsFillK;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.LikesOnClickListener;
 import com.spaikergrn.vkclient.tools.TimesUtils;
@@ -24,6 +25,7 @@ import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelGroup;
 import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsFeeds;
 import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsPost;
 import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelUser;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelCopyHistoryPostK;
 
 class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
 
@@ -71,6 +73,7 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
     void bind(final VkModelNewsPost pVkModelNewsPost) {
 
         final AttachmentsFill attachmentsFill = new AttachmentsFill(mContext);
+        final AttachmentsFillK attachmentsFillK = new AttachmentsFillK(mContext);
         mLinearLayoutAttachments.removeAllViews();
         mCopyHistoryLLAttachments.removeAllViews();
         mLikesToggleButton.setOnClickListener(new LikesOnClickListener(pVkModelNewsPost.getPostType(),
@@ -101,7 +104,7 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
 
         if (pVkModelNewsPost.getCopyHistory() != null) {
             mCopyHistory.setVisibility(View.VISIBLE);
-            final VkModelCopyHistoryPost vkModelPostHistory = pVkModelNewsPost.getCopyHistory().get(0);
+            final VkModelCopyHistoryPostK vkModelPostHistory = pVkModelNewsPost.getCopyHistory().get(0);
             if (!vkModelPostHistory.getText().equals(Constants.Parser.EMPTY_STRING)) {
                 mCopyHistoryTextTextView.setVisibility(View.VISIBLE);
                 mCopyHistoryTextTextView.setText(vkModelPostHistory.getText());
@@ -115,10 +118,9 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
                 final VkModelUser vkModelUser = mVkModelNewsFeeds.getUserMap().get(vkModelPostHistory.getFromId());
                 mCopyHistoryNameTextView.setText(vkModelUser.getFullName());
             }
-
-            attachmentsFill.inflateAttachments(vkModelPostHistory.getVkAttachments(), mLinearLayoutAttachments, mWidth, mInflater, mContext, SCALE);
+            attachmentsFillK.inflateAttachments(vkModelPostHistory.getVkAttachmentsI(), mLinearLayoutAttachments, mWidth, mInflater, mContext, SCALE);
         }
-        attachmentsFill.inflateAttachments(pVkModelNewsPost.getVkAttachments(), mLinearLayoutAttachments, mWidth, mInflater, mContext, SCALE);
+        attachmentsFillK.inflateAttachments(pVkModelNewsPost.getVkAttachments(), mLinearLayoutAttachments, mWidth, mInflater, mContext, SCALE);
     }
 
     private int getWidthCardView(final Context pContext) {

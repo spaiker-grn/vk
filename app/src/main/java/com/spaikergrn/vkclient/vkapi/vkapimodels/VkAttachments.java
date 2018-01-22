@@ -7,15 +7,15 @@ import com.spaikergrn.vkclient.serviceclasses.Constants;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VkAttachments implements Serializable {
+public class VkAttachments implements VkAttachmentsI {
 
-    private List<VkModelAttachments> mAttachmentsList;
+    private List<VkModelAttachmentsI> mAttachmentsList;
 
-    public List<VkModelAttachments> getAttachmentsList() {
+    @Override
+    public List<VkModelAttachmentsI> getAttachmentsList() {
         return mAttachmentsList;
     }
 
@@ -32,11 +32,11 @@ public class VkAttachments implements Serializable {
             mAttachmentsList = new ArrayList<>();
             for (int i = 0; i < pArray.length(); i++) {
 
-                final VkModelAttachments vkModelAttachments;
+                final VkModelAttachmentsI vkModelAttachmentsI;
                 try {
-                    vkModelAttachments = parseObject(pArray.getJSONObject(i));
-                    if (vkModelAttachments != null) {
-                        mAttachmentsList.add(vkModelAttachments);
+                    vkModelAttachmentsI = parseObject(pArray.getJSONObject(i));
+                    if (vkModelAttachmentsI != null) {
+                        mAttachmentsList.add(vkModelAttachmentsI);
                     }
                 } catch (final Exception pE) {
 
@@ -46,7 +46,7 @@ public class VkAttachments implements Serializable {
         }
     }
 
-    private VkModelAttachments parseObject(final JSONObject pAttachment) throws Exception {
+    private VkModelAttachmentsI parseObject(final JSONObject pAttachment) throws Exception {
         final String type = pAttachment.optString(Constants.Parser.TYPE);
 
         if (Constants.Parser.TYPE_PHOTO.equals(type)) {
@@ -74,8 +74,7 @@ public class VkAttachments implements Serializable {
         return null;
     }
 
-    public interface VkModelAttachments extends Serializable, VkModel {
-         String getType();
-    }
+    public interface VkModelAttachments extends VkModelAttachmentsI {
 
+    }
 }

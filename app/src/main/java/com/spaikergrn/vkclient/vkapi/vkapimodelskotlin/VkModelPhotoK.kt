@@ -6,52 +6,58 @@ import com.spaikergrn.vkclient.tools.ParseUtils.parseBoolean
 import com.spaikergrn.vkclient.tools.ParseUtils.parseInt
 import org.json.JSONObject
 
-class VkModelPhotoK : VkModelK {
+ class VkModelPhotoK(jsonObject: JSONObject) : VkAttachmentsK.VkModelAttachments {
 
-    private var mId: Int = 0
-    private var mAlbumId: Int = 0
-    private var mOwnerId: Int = 0
-    private var mWidth: Int = 0
-    private var mHeight: Int = 0
-    private var mText: String? = null
-    private var mDate: Long = 0
-    private var mPhoto75: String? = null
-    private var mPhoto130: String? = null
-    private var mPhoto604: String? = null
-    private var mPhoto807: String? = null
-    private var mPhoto1280: String? = null
-    private var mPhoto2560: String? = null
-    private var mUserLikes: Boolean = false
-    private var mCanComment: Boolean = false
-    private var mLikes: Int = 0
-    private var mComments: Int = 0
-    private var mTags: Int = 0
-    private var mAccessKey: String? = null
+    override fun getType(): String = Constants.Parser.TYPE_PHOTO
 
-    override fun parse(pJSONObject: JSONObject): VkModelK {
+    init {
+        parse(jsonObject)
+    }
 
-        mAlbumId = pJSONObject.optInt(Constants.Parser.ALBUM_ID)
-        mDate = pJSONObject.optLong(Constants.Parser.DATE)
-        mHeight = pJSONObject.optInt(Constants.Parser.HEIGHT)
-        mWidth = pJSONObject.optInt(Constants.Parser.WIDTH)
-        mOwnerId = pJSONObject.optInt(Constants.Parser.OWNER_ID)
-        mId = pJSONObject.optInt(Constants.Parser.ID)
-        mText = pJSONObject.optString(Constants.Parser.TEXT)
-        mAccessKey = pJSONObject.optString(Constants.Parser.ACCESS_KEY)
+    var id: Int = 0
+    var albumId: Int = 0
+    var ownerId: Int = 0
+    var width: Int = 0
+    var height: Int = 0
+    var text: String? = null
+    var date: Long = 0
+    var photo75: String? = null
+    var photo130: String? = null
+    var photo604: String? = null
+    var photo807: String? = null
+    var photo1280: String? = null
+    var photo2560: String? = null
+    var userLikes: Boolean = false
+    var canComment: Boolean = false
+    var likes: Int = 0
+    var comments: Int = 0
+    var tags: Int = 0
+    var accessKey: String? = null
 
-        mPhoto75 = pJSONObject.optString(Constants.Parser.PHOTO_75)
-        mPhoto130 = pJSONObject.optString(Constants.Parser.PHOTO_130)
-        mPhoto604 = pJSONObject.optString(Constants.Parser.PHOTO_604)
-        mPhoto807 = pJSONObject.optString(Constants.Parser.PHOTO_807)
-        mPhoto1280 = pJSONObject.optString(Constants.Parser.PHOTO_1280)
-        mPhoto2560 = pJSONObject.optString(Constants.Parser.PHOTO_2560)
+    override fun parse(pJSONObject: JSONObject) : VkModelPhotoK  {
+
+        albumId = pJSONObject.optInt(Constants.Parser.ALBUM_ID)
+        date = pJSONObject.optLong(Constants.Parser.DATE)
+        height = pJSONObject.optInt(Constants.Parser.HEIGHT)
+        width = pJSONObject.optInt(Constants.Parser.WIDTH)
+        ownerId = pJSONObject.optInt(Constants.Parser.OWNER_ID)
+        id = pJSONObject.optInt(Constants.Parser.ID)
+        text = pJSONObject.optString(Constants.Parser.TEXT)
+        accessKey = pJSONObject.optString(Constants.Parser.ACCESS_KEY)
+
+        photo75 = pJSONObject.optString(Constants.Parser.PHOTO_75)
+        photo130 = pJSONObject.optString(Constants.Parser.PHOTO_130)
+        photo604 = pJSONObject.optString(Constants.Parser.PHOTO_604)
+        photo807 = pJSONObject.optString(Constants.Parser.PHOTO_807)
+        photo1280 = pJSONObject.optString(Constants.Parser.PHOTO_1280)
+        photo2560 = pJSONObject.optString(Constants.Parser.PHOTO_2560)
 
         val jsonLikes = pJSONObject.optJSONObject(Constants.Parser.LIKES)
-        mLikes = parseInt(jsonLikes, Constants.Parser.COUNT)
-        mUserLikes = parseBoolean(jsonLikes, Constants.Parser.USER_LIKES)
-        mComments = parseInt(pJSONObject.optJSONObject(Constants.Parser.COMMENTS), Constants.Parser.COUNT)
-        mTags = parseInt(pJSONObject.optJSONObject(Constants.Parser.TAGS), Constants.Parser.COUNT)
-        mCanComment = parseBoolean(pJSONObject, Constants.Parser.CAN_COMMENT)
+        likes = parseInt(jsonLikes, Constants.Parser.COUNT)
+        userLikes = parseBoolean(jsonLikes, Constants.Parser.USER_LIKES)
+        comments = parseInt(pJSONObject.optJSONObject(Constants.Parser.COMMENTS), Constants.Parser.COUNT)
+        tags = parseInt(pJSONObject.optJSONObject(Constants.Parser.TAGS), Constants.Parser.COUNT)
+        canComment = parseBoolean(pJSONObject, Constants.Parser.CAN_COMMENT)
         return this@VkModelPhotoK
     }
 
@@ -60,23 +66,23 @@ class VkModelPhotoK : VkModelK {
         val size = if (pSize == Constants.Parser.EMPTY_STRING) Constants.Parser.PHOTO_604 else pSize
 
         when (size) {
-            Constants.Parser.PHOTO_1280 -> return if (!TextUtils.isEmpty(mPhoto1280)) {
-                mPhoto1280
+            Constants.Parser.PHOTO_1280 -> return if (!TextUtils.isEmpty(photo1280)) {
+                photo1280
             } else {
                 getPhotoBySize(Constants.Parser.PHOTO_807)
             }
-            Constants.Parser.PHOTO_807 -> return if (!TextUtils.isEmpty(mPhoto807)) {
-                mPhoto807
+            Constants.Parser.PHOTO_807 -> return if (!TextUtils.isEmpty(photo807)) {
+                photo807
             } else {
                 getPhotoBySize(Constants.Parser.PHOTO_604)
             }
-            Constants.Parser.PHOTO_604 -> return if (!TextUtils.isEmpty(mPhoto604)) {
-                mPhoto604
+            Constants.Parser.PHOTO_604 -> return if (!TextUtils.isEmpty(photo604)) {
+                photo604
             } else {
                 getPhotoBySize(Constants.Parser.PHOTO_130)
             }
-            Constants.Parser.PHOTO_130 -> if (!TextUtils.isEmpty(mPhoto130)) {
-                return mPhoto130
+            Constants.Parser.PHOTO_130 -> if (!TextUtils.isEmpty(photo130)) {
+                return photo130
             }
         }
         return null
@@ -85,8 +91,8 @@ class VkModelPhotoK : VkModelK {
     fun getSmallPhotoForNews(): String? {
 
         return when {
-            (mPhoto604 != Constants.Parser.EMPTY_STRING) -> mPhoto604
-            (mPhoto130 != Constants.Parser.EMPTY_STRING) -> mPhoto130
+            (!TextUtils.isEmpty(photo604)) -> photo604
+            (!TextUtils.isEmpty(photo130)) -> photo130
             else -> null
         }
     }

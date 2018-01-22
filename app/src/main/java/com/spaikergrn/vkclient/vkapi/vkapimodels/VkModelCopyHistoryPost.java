@@ -13,7 +13,7 @@ public class VkModelCopyHistoryPost implements VkModel {
     private long mDate;
     private String mText;
     private String mType;
-    private VkAttachments mVkAttachments;
+    private VkAttachmentsI mVkAttachmentsI;
 
     VkModelCopyHistoryPost(final JSONObject pJSONObject) throws JSONException {
         parse(pJSONObject);
@@ -29,7 +29,7 @@ public class VkModelCopyHistoryPost implements VkModel {
         mType = pJSONObject.optString(Constants.Parser.POST_TYPE);
         mText = pJSONObject.optString(Constants.Parser.TEXT);
         if (pJSONObject.has(Constants.Parser.ATTACHMENTS)) {
-            mVkAttachments = new VkAttachments(pJSONObject.getJSONArray(Constants.Parser.ATTACHMENTS));
+            mVkAttachmentsI = new VkAttachments(pJSONObject.getJSONArray(Constants.Parser.ATTACHMENTS));
         }
         return this;
     }
@@ -82,11 +82,11 @@ public class VkModelCopyHistoryPost implements VkModel {
         mType = pType;
     }
 
-    public VkAttachments getVkAttachments() {
-        return mVkAttachments;
+    public VkAttachmentsI getVkAttachments() {
+        return mVkAttachmentsI;
     }
 
-    public void setVkAttachments(final VkAttachments pVkAttachments) {
-        mVkAttachments = pVkAttachments;
+    public void setVkAttachments(final VkAttachmentsI pVkAttachmentsI) {
+        mVkAttachmentsI = pVkAttachmentsI;
     }
 }

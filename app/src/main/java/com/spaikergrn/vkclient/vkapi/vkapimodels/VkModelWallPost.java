@@ -30,7 +30,7 @@ public class VkModelWallPost implements VkAttachments.VkModelAttachments {
     private boolean mUserReposted;
     private String mPostType;
     private int mViewsCount;
-    private VkAttachments mAttachments;
+    private VkAttachmentsI mAttachments;
     private int mSignerId;
     private List<VkModelWallPost> mCopyHistory = new ArrayList<>();
     private VkModelGroup mVkModelGroup;
@@ -248,11 +248,11 @@ public class VkModelWallPost implements VkAttachments.VkModelAttachments {
         mPostType = pPostType;
     }
 
-    public VkAttachments getAttachments() {
+    public VkAttachmentsI getAttachments() {
         return mAttachments;
     }
 
-    public void setAttachments(final VkAttachments pAttachments) {
+    public void setAttachments(final VkAttachmentsI pAttachments) {
         mAttachments = pAttachments;
     }
 

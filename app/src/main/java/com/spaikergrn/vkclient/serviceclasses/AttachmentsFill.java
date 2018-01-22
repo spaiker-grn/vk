@@ -24,6 +24,8 @@ import com.spaikergrn.vkclient.activity.fullscreenimageactivity.FullScreenImageV
 import com.spaikergrn.vkclient.imageloader.ImageLoader;
 import com.spaikergrn.vkclient.services.MediaPlayerService;
 import com.spaikergrn.vkclient.vkapi.vkapimodels.VkAttachments;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkAttachmentsI;
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelAttachmentsI;
 import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelAudio;
 import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelGift;
 import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelLink;
@@ -35,11 +37,12 @@ import java.util.List;
 
 public final class AttachmentsFill {
 
-    public static final int GIFT_SIZE_IN_DP = 120;
+    private static final int GIFT_SIZE_IN_DP = 120;
     private final boolean sIsLoadPhoto;
     private final String sPhotoSize;
 
     public AttachmentsFill(final Context pContext) {
+
         sPhotoSize = PreferenceManager
                 .getDefaultSharedPreferences(pContext)
                 .getString(Constants.PreferencesKeys.PHOTO_SIZE, Constants.Parser.EMPTY_STRING);
@@ -49,7 +52,7 @@ public final class AttachmentsFill {
                 .getBoolean(Constants.PreferencesKeys.ENABLE_PHOTO, true);
     }
 
-    public void inflateAttachments(final VkAttachments pVkModelAttachment,
+    public void inflateAttachments(final VkAttachmentsI pVkModelAttachment,
                                    final LinearLayout pParentLinearLayout, final int pWidth,
                                    final LayoutInflater pInflater, final Context pContext, final int pScale) {
 
@@ -58,7 +61,8 @@ public final class AttachmentsFill {
         }
 
         String type;
-        final List<VkAttachments.VkModelAttachments> pVkAttachmentsList = pVkModelAttachment.getAttachmentsList();
+
+        final List<VkModelAttachmentsI> pVkAttachmentsList = pVkModelAttachment.getAttachmentsList();
 
         for (int i = 0; i < pVkAttachmentsList.size(); i++) {
             type = pVkAttachmentsList.get(i).getType();
@@ -124,7 +128,7 @@ public final class AttachmentsFill {
         }
     }
 
-    private static void inflateSticker(final VkAttachments.VkModelAttachments pVkModelAttachments,
+    private static void inflateSticker(final VkModelAttachmentsI pVkModelAttachments,
                                        final LinearLayout mParentLinearLayout, final Context pContext) {
 
         final VkModelSticker vkModelSticker = (VkModelSticker) pVkModelAttachments;
@@ -138,7 +142,7 @@ public final class AttachmentsFill {
         ImageLoader.with(pContext).load(vkModelSticker.getPhoto352()).into(imageView);
     }
 
-    private static void inflateGift(final VkAttachments.VkModelAttachments pVkModelAttachments,
+    private static void inflateGift(final VkModelAttachmentsI pVkModelAttachments,
                                     final LinearLayout mParentLinearLayout, final Context pContext) {
 
         final VkModelGift vkModelGift = (VkModelGift) pVkModelAttachments;
@@ -151,7 +155,7 @@ public final class AttachmentsFill {
         ImageLoader.with(pContext).load(vkModelGift.getThumb256()).into(imageView);
     }
 
-    private void inflateImage(final VkAttachments.VkModelAttachments pVkModelAttachments,
+    private void inflateImage(final VkModelAttachmentsI pVkModelAttachments,
                               final LinearLayout mParentLinearLayout, final int pWidth, final Context pContext, final int pScale) {
 
         if (!sIsLoadPhoto) {
@@ -184,7 +188,7 @@ public final class AttachmentsFill {
         }
     }
 
-    private void inflateVideo(final VkAttachments.VkModelAttachments pVkModelAttachments,
+    private void inflateVideo(final VkModelAttachmentsI pVkModelAttachments,
                               final LinearLayout mParentLinearLayout, final int pWidth, final Context pContext, final int pScale) {
 
         final VkModelVideo vkModelVideo = (VkModelVideo) pVkModelAttachments;
@@ -225,7 +229,7 @@ public final class AttachmentsFill {
         }
     }
 
-    private void inflateAudio(final VkAttachments.VkModelAttachments pVkModelAttachments, final LinearLayout mParentLinearLayout,
+    private void inflateAudio(final VkModelAttachmentsI pVkModelAttachments, final LinearLayout mParentLinearLayout,
                               final LayoutInflater pInflater, final Context pContext) {
 
         final VkModelAudio vkModelAudio = (VkModelAudio) pVkModelAttachments;
@@ -250,7 +254,7 @@ public final class AttachmentsFill {
         mParentLinearLayout.addView(view);
     }
 
-    private void inflateLink(final VkAttachments.VkModelAttachments pVkModelAttachments,
+    private void inflateLink(final VkModelAttachmentsI pVkModelAttachments,
                              final LinearLayout mParentLinearLayout, final int pWidth, final Context pContext) {
 
         final VkModelLink vkModelLink = (VkModelLink) pVkModelAttachments;
@@ -284,7 +288,7 @@ public final class AttachmentsFill {
         mParentLinearLayout.addView(linkTextView);
     }
 
-    private void inflateDoc(final VkAttachments.VkModelAttachments pVkModelAttachments,
+    private void inflateDoc(final VkModelAttachmentsI pVkModelAttachments,
                             final LinearLayout mParentLinearLayout, final Context pContext) {
         final TextView textView = new TextView(pContext);
         final LinearLayout.LayoutParams paramsTextView = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -300,7 +304,7 @@ public final class AttachmentsFill {
         mParentLinearLayout.addView(textView);
     }
 
-    private void inflateWall(final VkAttachments.VkModelAttachments pVkModelAttachments,
+    private void inflateWall(final VkModelAttachmentsI pVkModelAttachments,
                              final LinearLayout mParentLinearLayout, final Context pContext) {
         final TextView textView = new TextView(pContext);
         final LinearLayout.LayoutParams paramsTextView = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
