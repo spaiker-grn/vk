@@ -8,18 +8,18 @@ import android.view.ViewGroup;
 
 import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelDialog;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelDialogK;
 
 import java.util.List;
 
 class RecyclerAdapterDialogs extends RecyclerView.Adapter<RecyclerDialogsViewHolder> {
 
-    private final List<VkModelDialog> mDialogsList;
+    private final List<VkModelDialogK> mDialogsList;
     private ILoadMore mILoadMore;
     private boolean mIsLoading;
     private final LinearLayoutManager mLinearLayoutManager;
 
-    RecyclerAdapterDialogs(final RecyclerView pRecyclerView, final List<VkModelDialog> pModelDialogsList) {
+    RecyclerAdapterDialogs(final RecyclerView pRecyclerView, final List<VkModelDialogK> pModelDialogsList) {
         mDialogsList = pModelDialogsList;
         mLinearLayoutManager = (LinearLayoutManager) pRecyclerView.getLayoutManager();
         pRecyclerView.addOnScrollListener(mOnScrollListener);

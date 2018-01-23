@@ -8,21 +8,21 @@ import android.view.ViewGroup;
 
 import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsFeeds;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsPost;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelNewsFeedsK;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelNewsPostK;
 
 import java.util.List;
 
 public class RecyclerAdapterNewsFeed extends RecyclerView.Adapter<RecyclerNewsFeedViewHolder> {
 
-    private final List<VkModelNewsPost> mVkModelNewsPosts;
-    private VkModelNewsFeeds mVkModelNewsFeeds;
+    private final List<VkModelNewsPostK> mVkModelNewsPosts;
+    private final VkModelNewsFeedsK mVkModelNewsFeeds;
     private final NewsFragment mNewsFragment;
     private ILoadMore mILoadMore;
     private boolean mIsLoading;
     private final LinearLayoutManager mLinearLayoutManager;
 
-    RecyclerAdapterNewsFeed(final NewsFragment pNewsFragment, final RecyclerView pRecyclerView, final VkModelNewsFeeds pVkModelNewsFeeds) {
+    RecyclerAdapterNewsFeed(final NewsFragment pNewsFragment, final RecyclerView pRecyclerView, final VkModelNewsFeedsK pVkModelNewsFeeds) {
         mNewsFragment = pNewsFragment;
         mVkModelNewsFeeds = pVkModelNewsFeeds;
         mVkModelNewsPosts = pVkModelNewsFeeds.getVkModelNewsPosts();

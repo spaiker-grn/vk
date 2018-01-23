@@ -6,7 +6,7 @@ import com.spaikergrn.vkclient.tools.ParseUtils.parseBoolean
 import com.spaikergrn.vkclient.tools.ParseUtils.parseInt
 import org.json.JSONObject
 
- class VkModelPhotoK(jsonObject: JSONObject) : VkAttachmentsK.VkModelAttachments {
+ class VkModelPhotoK(jsonObject: JSONObject) : VkAttachmentsK.VkModelAttachments, ILikeAbleK {
 
     override fun getType(): String = Constants.Parser.TYPE_PHOTO
 
@@ -96,4 +96,12 @@ import org.json.JSONObject
             else -> null
         }
     }
+
+     override fun setUserLike(pUserLike: Boolean) {
+         userLikes = pUserLike
+     }
+
+     override fun getUserLike(): Boolean {
+         return userLikes
+     }
 }

@@ -10,8 +10,8 @@ import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.GetUsersHelper;
 import com.spaikergrn.vkclient.tools.ParseUtils;
 import com.spaikergrn.vkclient.vkapi.VkApiMethods;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelDialog;
 import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelUser;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelDialogK;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +23,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialog>>  {
+public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialogK>>  {
 
     private int mStartMessageId;
     private int mCount;
@@ -38,9 +38,9 @@ public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialog>
     }
 
     @Override
-    public List<VkModelDialog> loadInBackground() {
+    public List<VkModelDialogK> loadInBackground() {
 
-        List<VkModelDialog> vkModelDialogList = null;
+        List<VkModelDialogK> vkModelDialogList = null;
         final LinkedHashSet<Integer> userId = new LinkedHashSet<>();
         final SparseArray<VkModelUser> vkModelUserMap;
 
@@ -51,7 +51,7 @@ public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialog>
             assert itemsArray != null;
             vkModelDialogList = new ArrayList<>();
             for (int i = 0; i < itemsArray.length(); i++) {
-                final VkModelDialog vkModelDialog = new VkModelDialog(itemsArray.getJSONObject(i));
+                final VkModelDialogK vkModelDialog = new VkModelDialogK(itemsArray.getJSONObject(i));
                 vkModelDialog.setDialogsCount(DIALOGS_SIZE);
                 vkModelDialogList.add(vkModelDialog);
                 userId.add(vkModelDialog.getMessages().getUserId());

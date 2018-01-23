@@ -11,7 +11,7 @@ import com.spaikergrn.vkclient.clients.IHttpUrlClient;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.NetworkUtil;
 import com.spaikergrn.vkclient.vkapi.VkApiMethods;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelLongPollServer;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelLongPollServerK;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,7 +60,7 @@ public class LongPollService extends Service {
 
             try {
                 final JSONObject jsonObjectServer = new JSONObject(VkApiMethods.getLongPollServer());
-                final VkModelLongPollServer longPollServer = new VkModelLongPollServer(jsonObjectServer);
+                final VkModelLongPollServerK longPollServer = new VkModelLongPollServerK(jsonObjectServer);
                 mTs = longPollServer.getTs();
                 do {
                     s = getLongPollRequest(longPollServer.getServer(), longPollServer.getKey(), mTs);

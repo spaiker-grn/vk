@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.vkapi.VkApiMethods;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsFeeds;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelNewsFeedsK;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,9 +15,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-public class ParsingNewsAsyncTask extends AsyncTaskLoader<VkModelNewsFeeds> {
+public class ParsingNewsAsyncTask extends AsyncTaskLoader<VkModelNewsFeedsK> {
 
-    private VkModelNewsFeeds mVkModelNewsFeeds;
+    private VkModelNewsFeedsK mVkModelNewsFeeds;
     private final String mStartFrom;
 
     ParsingNewsAsyncTask(final Context pContext, final Bundle pBundle) {
@@ -28,11 +28,11 @@ public class ParsingNewsAsyncTask extends AsyncTaskLoader<VkModelNewsFeeds> {
 
 
     @Override
-    public VkModelNewsFeeds loadInBackground() {
+    public VkModelNewsFeedsK loadInBackground() {
 
         try {
             final String request = VkApiMethods.getNews(mStartFrom);
-            mVkModelNewsFeeds = new VkModelNewsFeeds(new JSONObject(request));
+            mVkModelNewsFeeds = new VkModelNewsFeedsK(new JSONObject(request));
         } catch (InterruptedException | ExecutionException | IOException | JSONException pE) {
             Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         }

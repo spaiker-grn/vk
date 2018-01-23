@@ -5,14 +5,11 @@ import com.spaikergrn.vkclient.db.annotations.dbInteger;
 import com.spaikergrn.vkclient.db.annotations.dbString;
 import com.spaikergrn.vkclient.db.annotations.dbTable;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
-import com.spaikergrn.vkclient.vkapi.VkApiMethods;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.concurrent.ExecutionException;
 @IgnoreExtraProperties
 @dbTable("UsersDb")
 public class VkModelUser implements Serializable, VkModel {

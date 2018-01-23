@@ -12,7 +12,7 @@ import com.spaikergrn.vkclient.imageloader.ImageLoader;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.serviceclasses.ProfileInfoHolder;
 import com.spaikergrn.vkclient.tools.TimesUtils;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelDialog;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelDialogK;
 
 class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
 
@@ -37,7 +37,7 @@ class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
         mProfileImageView = pItemView.findViewById(R.id.card_message_profile_image_view);
     }
 
-    void bind(final VkModelDialog pVkModelDialog) {
+    void bind(final VkModelDialogK pVkModelDialog) {
 
         final String emptyString = Constants.Parser.EMPTY_STRING;
         final int colorWhite = mContext.getResources().getColor(R.color.colorWhite);
@@ -86,11 +86,11 @@ class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
             mLastMessageTextView.setText(pVkModelDialog.getMessages().getBody());   //Set empty body
         }
 
-        if (pVkModelDialog.getMessages().isReadState()) {      //Check readied message or not and set backgrounds
+        if (pVkModelDialog.getMessages().getReadState()) {      //Check readied message or not and set backgrounds
             mLayout.setBackgroundColor(colorWhite);
             mLastMessageTextView.setBackgroundColor(colorWhite);
         } else {
-            if (pVkModelDialog.getMessages().isOut()) {
+            if (pVkModelDialog.getMessages().getOut()) {
                 mLastMessageTextView.setBackgroundColor(colorLightGrey);
                 mLayout.setBackgroundColor(colorWhite);
             } else {
@@ -99,7 +99,7 @@ class RecyclerDialogsViewHolder extends RecyclerView.ViewHolder {
             }
         }
 
-        if (pVkModelDialog.getMessages().isOut()) {   //Check set small profile_image or not
+        if (pVkModelDialog.getMessages().getOut()) {   //Check set small profile_image or not
             mOutImageView.setVisibility(View.VISIBLE);
             ImageLoader.with(mContext).load(ProfileInfoHolder.getVkModelUser().getPhoto50()).into(mOutImageView);
         } else {

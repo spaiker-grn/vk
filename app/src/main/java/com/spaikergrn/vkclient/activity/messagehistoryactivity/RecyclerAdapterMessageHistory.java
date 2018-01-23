@@ -8,19 +8,19 @@ import android.view.ViewGroup;
 
 import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelMessages;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelMessagesK;
 
 import java.util.List;
 
 public class RecyclerAdapterMessageHistory extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int IN = 1;
-    private final List<VkModelMessages> mMessagesList;
+    private final List<VkModelMessagesK> mMessagesList;
     private ILoadMore mILoadMore;
     private boolean mIsLoading;
     private final LinearLayoutManager mLinearLayoutManager;
 
-    public RecyclerAdapterMessageHistory(final RecyclerView pRecyclerView, final List<VkModelMessages> pMessagesList) {
+    public RecyclerAdapterMessageHistory(final RecyclerView pRecyclerView, final List<VkModelMessagesK> pMessagesList) {
 
         mMessagesList = pMessagesList;
         mLinearLayoutManager = (LinearLayoutManager) pRecyclerView.getLayoutManager();
@@ -31,7 +31,7 @@ public class RecyclerAdapterMessageHistory extends RecyclerView.Adapter<Recycler
     @Override
     public int getItemViewType(final int position) {
 
-        if (mMessagesList.get(position).isOut()) {
+        if (mMessagesList.get(position).getOut()) {
             return 0;
         } else {
             return IN;

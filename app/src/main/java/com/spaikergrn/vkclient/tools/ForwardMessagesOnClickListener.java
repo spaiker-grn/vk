@@ -6,14 +6,14 @@ import android.view.View;
 
 import com.spaikergrn.vkclient.activity.ForwardMessagesActivity;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelMessages;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelMessagesK;
 
 public class ForwardMessagesOnClickListener implements View.OnClickListener {
 
-    private final VkModelMessages mVkModelMessages;
+    private final VkModelMessagesK mVkModelMessages;
     private final Context mContext;
 
-    public ForwardMessagesOnClickListener(final VkModelMessages pVkModelMessages, final Context pContext) {
+    public ForwardMessagesOnClickListener(final VkModelMessagesK pVkModelMessages, final Context pContext) {
         mContext = pContext;
         mVkModelMessages = pVkModelMessages;
     }

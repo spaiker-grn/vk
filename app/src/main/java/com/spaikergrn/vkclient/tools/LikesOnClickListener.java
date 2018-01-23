@@ -6,6 +6,7 @@ import android.view.View;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.vkapi.VkApiMethods;
 import com.spaikergrn.vkclient.vkapi.vkapimodels.ILikeAble;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.ILikeAbleK;
 
 import org.json.JSONException;
 
@@ -19,10 +20,10 @@ public class LikesOnClickListener implements View.OnClickListener {
     private final int mItemId;
     private final int mOwnerId;
     private final String mType;
-    private final ILikeAble mLikeAble;
+    private final ILikeAbleK mLikeAble;
     private final ExecutorService mExecutorService;
 
-    public LikesOnClickListener(final String pType, final int pOwnerId, final int pItemId, final ILikeAble pLikeAble) {
+    public LikesOnClickListener(final String pType, final int pOwnerId, final int pItemId, final ILikeAbleK pLikeAble) {
         mLikeAble = pLikeAble;
         mType = pType;
         mOwnerId = pOwnerId;

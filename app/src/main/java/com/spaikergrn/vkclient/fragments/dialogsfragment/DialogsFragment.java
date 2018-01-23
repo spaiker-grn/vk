@@ -24,16 +24,16 @@ import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
 import com.spaikergrn.vkclient.fragments.recyclersutils.OnItemClickListener;
 import com.spaikergrn.vkclient.fragments.recyclersutils.RecyclerItemClickListener;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelDialog;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelDialogK;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DialogsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<VkModelDialog>>, IFragmentAdapterRefresh {
+public class DialogsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<VkModelDialogK>>, IFragmentAdapterRefresh {
 
     public RecyclerView mRecyclerView;
     public RecyclerAdapterDialogs mAdapter;
-    public List<VkModelDialog> mVkModelDialogList = new ArrayList<>();
+    public List<VkModelDialogK> mVkModelDialogList = new ArrayList<>();
     public int DIALOGS_SIZE;
     public ProgressBar mProgressBar;
     private final Object mLock = new Object();
@@ -84,8 +84,8 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
     @Override
-    public Loader<List<VkModelDialog>> onCreateLoader(final int id, final Bundle args) {
-        Loader<List<VkModelDialog>> listLoader = null;
+    public Loader<List<VkModelDialogK>> onCreateLoader(final int id, final Bundle args) {
+        Loader<List<VkModelDialogK>> listLoader = null;
         if (id == Constants.LoadersKeys.DIALOGS_LOADER_ID) {
             listLoader = new ParsingDialogsAsyncTask(getContext(), args);
         }
@@ -94,7 +94,7 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
     @Override
-    public void onLoadFinished(final Loader<List<VkModelDialog>> loader, final List<VkModelDialog> data) {
+    public void onLoadFinished(final Loader<List<VkModelDialogK>> loader, final List<VkModelDialogK> data) {
 
         if (data != null) {
             if (DIALOGS_SIZE == 0) {
@@ -110,7 +110,7 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
     @Override
-    public void onLoaderReset(final Loader<List<VkModelDialog>> loader) {
+    public void onLoaderReset(final Loader<List<VkModelDialogK>> loader) {
 
     }
 
@@ -177,7 +177,7 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
 
     class LoadLongPollMessage implements Runnable {
 
-        VkModelDialog mVkModelDialog;
+        VkModelDialogK mVkModelDialog;
         boolean mIsChat;
 
         LoadLongPollMessage() {
@@ -190,7 +190,7 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
             bundle.putInt(Constants.URL_BUILDER.START_MESSAGE_ID, 0);
             bundle.putInt(Constants.URL_BUILDER.COUNT, 1);
             final ParsingDialogsAsyncTask parsingDialogsAsyncTask = new ParsingDialogsAsyncTask(getContext(), bundle);
-            final List<VkModelDialog> vkModelDialogs = parsingDialogsAsyncTask.loadInBackground();
+            final List<VkModelDialogK> vkModelDialogs = parsingDialogsAsyncTask.loadInBackground();
             mVkModelDialog = vkModelDialogs.get(0);
             mIsChat = vkModelDialogs.get(0).getMessages().getChatId() != 0;
 

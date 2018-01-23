@@ -14,13 +14,12 @@ import android.widget.TextView;
 
 import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.imageloader.ImageLoader;
-import com.spaikergrn.vkclient.serviceclasses.AttachmentsFill;
 import com.spaikergrn.vkclient.serviceclasses.AttachmentsFillK;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.serviceclasses.ProfileInfoHolder;
 import com.spaikergrn.vkclient.tools.ForwardMessagesOnClickListener;
 import com.spaikergrn.vkclient.tools.TimesUtils;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelMessages;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelMessagesK;
 
 class RecyclerViewHolderHistory extends RecyclerView.ViewHolder {
 
@@ -43,9 +42,9 @@ class RecyclerViewHolderHistory extends RecyclerView.ViewHolder {
         mWidth = getWidthCardView(mContext);
     }
 
-    void bind(final VkModelMessages pVkModelMessages) {
+    void bind(final VkModelMessagesK pVkModelMessages) {
 
-        final AttachmentsFill attachmentsFill = new AttachmentsFill(mContext);
+        final AttachmentsFillK attachmentsFill = new AttachmentsFillK(mContext);
         mAttachmentLayout.removeAllViews();
         mMessageTextView.setText(Constants.Parser.EMPTY_STRING);
 
@@ -65,9 +64,9 @@ class RecyclerViewHolderHistory extends RecyclerView.ViewHolder {
 
         mTimeTextView.setText(TimesUtils.getTimeHistory(pVkModelMessages.getDate()));   //set time
 
-        if (pVkModelMessages.getVkModelUser() != null && !pVkModelMessages.isOut()) {
+        if (pVkModelMessages.getVkModelUser() != null && !pVkModelMessages.getOut()) {
             ImageLoader.with(mContext).load(pVkModelMessages.getVkModelUser().getPhoto50()).into(mImageView);
-        } else  if (pVkModelMessages.isOut()){
+        } else  if (pVkModelMessages.getOut()){
             ImageLoader.with(mContext).load(ProfileInfoHolder.getVkModelUser().getPhoto50()).into(mImageView);
         }
 

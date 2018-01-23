@@ -228,7 +228,7 @@ public final class ImageLoader {
                         }
                     }
                 } catch (final FileNotFoundException pE) {
-                    Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
+                    Log.e(Constants.ERROR, pE.getMessage());
                 }
 
                 final InputStream inputStream = new HttpUrlClient().getInputStream(request.url);

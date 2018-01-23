@@ -22,8 +22,8 @@ import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.vkapi.VkApiMethods;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelMessages;
 import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelUser;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelMessagesK;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +37,7 @@ public class ActivityMessagesHistory extends AppCompatActivity {
 
     public RecyclerView mRecyclerView;
     public RecyclerAdapterMessageHistory mAdapter;
-    public List<VkModelMessages> mVkModelMessagesList = new ArrayList<>();
+    public List<VkModelMessagesK> mVkModelMessagesList = new ArrayList<>();
     public int MESSAGES_HISTORY_SIZE;
     private ProgressBar mProgressBar;
     private int mRequestId;
@@ -145,11 +145,11 @@ public class ActivityMessagesHistory extends AppCompatActivity {
         }
     };
 
-    private final LoaderManager.LoaderCallbacks<List<VkModelMessages>> mListLoaderCallbacks = new LoaderManager.LoaderCallbacks<List<VkModelMessages>>() {
+    private final LoaderManager.LoaderCallbacks<List<VkModelMessagesK>> mListLoaderCallbacks = new LoaderManager.LoaderCallbacks<List<VkModelMessagesK>>() {
 
         @Override
-        public Loader<List<VkModelMessages>> onCreateLoader(final int pId, final Bundle pArgs) {
-            Loader<List<VkModelMessages>> messagesLoader = null;
+        public Loader<List<VkModelMessagesK>> onCreateLoader(final int pId, final Bundle pArgs) {
+            Loader<List<VkModelMessagesK>> messagesLoader = null;
             if (pId == Constants.LoadersKeys.HISTORY_MESSAGE_LOADER_ID) {
                 messagesLoader = new AsyncTaskMessageHistoryParsing(ActivityMessagesHistory.this, pArgs);
             }
@@ -158,7 +158,7 @@ public class ActivityMessagesHistory extends AppCompatActivity {
         }
 
         @Override
-        public void onLoadFinished(final Loader<List<VkModelMessages>> pLoader, final List<VkModelMessages> pData) {
+        public void onLoadFinished(final Loader<List<VkModelMessagesK>> pLoader, final List<VkModelMessagesK> pData) {
 
             if (MESSAGES_HISTORY_SIZE == 0) {
                 MESSAGES_HISTORY_SIZE = pData.get(0).getCountMessagesHistory();
@@ -173,7 +173,7 @@ public class ActivityMessagesHistory extends AppCompatActivity {
         }
 
         @Override
-        public void onLoaderReset(final Loader<List<VkModelMessages>> pLoader) {
+        public void onLoaderReset(final Loader<List<VkModelMessagesK>> pLoader) {
 
         }
     };
@@ -219,7 +219,7 @@ public class ActivityMessagesHistory extends AppCompatActivity {
     class LoadLongPollMessage implements Runnable {
 
         String mTsKey;
-        private VkModelMessages mVkModelMessages;
+        private VkModelMessagesK mVkModelMessages;
 
         LoadLongPollMessage(final String pTsKey) {
             mTsKey = pTsKey;
@@ -246,10 +246,10 @@ public class ActivityMessagesHistory extends AppCompatActivity {
             });
         }
 
-        VkModelMessages getLongPollMessage(final String pTsKey) throws JSONException, InterruptedException, ExecutionException, IOException {
-            final VkModelMessages vkModelMessages;
+        VkModelMessagesK getLongPollMessage(final String pTsKey) throws JSONException, InterruptedException, ExecutionException, IOException {
+            final VkModelMessagesK vkModelMessages;
             final JSONObject jsonObject = new JSONObject(VkApiMethods.getLongPollHistory(pTsKey));
-            vkModelMessages = new VkModelMessages(jsonObject.getJSONObject(Constants.Parser.RESPONSE).
+            vkModelMessages = new VkModelMessagesK(jsonObject.getJSONObject(Constants.Parser.RESPONSE).
                     getJSONObject(Constants.Parser.MESSAGES).getJSONArray(Constants.Parser.ITEMS).getJSONObject(0));
             vkModelMessages.setVkModelUser(new VkModelUser(jsonObject.getJSONObject(Constants.Parser.RESPONSE).
                     getJSONArray(Constants.Parser.PROFILES).getJSONObject(0)));

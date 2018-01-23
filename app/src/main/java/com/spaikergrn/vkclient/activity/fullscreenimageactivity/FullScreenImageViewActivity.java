@@ -13,7 +13,7 @@ import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.imageloader.ImageLoader;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.LikesOnClickListener;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelPhoto;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelPhotoK;
 
 public class FullScreenImageViewActivity extends AppCompatActivity {
 
@@ -21,7 +21,7 @@ public class FullScreenImageViewActivity extends AppCompatActivity {
     ImageView mCommentsImageView;
     ImageView mFullScreenImageView;
     String mPhotoId;
-    VkModelPhoto mVkModelPhoto;
+    VkModelPhotoK mVkModelPhoto;
     private String mPhotoSize;
 
     @Override
@@ -43,12 +43,12 @@ public class FullScreenImageViewActivity extends AppCompatActivity {
 
     }
 
-    LoaderManager.LoaderCallbacks<VkModelPhoto> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<VkModelPhoto>() {
+    LoaderManager.LoaderCallbacks<VkModelPhotoK> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<VkModelPhotoK>() {
 
         @Override
-        public Loader<VkModelPhoto> onCreateLoader(final int pId, final Bundle pArgs) {
+        public Loader<VkModelPhotoK> onCreateLoader(final int pId, final Bundle pArgs) {
 
-            Loader<VkModelPhoto> photoLoader = null;
+            Loader<VkModelPhotoK> photoLoader = null;
             if (pId == Constants.LoadersKeys.PHOTO_LOADER_ID) {
                 photoLoader = new PhotoLoaderAsyncTask(FullScreenImageViewActivity.this, pArgs);
             }
@@ -56,7 +56,7 @@ public class FullScreenImageViewActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onLoadFinished(final Loader<VkModelPhoto> pLoader, final VkModelPhoto pData) {
+        public void onLoadFinished(final Loader<VkModelPhotoK> pLoader, final VkModelPhotoK pData) {
             if (pData != null) {
                 mVkModelPhoto = pData;
                 mLikesToggleButton.setOnClickListener(new LikesOnClickListener(mVkModelPhoto.getType(), mVkModelPhoto.getOwnerId(), mVkModelPhoto.getId(), mVkModelPhoto));

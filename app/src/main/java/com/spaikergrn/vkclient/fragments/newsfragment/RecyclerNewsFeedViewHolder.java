@@ -14,18 +14,16 @@ import android.widget.ToggleButton;
 
 import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.imageloader.ImageLoader;
-import com.spaikergrn.vkclient.serviceclasses.AttachmentsFill;
 import com.spaikergrn.vkclient.serviceclasses.AttachmentsFillK;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.LikesOnClickListener;
 import com.spaikergrn.vkclient.tools.TimesUtils;
 
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelCopyHistoryPost;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelGroup;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsFeeds;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsPost;
 import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelUser;
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelCopyHistoryPostK;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelGroupK;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelNewsFeedsK;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelNewsPostK;
 
 class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
 
@@ -44,11 +42,11 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
     private final TextView mCopyHistoryNameTextView;
     private final TextView mCopyHistoryTextTextView;
     private final LinearLayout mCopyHistoryLLAttachments;
-    private final VkModelNewsFeeds mVkModelNewsFeeds;
+    private final VkModelNewsFeedsK mVkModelNewsFeeds;
     private final View mCopyHistory;
     private final ToggleButton mLikesToggleButton;
 
-    RecyclerNewsFeedViewHolder(final NewsFragment pNewsFragment, final VkModelNewsFeeds pVkModelNewsFeeds, final View pItemView) {
+    RecyclerNewsFeedViewHolder(final NewsFragment pNewsFragment, final VkModelNewsFeedsK pVkModelNewsFeeds, final View pItemView) {
         super(pItemView);
         mNewsFragment = pNewsFragment;
         mProfileImageView = pItemView.findViewById(R.id.card_news_profile_image_view);
@@ -70,9 +68,8 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
         ImageLoader.with(mContext).setPlaceHolder(R.drawable.ic_images);
     }
 
-    void bind(final VkModelNewsPost pVkModelNewsPost) {
+    void bind(final VkModelNewsPostK pVkModelNewsPost) {
 
-        final AttachmentsFill attachmentsFill = new AttachmentsFill(mContext);
         final AttachmentsFillK attachmentsFillK = new AttachmentsFillK(mContext);
         mLinearLayoutAttachments.removeAllViews();
         mCopyHistoryLLAttachments.removeAllViews();
@@ -112,7 +109,7 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
                 mCopyHistoryTextTextView.setVisibility(View.GONE);
             }
             if (vkModelPostHistory.getFromId() < 0) {
-                final VkModelGroup vkModelGroup = mVkModelNewsFeeds.getGroupMap().get(Math.abs(vkModelPostHistory.getFromId()));
+                final VkModelGroupK vkModelGroup = mVkModelNewsFeeds.getGroupMap().get(Math.abs(vkModelPostHistory.getFromId()));
                 mCopyHistoryNameTextView.setText(vkModelGroup.getName());
             } else {
                 final VkModelUser vkModelUser = mVkModelNewsFeeds.getUserMap().get(vkModelPostHistory.getFromId());

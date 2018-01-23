@@ -18,14 +18,14 @@ import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.fragments.IFragmentAdapterRefresh;
 import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelNewsFeeds;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelNewsFeedsK;
 
 public class NewsFragment extends Fragment implements IFragmentAdapterRefresh {
 
     public RecyclerView mRecyclerView;
     public RecyclerAdapterNewsFeed mAdapter;
     public ProgressBar mProgressBar;
-    public VkModelNewsFeeds mVkModelNewsFeeds = new VkModelNewsFeeds();
+    public VkModelNewsFeedsK mVkModelNewsFeeds = new VkModelNewsFeedsK();
 
     public static NewsFragment newInstance() {
         final Bundle bundle = new Bundle();
@@ -54,11 +54,11 @@ public class NewsFragment extends Fragment implements IFragmentAdapterRefresh {
         return view;
     }
 
-    LoaderManager.LoaderCallbacks<VkModelNewsFeeds> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<VkModelNewsFeeds>() {
+    LoaderManager.LoaderCallbacks<VkModelNewsFeedsK> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<VkModelNewsFeedsK>() {
 
         @Override
-        public Loader<VkModelNewsFeeds> onCreateLoader(final int pId, final Bundle pArgs) {
-            Loader<VkModelNewsFeeds> listLoader = null;
+        public Loader<VkModelNewsFeedsK> onCreateLoader(final int pId, final Bundle pArgs) {
+            Loader<VkModelNewsFeedsK> listLoader = null;
             if (pId == Constants.LoadersKeys.NEWS_LOADER_ID) {
                 listLoader = new ParsingNewsAsyncTask(getContext(), pArgs);
             }
@@ -67,7 +67,7 @@ public class NewsFragment extends Fragment implements IFragmentAdapterRefresh {
         }
 
         @Override
-        public void onLoadFinished(final Loader<VkModelNewsFeeds> pLoader, final VkModelNewsFeeds pData) {
+        public void onLoadFinished(final Loader<VkModelNewsFeedsK> pLoader, final VkModelNewsFeedsK pData) {
 
             mVkModelNewsFeeds.addNew(pData);
             mAdapter.notifyDataSetChanged();
@@ -76,7 +76,7 @@ public class NewsFragment extends Fragment implements IFragmentAdapterRefresh {
         }
 
         @Override
-        public void onLoaderReset(final Loader<VkModelNewsFeeds> pLoader) {
+        public void onLoaderReset(final Loader<VkModelNewsFeedsK> pLoader) {
 
         }
     };
@@ -108,7 +108,7 @@ public class NewsFragment extends Fragment implements IFragmentAdapterRefresh {
     @Override
     public void refresh() {
 
-        mVkModelNewsFeeds = new VkModelNewsFeeds();
+        mVkModelNewsFeeds = new VkModelNewsFeedsK();
         mAdapter = new RecyclerAdapterNewsFeed(this, mRecyclerView, mVkModelNewsFeeds);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setILoadMore(mScrollLoad);

@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.vkapi.VkApiMethods;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelPhoto;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelPhotoK;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-public class PhotoLoaderAsyncTask extends AsyncTaskLoader<VkModelPhoto> {
+public class PhotoLoaderAsyncTask extends AsyncTaskLoader<VkModelPhotoK> {
 
     private final String mPhotoId;
 
@@ -25,12 +25,12 @@ public class PhotoLoaderAsyncTask extends AsyncTaskLoader<VkModelPhoto> {
     }
 
     @Override
-    public VkModelPhoto loadInBackground() {
+    public VkModelPhotoK loadInBackground() {
 
         try {
             final String string = VkApiMethods.getPhotoById(mPhotoId);
             final JSONObject jsonObject = new JSONObject(string).getJSONArray(Constants.Parser.RESPONSE).getJSONObject(0);
-            return new VkModelPhoto(jsonObject);
+            return new VkModelPhotoK(jsonObject);
         } catch (InterruptedException | ExecutionException | JSONException | IOException pE) {
             Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         }

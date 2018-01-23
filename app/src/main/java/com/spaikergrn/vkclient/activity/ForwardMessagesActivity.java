@@ -15,8 +15,8 @@ import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.activity.messagehistoryactivity.RecyclerAdapterMessageHistory;
 import com.spaikergrn.vkclient.loaders.UsersByIdLoader;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelMessages;
 import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelUser;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelMessagesK;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -26,13 +26,13 @@ public class ForwardMessagesActivity extends AppCompatActivity implements Loader
 
     public RecyclerView mRecyclerView;
     public RecyclerAdapterMessageHistory mAdapter;
-    private List<VkModelMessages> mMessagesList;
+    private List<VkModelMessagesK> mMessagesList;
 
     @Override
     protected void onCreate(@Nullable final Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_messages_history);
-        final VkModelMessages vkModelMessage = (VkModelMessages) getIntent().getSerializableExtra(Constants.FORWARD_MESSAGES_INTENT);
+        final VkModelMessagesK vkModelMessage = (VkModelMessagesK) getIntent().getSerializableExtra(Constants.FORWARD_MESSAGES_INTENT);
         mMessagesList = vkModelMessage.getFwdMessages();
         mRecyclerView = findViewById(R.id.recycler_view);
         final ProgressBar progressBar = findViewById(R.id.progress_bar);
@@ -75,7 +75,7 @@ public class ForwardMessagesActivity extends AppCompatActivity implements Loader
 
     }
 
-    public ArrayList<Integer> getUsersList(final List<VkModelMessages> pMessagesList){
+    public ArrayList<Integer> getUsersList(final List<VkModelMessagesK> pMessagesList){
         final LinkedHashSet<Integer> usersHashSet = new LinkedHashSet<>();
         for (int i = 0; i < pMessagesList.size(); i++){
             usersHashSet.add(pMessagesList.get(i).getUserId());
