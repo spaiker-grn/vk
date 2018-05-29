@@ -19,7 +19,6 @@ import java.lang.reflect.Field;
 
 public class SQLHelper extends SQLiteOpenHelper {
 
-
     private static final String TAG = SQLHelper.class.getSimpleName();
 
     private static final String NAME = Constants.VK_CLIENT_DB;
@@ -53,13 +52,13 @@ public class SQLHelper extends SQLiteOpenHelper {
                     final StringBuilder stringBuilder = new StringBuilder();
 
                     final Field[] fields = tableClass.getFields();
-
                     for (final Field field : fields) {
                         final Annotation[] fieldAnnotations = field.getAnnotations();
-                        final String fieldName = (String) field.get(null);
-
+                        String fieldName = null;
+                        if((field.get(null) instanceof String)) {
+                            fieldName = (String) field.get(null);
+                        }
                         String fieldType = null;
-
                         for (final Annotation fieldAnnotation : fieldAnnotations) {
                             final Class<?> fieldAnnotationType = fieldAnnotation.annotationType();
                             if (fieldAnnotationType.equals(dbString.class)) {
@@ -69,13 +68,12 @@ public class SQLHelper extends SQLiteOpenHelper {
                             } else if (fieldAnnotationType.equals(dbInteger.class)) {
                                 fieldType = ((dbInteger) fieldAnnotation).value();
                             }
-                            if (!TextUtils.isEmpty(fieldType)) {
+                            if (!TextUtils.isEmpty(fieldType) && !TextUtils.isEmpty(fieldName)) {
                                 stringBuilder.append(fieldName).append(" ").append(fieldType).append(",");
                             }
                         }
                     }
-                    stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-
+                    stringBuilder.deleteCharAt((stringBuilder.length()) - 1);
                     final String tableCreteQuery = String.format(Constants.TABLE_TEMPLATE, dbTableName, BaseColumns._ID, stringBuilder.toString());
                     pReadableConnection.execSQL(tableCreteQuery);
                 }

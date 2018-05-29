@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/VkTheme">
-        <activity android:name="com.spaikergrn.vkclient.activity.MainActivity"
+        <activity android:name="com.spaikergrn.vkclient.activity.mainactivity.MainActivityImpl"
                   android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -41,12 +41,12 @@
 
         <activity android:name="com.spaikergrn.vkclient.activity.SettingsActivity"
                   android:label="@string/title_activity_settings"
-                  android:parentActivityName="com.spaikergrn.vkclient.activity.MainActivity"
+                  android:parentActivityName="com.spaikergrn.vkclient.activity.mainactivity.MainActivityImpl"
                   tools:targetApi="jelly_bean"
                   android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.spaikergrn.vkclient.activity.MainActivity"/>
+                android:value="com.spaikergrn.vkclient.activity.mainactivity.MainActivityImpl"/>
         </activity>
         <activity android:name=".activity.WallPostActivity"
                   android:screenOrientation="portrait"/>

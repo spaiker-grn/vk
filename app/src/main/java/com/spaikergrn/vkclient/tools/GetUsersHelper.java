@@ -44,19 +44,19 @@ public final class GetUsersHelper {
         final SQLHelper sqlHelper = new SQLHelper(ContextHolder.getContext());
         final DbOperations dbOperations = new DbOperations(sqlHelper);
         SparseArray<VkModelUser> vkModelUserArr;
-        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference fireBaseDatabaseReference = firebaseDatabase.getReference("VkModelUser");
+        //final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        //final DatabaseReference fireBaseDatabaseReference = firebaseDatabase.getReference("VkModelUser");
 
         vkModelUserArr = getUsersFromDB(request, dbOperations);
         if (checkArrayIntegrity(pList, vkModelUserArr)) {
             return vkModelUserArr;
         }
 
-        vkModelUserArr = getUsersFromFireBase(pList);
+/*        vkModelUserArr = getUsersFromFireBase(pList);
 
         if (checkArrayIntegrity(pList, vkModelUserArr)) {
             return vkModelUserArr;
-        }
+        }*/
 
         final Map<String, String> map = new HashMap<>();
         final IVkApiBuilder vkApi = new VkApiBuilder();
@@ -76,7 +76,7 @@ public final class GetUsersHelper {
 
             insertUserToDB(dbOperations, modelUser);
 
-            fireBaseDatabaseReference.child(String.valueOf(modelUser.getId())).setValue(modelUser);
+            //fireBaseDatabaseReference.child(String.valueOf(modelUser.getId())).setValue(modelUser);
         }
         sqlHelper.close();
         return vkModelUserArr;

@@ -7,8 +7,6 @@ import com.spaikergrn.vkclient.serviceclasses.Constants;
 @dbTable(Constants.USERS_DB)
 public final class UsersDb {
 
-    public static final String TABLE = UsersDb.class.getSimpleName();
-
     @dbString
     public static final String FIRST_NAME = Constants.Parser.FIRST_NAME;
 

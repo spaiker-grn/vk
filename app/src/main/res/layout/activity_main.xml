@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.spaikergrn.vkclient.activity.MainActivity"
+    tools:context="com.spaikergrn.vkclient.activity.mainactivity.MainActivityImpl"
     android:orientation="vertical"
     android:background="@color/colorVk"
     android:id="@+id/main_layout">
