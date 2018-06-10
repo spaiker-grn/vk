@@ -16,7 +16,6 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
 
     MainActivityPresenterImpl(final MainActivity pMainActivity) {
         mView = pMainActivity;
-
     }
 
     @Override

@@ -27,7 +27,7 @@
         <activity android:name="com.spaikergrn.vkclient.activity.LoginActivity"
                   android:screenOrientation="portrait"
                   android:launchMode="singleTask"/>
-        <activity android:name="com.spaikergrn.vkclient.activity.messagehistoryactivity.ActivityMessagesHistory"
+        <activity android:name="com.spaikergrn.vkclient.activity.messagehistoryactivity.ActivityMessagesHistoryImpl"
                   android:screenOrientation="portrait"/>
         <activity android:name="com.spaikergrn.vkclient.activity.fullscreenimageactivity.FullScreenImageViewActivity"
                   android:theme="@style/VkTheme.NoActionBar"
