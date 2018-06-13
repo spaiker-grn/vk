@@ -1,6 +1,7 @@
 package com.spaikergrn.vkclient.activity;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -25,6 +26,11 @@ import com.spaikergrn.vkclient.serviceclasses.Constants;
 import java.util.List;
 
 public class SettingsActivity extends PreferenceActivity {
+
+    public static void start(final Context pContext){
+        final Intent intent = new Intent(pContext, SettingsActivity.class);
+        pContext.startActivity(intent);
+    }
 
     private AppCompatDelegate mDelegate;
 

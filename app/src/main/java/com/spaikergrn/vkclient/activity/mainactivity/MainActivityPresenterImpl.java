@@ -55,11 +55,11 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
     }
 
     @Override
-    public void onStart() {
+    public void onResume() {
     }
 
     @Override
-    public void onStop() {
+    public void onPause() {
 
     }
 }

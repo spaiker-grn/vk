@@ -4,7 +4,7 @@ import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelPhotoK;
 
 import io.reactivex.observers.DisposableObserver;
 
-public interface ImageActivityModel {
+public interface FullScreenImageViewModel {
 
     String getPhotoSize();
 

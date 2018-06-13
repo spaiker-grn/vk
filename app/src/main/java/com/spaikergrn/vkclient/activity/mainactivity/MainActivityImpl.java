@@ -45,7 +45,7 @@ public class MainActivityImpl extends AppCompatActivity implements MainActivity 
         viewPager.setAdapter(mTabsPagerFragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
         registerReceiver(networkStateReceiver, getIntentFilter());
-        startService(new Intent(this, LongPollService.class));
+        LongPollService.start(this);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
         }
@@ -70,18 +70,18 @@ public class MainActivityImpl extends AppCompatActivity implements MainActivity 
 
     @Override
     public void startLoginActivity() {
-        startActivity(new Intent(this, LoginActivity.class).putExtra(Constants.Parser.URL, Constants.HTTPS_VK_COM));
+        LoginActivity.start(this);
     }
 
     @Override
     public void startSettingsActivity() {
-       startActivity(new Intent(this, SettingsActivity.class));
+        SettingsActivity.start(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(new Intent(getApplicationContext(), LongPollService.class));
+        LongPollService.stop(getApplicationContext());
         unregisterReceiver(networkStateReceiver);
         mPresenter.onDestroy();
     }
@@ -100,10 +100,10 @@ public class MainActivityImpl extends AppCompatActivity implements MainActivity 
             final boolean isOnline = NetworkUtil.getConnectivityStatus(pContext);
 
             if (isOnline) {
-                pContext.startService(new Intent(pContext, LongPollService.class));
+                LongPollService.start(pContext);
                 hideViewOffline();
             } else {
-                pContext.stopService(new Intent(pContext, LongPollService.class));
+                LongPollService.stop(pContext);
                 showViewOffline();
             }
 

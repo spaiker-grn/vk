@@ -4,31 +4,31 @@ import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelPhotoK;
 
 import io.reactivex.observers.DisposableObserver;
 
-public class ImageActivityPresenterImpl implements ImageActivityPresenter {
+public class FullScreenImageViewPresenterImpl implements FullScreenImageViewPresenter {
 
-    private final ImageViewActivity mImageViewActivity;
-    private final ImageActivityModel mImageActivityModel;
+    private final FullScreenImageView mFullScreenImageView;
+    private final FullScreenImageViewModel mFullScreenImageViewModel;
 
-    ImageActivityPresenterImpl(final ImageViewActivity pImageViewActivity) {
-        mImageViewActivity = pImageViewActivity;
-        mImageActivityModel = new ImageActivityModelImpl();
+    FullScreenImageViewPresenterImpl(final FullScreenImageView pFullScreenImageView) {
+        mFullScreenImageView = pFullScreenImageView;
+        mFullScreenImageViewModel = new FullScreenImageViewModelImpl();
     }
 
     @Override
     public String getPhotoSize() {
-        return mImageActivityModel.getPhotoSize();
+        return mFullScreenImageViewModel.getPhotoSize();
     }
 
     @Override
     public void loadVkModelPhoto(final String pPhotoId) {
-        mImageActivityModel.getVkModelPhoto(pPhotoId, mDisposableObserver);
+        mFullScreenImageViewModel.getVkModelPhoto(pPhotoId, mDisposableObserver);
     }
 
     private final DisposableObserver<VkModelPhotoK> mDisposableObserver = new DisposableObserver<VkModelPhotoK>() {
 
         @Override
         public void onNext(final VkModelPhotoK pVkModelPhotoK) {
-            mImageViewActivity.onVkModelPhotoLoaded(pVkModelPhotoK);
+            mFullScreenImageView.onVkModelPhotoLoaded(pVkModelPhotoK);
         }
 
         @Override
@@ -44,7 +44,7 @@ public class ImageActivityPresenterImpl implements ImageActivityPresenter {
 
     @Override
     public void onDestroy() {
-        mDisposableObserver.dispose();
+
     }
 
     @Override
@@ -53,12 +53,12 @@ public class ImageActivityPresenterImpl implements ImageActivityPresenter {
     }
 
     @Override
-    public void onStart() {
+    public void onResume() {
 
     }
 
     @Override
-    public void onStop() {
-
+    public void onPause() {
+        mDisposableObserver.dispose();
     }
 }

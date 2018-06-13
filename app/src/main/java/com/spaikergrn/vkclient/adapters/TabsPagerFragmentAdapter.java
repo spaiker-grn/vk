@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import com.spaikergrn.vkclient.TabModel;
 import com.spaikergrn.vkclient.fragments.IFragmentAdapterRefresh;
 import com.spaikergrn.vkclient.fragments.dialogsfragment.DialogsFragment;
-import com.spaikergrn.vkclient.fragments.profilefragment.ProfileFragment;
 import com.spaikergrn.vkclient.fragments.newsfragment.NewsFragment;
+import com.spaikergrn.vkclient.fragments.profilefragment.ProfileFragment;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 import java.util.ArrayList;
@@ -57,6 +57,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
         tabModelList.add(new TabModel(Constants.Tabs.MESSAGES, DialogsFragment.newInstance()));
         return tabModelList;
     }
+
     public IFragmentAdapterRefresh getCurrentFragment() {
         return mCurrentFragment;
     }

@@ -12,15 +12,13 @@ import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.LikesOnClickListener;
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelPhotoK;
 
-public class FullScreenImageViewActivity extends AppCompatActivity implements ImageViewActivity {
+public class FullScreenImageViewActivity extends AppCompatActivity implements FullScreenImageView {
 
-    ToggleButton mLikesToggleButton;
-    ImageView mCommentsImageView;
-    ImageView mFullScreenImageView;
-    String mPhotoId;
-    VkModelPhotoK mVkModelPhoto;
+    private ToggleButton mLikesToggleButton;
+    private ImageView mCommentsImageView;
+    private ImageView mFullScreenImageView;
     private String mPhotoSize;
-    ImageActivityPresenter mPresenter;
+    private FullScreenImageViewPresenter mPresenter;
 
     @Override
     protected void onDestroy() {
@@ -32,11 +30,11 @@ public class FullScreenImageViewActivity extends AppCompatActivity implements Im
     protected void onCreate(@Nullable final Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_full_sreen_image_view);
-        mPresenter = new ImageActivityPresenterImpl(this);
+        mPresenter = new FullScreenImageViewPresenterImpl(this);
         initViews();
         mPhotoSize = mPresenter.getPhotoSize();
-        mPhotoId = getIntent().getStringExtra(Constants.FULL_SCREEN_IMAGE_VIEW);
-        mPresenter.loadVkModelPhoto(mPhotoId);
+        final String photoId = getIntent().getStringExtra(Constants.FULL_SCREEN_IMAGE_VIEW);
+        mPresenter.loadVkModelPhoto(photoId);
     }
 
     private void initViews() {
@@ -47,11 +45,12 @@ public class FullScreenImageViewActivity extends AppCompatActivity implements Im
 
     @Override
     public void onVkModelPhotoLoaded(final VkModelPhotoK pVkModelPhotoK) {
+
         if (pVkModelPhotoK != null) {
-            mVkModelPhoto = pVkModelPhotoK;
-            mLikesToggleButton.setOnClickListener(new LikesOnClickListener(mVkModelPhoto.getType(), mVkModelPhoto.getOwnerId(), mVkModelPhoto.getId(), mVkModelPhoto));
-            ImageLoader.with(this).load(mVkModelPhoto.getPhotoBySize(mPhotoSize)).into(mFullScreenImageView);
-            if (mVkModelPhoto.getUserLike()) {
+            mLikesToggleButton.setOnClickListener(new LikesOnClickListener(pVkModelPhotoK.getType(), pVkModelPhotoK.getOwnerId(), pVkModelPhotoK.getId(), pVkModelPhotoK));
+            ImageLoader.with(this).load(pVkModelPhotoK.getPhotoBySize(mPhotoSize)).into(mFullScreenImageView);
+
+            if (pVkModelPhotoK.getUserLike()) {
                 mLikesToggleButton.setChecked(true);
             }
         }

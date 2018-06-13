@@ -11,7 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class ImageActivityModelImpl implements ImageActivityModel {
+public class FullScreenImageViewModelImpl implements FullScreenImageViewModel {
 
     @Override
     public String getPhotoSize() {

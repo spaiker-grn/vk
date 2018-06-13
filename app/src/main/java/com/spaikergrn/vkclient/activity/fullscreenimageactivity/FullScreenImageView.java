@@ -2,7 +2,7 @@ package com.spaikergrn.vkclient.activity.fullscreenimageactivity;
 
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelPhotoK;
 
-public interface ImageViewActivity {
+public interface FullScreenImageView {
 
     void onVkModelPhotoLoaded(final VkModelPhotoK pVkModelPhotoK);
 }

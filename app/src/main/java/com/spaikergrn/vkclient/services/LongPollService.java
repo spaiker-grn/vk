@@ -1,6 +1,7 @@
 package com.spaikergrn.vkclient.services;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -21,8 +22,20 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.prefs.PreferenceChangeEvent;
 
 public class LongPollService extends Service {
+
+    public static void start(final Context pContext){
+        final Intent intent = new Intent(pContext, LongPollService.class);
+        pContext.startService(intent);
+    }
+
+    public static void stop(final Context pContext){
+        final Intent intent = new Intent(pContext, LongPollService.class);
+        pContext.stopService(intent);
+
+    }
 
     ExecutorService mExecutorService;
 

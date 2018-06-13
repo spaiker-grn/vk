@@ -4,9 +4,9 @@ public interface Presenter {
 
     void onCreate();
 
-    void onStart();
+    void onResume();
 
-    void onStop();
+    void onPause();
 
     void onDestroy();
 

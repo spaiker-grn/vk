@@ -1,17 +1,23 @@
 package com.spaikergrn.vkclient.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 
 import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.clients.WebViewClientLogin;
-
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 
 public class LoginActivity extends AppCompatActivity {
+
+    public static void start(final Context pContext){
+        final Intent intent = new Intent(pContext, LoginActivity.class);
+        intent.putExtra(Constants.Parser.URL, Constants.HTTPS_VK_COM);
+        pContext.startActivity(intent);
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override

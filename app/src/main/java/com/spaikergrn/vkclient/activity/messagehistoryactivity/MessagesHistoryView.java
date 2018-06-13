@@ -1,5 +1,5 @@
 package com.spaikergrn.vkclient.activity.messagehistoryactivity;
 
-public interface ActivityMessagesHistoryPresenter {
+public interface MessagesHistoryView {
 
 }
