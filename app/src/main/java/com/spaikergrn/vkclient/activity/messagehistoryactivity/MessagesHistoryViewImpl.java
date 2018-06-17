@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class ActivityMessagesHistoryImpl extends AppCompatActivity {
+public class MessagesHistoryViewImpl extends AppCompatActivity {
 
     public RecyclerView mRecyclerView;
     public RecyclerAdapterMessageHistory mAdapter;
@@ -148,7 +148,7 @@ public class ActivityMessagesHistoryImpl extends AppCompatActivity {
         public Loader<List<VkModelMessagesK>> onCreateLoader(final int pId, final Bundle pArgs) {
             Loader<List<VkModelMessagesK>> messagesLoader = null;
             if (pId == Constants.LoadersKeys.HISTORY_MESSAGE_LOADER_ID) {
-                messagesLoader = new AsyncTaskMessageHistoryParsing(ActivityMessagesHistoryImpl.this, pArgs);
+                messagesLoader = new AsyncTaskMessageHistoryParsing(MessagesHistoryViewImpl.this, pArgs);
             }
             mProgressBar.setVisibility(View.VISIBLE);
             return messagesLoader;
@@ -201,7 +201,7 @@ public class ActivityMessagesHistoryImpl extends AppCompatActivity {
                             final String response = VkApiMethods.sendMessage(requestId, text);
                             final JSONObject jsonResponse = new JSONObject(response);
                             if (!jsonResponse.has(Constants.Parser.RESPONSE)) {
-                                Toast.makeText(ActivityMessagesHistoryImpl.this, Constants.ERROR_TO_SEND_MESSAGE, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MessagesHistoryViewImpl.this, Constants.ERROR_TO_SEND_MESSAGE, Toast.LENGTH_SHORT).show();
                             }
                         } catch (InterruptedException | ExecutionException | IOException | JSONException pE) {
                             Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
