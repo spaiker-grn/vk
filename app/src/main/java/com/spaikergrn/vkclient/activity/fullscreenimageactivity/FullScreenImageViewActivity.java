@@ -1,8 +1,11 @@
 package com.spaikergrn.vkclient.activity.fullscreenimageactivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
@@ -20,10 +23,11 @@ public class FullScreenImageViewActivity extends AppCompatActivity implements Fu
     private String mPhotoSize;
     private FullScreenImageViewPresenter mPresenter;
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDestroy();
+    public static void start(final Context pContext, final String pPhotoId) {
+        final Intent intent = new Intent(pContext, FullScreenImageViewActivity.class);
+        intent.putExtra(pPhotoId, Constants.FULL_SCREEN_IMAGE_VIEW)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        pContext.startActivity(intent);
     }
 
     @Override
@@ -35,6 +39,12 @@ public class FullScreenImageViewActivity extends AppCompatActivity implements Fu
         mPhotoSize = mPresenter.getPhotoSize();
         final String photoId = getIntent().getStringExtra(Constants.FULL_SCREEN_IMAGE_VIEW);
         mPresenter.loadVkModelPhoto(photoId);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPresenter.onPause();
     }
 
     private void initViews() {
@@ -54,6 +64,11 @@ public class FullScreenImageViewActivity extends AppCompatActivity implements Fu
                 mLikesToggleButton.setChecked(true);
             }
         }
+    }
+
+    @Override
+    public void onImageLoadedError(final Throwable pThrowable) {
+        Log.e(getClass().getSimpleName(), Constants.ERROR, pThrowable);
     }
 
 }

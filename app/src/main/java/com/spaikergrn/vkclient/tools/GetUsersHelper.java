@@ -38,7 +38,7 @@ public final class GetUsersHelper {
     private static final int WAITING_TIME_MILLIS = 5000;
     private final Object mLock = new Object();
 
-    public SparseArray<VkModelUser> getUsersById(final List<Integer> pList) throws JSONException, ExecutionException, InterruptedException, IOException {
+    public SparseArray<VkModelUser> getUsersById(final List<Integer> pList) throws JSONException,  IOException {
 
         final String request = TextUtils.join(Constants.DELIMITER, pList);
         final SQLHelper sqlHelper = new SQLHelper(ContextHolder.getContext());

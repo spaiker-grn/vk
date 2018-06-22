@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.spaikergrn.vkclient.R;
+import com.spaikergrn.vkclient.activity.messagehistoryactivity.MessagesHistoryView;
 import com.spaikergrn.vkclient.activity.messagehistoryactivity.MessagesHistoryViewImpl;
 import com.spaikergrn.vkclient.fragments.IFragmentAdapterRefresh;
 import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
@@ -118,16 +119,14 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
 
         @Override
         public void onItemClick(final View pView, final int pPosition) {
-            final Intent intent = new Intent(getContext(), MessagesHistoryViewImpl.class);
             int chatId = mVkModelDialogList.get(pPosition).getMessages().getChatId();
 
             if (chatId != 0) {
                 chatId = Constants.Values.INT_FOR_CHAT_ID + chatId;
-                intent.putExtra(Constants.Parser.CHAT_ID, chatId);
+                MessagesHistoryViewImpl.start(getContext(), chatId);
             } else {
-                intent.putExtra(Constants.Parser.USER_ID, mVkModelDialogList.get(pPosition).getMessages().getUserId());
+                MessagesHistoryViewImpl.start(getContext(), mVkModelDialogList.get(pPosition).getMessages().getUserId());
             }
-            startActivity(intent);
         }
 
         @Override

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.imageloader.ImageLoader;
-import com.spaikergrn.vkclient.serviceclasses.AttachmentsFillK;
+import com.spaikergrn.vkclient.serviceclasses.AttachmentsFill;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.serviceclasses.ProfileInfoHolder;
 import com.spaikergrn.vkclient.tools.ForwardMessagesOnClickListener;
@@ -44,7 +44,7 @@ class RecyclerViewHolderHistory extends RecyclerView.ViewHolder {
 
     void bind(final VkModelMessagesK pVkModelMessages) {
 
-        final AttachmentsFillK attachmentsFill = new AttachmentsFillK(mContext);
+        final AttachmentsFill attachmentsFill = new AttachmentsFill(mContext);
         mAttachmentLayout.removeAllViews();
         mMessageTextView.setText(Constants.Parser.EMPTY_STRING);
 

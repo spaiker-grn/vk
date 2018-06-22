@@ -24,9 +24,8 @@ public class CallVkModelPhoto implements Callable<VkModelPhotoK> {
     @Override
     public VkModelPhotoK call() {
         try {
-            final String string = VkApiMethods.getPhotoById(mPhotoId);
-            final JSONObject jsonObject = new JSONObject(string).getJSONArray(Constants.Parser.RESPONSE).getJSONObject(0);
-            return new VkModelPhotoK(jsonObject);
+
+            return VkApiMethods.getPhotoById(mPhotoId);
         } catch (InterruptedException | ExecutionException | JSONException | IOException pE) {
             Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         }

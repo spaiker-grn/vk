@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialogK>>  {
 
@@ -62,7 +61,7 @@ public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialogK
                 vkModelDialogList.get(i).getMessages().setVkModelUser((vkModelUserMap.get(vkModelDialogList.get(i).getMessages().getUserId())));
             }
 
-        } catch (final InterruptedException | ExecutionException | JSONException | IOException pE) {
+        } catch (final JSONException | IOException pE) {
             Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         }
         return vkModelDialogList;

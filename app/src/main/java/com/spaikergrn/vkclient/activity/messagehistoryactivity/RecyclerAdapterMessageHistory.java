@@ -17,7 +17,6 @@ public class RecyclerAdapterMessageHistory extends RecyclerView.Adapter<Recycler
     private final int IN = 1;
     private final List<VkModelMessagesK> mMessagesList;
     private ILoadMore mILoadMore;
-    private boolean mIsLoading;
     private final LinearLayoutManager mLinearLayoutManager;
 
     public RecyclerAdapterMessageHistory(final RecyclerView pRecyclerView, final List<VkModelMessagesK> pMessagesList) {
@@ -73,19 +72,15 @@ public class RecyclerAdapterMessageHistory extends RecyclerView.Adapter<Recycler
             final int lastVisibleItem = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
 
             final int visibleThreshold = 5;
-            if (!mIsLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+            if (totalItemCount <= (lastVisibleItem + visibleThreshold)) {
 
                 if (mILoadMore != null) {
-                    mIsLoading = true;
                     mILoadMore.onLoadMore();
                 }
             }
         }
     };
 
-    void setLoaded() {
-        mIsLoading = false;
-    }
 
     void setILoadMore(final ILoadMore pLoadMore) {
         this.mILoadMore = pLoadMore;

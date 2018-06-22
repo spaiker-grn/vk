@@ -14,7 +14,7 @@ import android.widget.ToggleButton;
 
 import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.imageloader.ImageLoader;
-import com.spaikergrn.vkclient.serviceclasses.AttachmentsFillK;
+import com.spaikergrn.vkclient.serviceclasses.AttachmentsFill;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.LikesOnClickListener;
 import com.spaikergrn.vkclient.tools.TimesUtils;
@@ -70,7 +70,7 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
 
     void bind(final VkModelNewsPostK pVkModelNewsPost) {
 
-        final AttachmentsFillK attachmentsFillK = new AttachmentsFillK(mContext);
+        final AttachmentsFill attachmentsFill = new AttachmentsFill(mContext);
         mLinearLayoutAttachments.removeAllViews();
         mCopyHistoryLLAttachments.removeAllViews();
         mLikesToggleButton.setOnClickListener(new LikesOnClickListener(pVkModelNewsPost.getPostType(),
@@ -115,9 +115,9 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
                 final VkModelUser vkModelUser = mVkModelNewsFeeds.getUserMap().get(vkModelPostHistory.getFromId());
                 mCopyHistoryNameTextView.setText(vkModelUser.getFullName());
             }
-            attachmentsFillK.inflateAttachments(vkModelPostHistory.getVkAttachmentsI(), mLinearLayoutAttachments, mWidth, mInflater, mContext, SCALE);
+            attachmentsFill.inflateAttachments(vkModelPostHistory.getVkAttachmentsI(), mLinearLayoutAttachments, mWidth, mInflater, mContext, SCALE);
         }
-        attachmentsFillK.inflateAttachments(pVkModelNewsPost.getVkAttachments(), mLinearLayoutAttachments, mWidth, mInflater, mContext, SCALE);
+        attachmentsFill.inflateAttachments(pVkModelNewsPost.getVkAttachments(), mLinearLayoutAttachments, mWidth, mInflater, mContext, SCALE);
     }
 
     private int getWidthCardView(final Context pContext) {

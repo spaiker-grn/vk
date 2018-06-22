@@ -8,6 +8,7 @@ import com.spaikergrn.vkclient.clients.HttpUrlClient;
 import com.spaikergrn.vkclient.clients.IHttpUrlClient;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.serviceclasses.ContextHolder;
+import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelPhotoK;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 
 public final class VkApiMethods {
 
-    private static String getApiMethod(final String pMethod, final Map<String, String> pFields) throws ExecutionException, InterruptedException, IOException, JSONException {
+    private static String getApiMethod(final String pMethod, final Map<String, String> pFields) throws IOException, JSONException {
 
         final IVkApiBuilder vkApiBuilder = new VkApiBuilder();
         final IHttpUrlClient httpUrlClient = new HttpUrlClient();
@@ -28,7 +29,7 @@ public final class VkApiMethods {
 
     }
 
-    private static String getApiMethod(final String pMethod) throws ExecutionException, InterruptedException, IOException, JSONException {
+    private static String getApiMethod(final String pMethod) throws IOException, JSONException {
 
         final IVkApiBuilder vkApiBuilder = new VkApiBuilder();
         final IHttpUrlClient httpUrlClient = new HttpUrlClient();
@@ -36,7 +37,7 @@ public final class VkApiMethods {
         return checkError(httpUrlClient.getRequest(vkApiBuilder.buildUrl(pMethod)));
     }
 
-    private static String getLongPollApiMethod(final String pMethod, final Map<String, String> pFields) throws ExecutionException, InterruptedException, IOException, JSONException {
+    private static String getLongPollApiMethod(final String pMethod, final Map<String, String> pFields) throws IOException, JSONException {
 
         final IVkApiBuilder vkApiBuilder = new VkApiBuilder();
         final IHttpUrlClient httpUrlClient = new HttpUrlClient();
@@ -44,7 +45,7 @@ public final class VkApiMethods {
         return checkError(httpUrlClient.getLongPollRequest(vkApiBuilder.buildUrl(pMethod, pFields)));
     }
 
-    public static String getDialogs(final int pStartMessageId, final int pCount) throws ExecutionException, InterruptedException, IOException, JSONException {
+    public static String getDialogs(final int pStartMessageId, final int pCount) throws IOException, JSONException {
 
         final Map<String, String> map = new HashMap<>();
 
@@ -59,11 +60,11 @@ public final class VkApiMethods {
         }
     }
 
-    public static String getLongPollServer() throws ExecutionException, InterruptedException, IOException, JSONException {
+    public static String getLongPollServer() throws IOException, JSONException {
         return getApiMethod(Constants.VkApiMethods.MESSAGES_GET_LONG_POLL_SERVER);
     }
 
-    public static String getNews(final String pOffset) throws InterruptedException, ExecutionException, IOException, JSONException {
+    public static String getNews(final String pOffset) throws IOException, JSONException {
 
         final Map<String, String> map = new HashMap<>();
         map.put(Constants.Parser.COUNT, Constants.VkApiMethods.VALUE_20);
@@ -75,7 +76,7 @@ public final class VkApiMethods {
         return getApiMethod(Constants.VkApiMethods.NEWSFEED_GET, map);
     }
 
-    public static String getMessageHistory(final int pHistoryId, final int pStartMessageId, final int pCount) throws InterruptedException, ExecutionException, IOException, JSONException {
+    public static String getMessageHistory(final int pHistoryId, final int pStartMessageId, final int pCount) throws IOException, JSONException {
         final Map<String, String> map = new HashMap<>();
         map.put(Constants.VkApiMethods.PEER_ID, String.valueOf(pHistoryId));
         map.put(Constants.Parser.COUNT, String.valueOf(pCount));
@@ -86,27 +87,27 @@ public final class VkApiMethods {
         return getApiMethod(Constants.VkApiMethods.MESSAGES_GET_HISTORY, map);
     }
 
-    public static String getChatById(final int pChatId) throws ExecutionException, InterruptedException, IOException, JSONException {
+    public static String getChatById(final int pChatId) throws IOException, JSONException {
         final Map<String, String> map = new HashMap<>();
         map.put(Constants.URL_BUILDER.CHAT_ID, String.valueOf(pChatId));
         return getApiMethod(Constants.VkApiMethods.MESSAGES_GET_CHAT, map);
     }
 
-    public static String sendMessage(final int pId, final String pMessage) throws InterruptedException, ExecutionException, IOException, JSONException {
+    public static String sendMessage(final int pId, final String pMessage) throws IOException, JSONException {
         final Map<String, String> map = new HashMap<>();
         map.put(Constants.VkApiMethods.PEER_ID, String.valueOf(pId));
         map.put(Constants.Parser.MESSAGE, pMessage);
         return getApiMethod(Constants.VkApiMethods.MESSAGES_SEND, map);
     }
 
-    public static String getLongPollHistory(final String pTs) throws InterruptedException, ExecutionException, IOException, JSONException {
+    public static String getLongPollHistory(final String pTs) throws IOException, JSONException {
         final Map<String, String> map = new HashMap<>();
         map.put(Constants.URL_BUILDER.FIELDS, Constants.URL_BUILDER.PHOTO_50_PHOTO_100);
         map.put(Constants.URL_BUILDER.TS, pTs);
         return getLongPollApiMethod(Constants.VkApiMethods.MESSAGES_GET_LONG_POLL_HISTORY, map);
     }
 
-    public static void addLike(final String pType, final int pOwnerId, final int pItemId) throws InterruptedException, ExecutionException, IOException, JSONException {
+    public static void addLike(final String pType, final int pOwnerId, final int pItemId) throws IOException, JSONException {
         final Map<String, String> map = new HashMap<>();
         map.put(Constants.Parser.TYPE, pType);
         map.put(Constants.Parser.OWNER_ID, String.valueOf(pOwnerId));
@@ -114,7 +115,7 @@ public final class VkApiMethods {
         getApiMethod(Constants.VkApiMethods.LIKES_ADD, map);
     }
 
-    public static void deleteLike(final String pType, final int pOwnerId, final int pItemId) throws InterruptedException, ExecutionException, IOException, JSONException {
+    public static void deleteLike(final String pType, final int pOwnerId, final int pItemId) throws IOException, JSONException {
         final Map<String, String> map = new HashMap<>();
         map.put(Constants.Parser.TYPE, pType);
         map.put(Constants.Parser.OWNER_ID, String.valueOf(pOwnerId));
@@ -122,14 +123,18 @@ public final class VkApiMethods {
         getApiMethod(Constants.VkApiMethods.LIKES_DELETE, map);
     }
 
-    public static String getPhotoById(final String pPhotoId) throws InterruptedException, ExecutionException, JSONException, IOException {
+    public static VkModelPhotoK getPhotoById(final String pPhotoId) throws JSONException, IOException {
         final Map<String, String> map = new HashMap<>();
         map.put(Constants.VkApiMethods.PHOTOS, pPhotoId);
         map.put(Constants.VkApiMethods.EXTENDED,Constants.Values.STRING_VALUE_ONE);
-        return getApiMethod(Constants.VkApiMethods.PHOTOS_GET_BY_ID, map);
+
+        final String response = getApiMethod(Constants.VkApiMethods.PHOTOS_GET_BY_ID, map);
+        final JSONObject jsonObject = new JSONObject(response).getJSONArray(Constants.Parser.RESPONSE).getJSONObject(0);
+
+        return new VkModelPhotoK(jsonObject);
     }
 
-    public static String getProfileInfo() throws InterruptedException, ExecutionException, JSONException, IOException {
+    public static String getProfileInfo() throws JSONException, IOException {
         final Map<String, String> map = new HashMap<>();
         map.put(Constants.URL_BUILDER.FIELDS, Constants.URL_BUILDER.PHOTO_50_PHOTO_100);
         return getApiMethod(Constants.VkApiMethods.GET_USER_BY_ID, map);

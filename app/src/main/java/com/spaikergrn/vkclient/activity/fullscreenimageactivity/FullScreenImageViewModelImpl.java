@@ -25,6 +25,6 @@ public class FullScreenImageViewModelImpl implements FullScreenImageViewModel {
         Observable.fromCallable(new CallVkModelPhoto(pPhotoId))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(pDisposableObserver);
+                .subscribe(pDisposableObserver);
     }
 }

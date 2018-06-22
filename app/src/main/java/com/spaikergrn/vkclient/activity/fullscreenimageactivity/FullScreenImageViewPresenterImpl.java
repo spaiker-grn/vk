@@ -33,7 +33,7 @@ public class FullScreenImageViewPresenterImpl implements FullScreenImageViewPres
 
         @Override
         public void onError(final Throwable pThrowable) {
-
+            mFullScreenImageView.onImageLoadedError(pThrowable);
         }
 
         @Override
@@ -42,20 +42,6 @@ public class FullScreenImageViewPresenterImpl implements FullScreenImageViewPres
         }
     };
 
-    @Override
-    public void onDestroy() {
-
-    }
-
-    @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
 
     @Override
     public void onPause() {

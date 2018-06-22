@@ -5,4 +5,6 @@ import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelPhotoK;
 public interface FullScreenImageView {
 
     void onVkModelPhotoLoaded(final VkModelPhotoK pVkModelPhotoK);
+
+    void onImageLoadedError(final Throwable pThrowable);
 }

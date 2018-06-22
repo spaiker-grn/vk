@@ -34,14 +34,14 @@ import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelVideoK;
 
 import java.util.List;
 
-public class AttachmentsFillK {
+public class AttachmentsFill {
 
 
     private static final int GIFT_SIZE_IN_DP = 120;
     private final boolean sIsLoadPhoto;
     private final String sPhotoSize;
 
-    public AttachmentsFillK(final Context pContext) {
+    public AttachmentsFill(final Context pContext) {
 
         sPhotoSize = PreferenceManager
                 .getDefaultSharedPreferences(pContext)
@@ -378,9 +378,7 @@ public class AttachmentsFillK {
 
         @Override
         public void onClick(final View pView) {
-            ContextHolder.getContext().startActivity(new Intent(ContextHolder.getContext(),
-                    FullScreenImageViewActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(Constants.FULL_SCREEN_IMAGE_VIEW, (String) pView.getTag(R.string.key_tag_photo)));
+            FullScreenImageViewActivity.start(ContextHolder.getContext(),(String) pView.getTag(R.string.key_tag_photo));
         }
     };
 

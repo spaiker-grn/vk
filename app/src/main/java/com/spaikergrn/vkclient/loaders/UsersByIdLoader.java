@@ -31,7 +31,7 @@ public class UsersByIdLoader extends AsyncTaskLoader<SparseArray<VkModelUser>> {
 
         try {
            return mGetUsersHelper.getUsersById(mUsersList);
-        } catch (JSONException | ExecutionException | InterruptedException | IOException pE) {
+        } catch (JSONException | IOException pE) {
             Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         }
         return null;

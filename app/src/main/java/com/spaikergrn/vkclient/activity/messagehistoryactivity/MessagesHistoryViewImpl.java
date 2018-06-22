@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,19 +18,12 @@ import android.widget.Toast;
 import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
-import com.spaikergrn.vkclient.vkapi.VkApiMethods;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelUser;
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelMessagesK;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-public class MessagesHistoryViewImpl extends AppCompatActivity {
+public class MessagesHistoryViewImpl extends AppCompatActivity implements MessagesHistoryView {
 
     public RecyclerView mRecyclerView;
     public RecyclerAdapterMessageHistory mAdapter;
@@ -41,9 +32,27 @@ public class MessagesHistoryViewImpl extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private int mRequestId;
     private EditText mMessageEditText;
-    private int mChatId;
     private final Object mLock = new Object();
-    private int mUserHistoryId;
+    private MessagesHistoryViewPresenter mPresenter;
+
+    private final View.OnClickListener mSendMessageClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(final View pView) {
+            final String text = String.valueOf(mMessageEditText.getText());
+
+            if (!text.isEmpty()) {
+                mMessageEditText.getText().clear();
+                mPresenter.sendMessage(mRequestId, text);
+            }
+        }
+    };
+
+    public static void start(final Context pContext, final int pRequestId) {
+        final Intent intent = new Intent(pContext, MessagesHistoryViewImpl.class);
+        intent.putExtra(Constants.Parser.CHAT_ID, pRequestId);
+        pContext.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -52,14 +61,44 @@ public class MessagesHistoryViewImpl extends AppCompatActivity {
 
         initViews();
         registerLongPollReceiver();
-        initRequestId();
 
-        final Bundle bundle = setBundle(0, Constants.COUNT_20);
+        mRequestId = getIntent().getIntExtra(Constants.Parser.CHAT_ID, 0);
 
-        getSupportLoaderManager().initLoader(Constants.LoadersKeys.HISTORY_MESSAGE_LOADER_ID, bundle, mListLoaderCallbacks).forceLoad();
+        mPresenter = new MessagesHistoryViewPresenterImpl(this);
+        mPresenter.getMessages(mRequestId, 0, Constants.COUNT_20);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+    }
+
+    @Override
+    public void onMessageHistoryLoaded(final List<VkModelMessagesK> pVkModelMessages) {
+        if (MESSAGES_HISTORY_SIZE == 0) {
+            MESSAGES_HISTORY_SIZE = pVkModelMessages.get(0).getCountMessagesHistory();
+        }
+        synchronized (mLock) {
+            mVkModelMessagesList.addAll(pVkModelMessages);
+            mAdapter.notifyDataSetChanged();
+        }
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showErrorSendMessageToast() {
+        Toast.makeText(this, Constants.ERROR_TO_SEND_MESSAGE, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onError(final Throwable pThrowable) {
+        Log.e(getClass().getSimpleName(), Constants.ERROR_TO_SEND_MESSAGE, pThrowable);
+    }
+
+    @Override
+    public void onLongPollMessageLoaded(final VkModelMessagesK pVkModelMessagesK) {
+        synchronized (mLock) {
+            mVkModelMessagesList.add(0, pVkModelMessagesK);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private void registerLongPollReceiver() {
@@ -67,28 +106,10 @@ public class MessagesHistoryViewImpl extends AppCompatActivity {
         registerReceiver(broadcastReceiver, intentFilter);
     }
 
-    private Bundle setBundle(final int pValue, final int pCount) {
-        final Bundle bundle = new Bundle();
-        bundle.putInt(Constants.URL_BUILDER.USER_HISTORY, mRequestId);
-        bundle.putInt(Constants.URL_BUILDER.START_MESSAGE_ID, pValue);
-        bundle.putInt(Constants.URL_BUILDER.COUNT, pCount);
-        return bundle;
-    }
-
-    private void initRequestId() {
-        final Intent intent = getIntent();
-        mChatId = intent.getIntExtra(Constants.Parser.CHAT_ID, 0);
-        mUserHistoryId = intent.getIntExtra(Constants.Parser.USER_ID, 0);
-        if (mChatId != 0) {
-            mRequestId = mChatId;
-        } else {
-            mRequestId = mUserHistoryId;
-        }
-    }
-
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
+        mPresenter.onPause();
         unregisterReceiver(broadcastReceiver);
     }
 
@@ -104,7 +125,7 @@ public class MessagesHistoryViewImpl extends AppCompatActivity {
 
         mMessageEditText = findViewById(R.id.send_message_edit_text);
 
-        findViewById(R.id.send_image_view).setOnClickListener(mSendMessageOnClickListener);
+        findViewById(R.id.send_image_view).setOnClickListener(mSendMessageClickListener);
     }
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() { //broadcast for update MessagesHistory from LongPoll response
@@ -117,8 +138,7 @@ public class MessagesHistoryViewImpl extends AppCompatActivity {
                 final String mtsKey = pIntent.getStringExtra(Constants.MTS_KEY);
 
                 if (mVkModelMessagesList.get(0).getUserId() == userId) {
-                    final Thread thread = new Thread(new LoadLongPollMessage(mtsKey));
-                    thread.start();
+                    mPresenter.getLongPollMessage(mtsKey);
                 }
             }
         }
@@ -129,128 +149,12 @@ public class MessagesHistoryViewImpl extends AppCompatActivity {
         @Override
         public void onLoadMore() {
             if (mVkModelMessagesList.size() < MESSAGES_HISTORY_SIZE) {
-                mRecyclerView.post(new Runnable() {
 
-                    @Override
-                    public void run() {
+                mProgressBar.setVisibility(View.VISIBLE);
+                mPresenter.getMessages(mRequestId, mVkModelMessagesList.get(mVkModelMessagesList.size() - 1).getId(), Constants.COUNT_20);
 
-                        final Bundle bundle = setBundle(mVkModelMessagesList.get(mVkModelMessagesList.size() - 1).getId(), Constants.COUNT_20);
-                        getSupportLoaderManager().restartLoader(Constants.LoadersKeys.HISTORY_MESSAGE_LOADER_ID, bundle, mListLoaderCallbacks).forceLoad();
-                    }
-                });
             }
         }
     };
 
-    private final LoaderManager.LoaderCallbacks<List<VkModelMessagesK>> mListLoaderCallbacks = new LoaderManager.LoaderCallbacks<List<VkModelMessagesK>>() {
-
-        @Override
-        public Loader<List<VkModelMessagesK>> onCreateLoader(final int pId, final Bundle pArgs) {
-            Loader<List<VkModelMessagesK>> messagesLoader = null;
-            if (pId == Constants.LoadersKeys.HISTORY_MESSAGE_LOADER_ID) {
-                messagesLoader = new AsyncTaskMessageHistoryParsing(MessagesHistoryViewImpl.this, pArgs);
-            }
-            mProgressBar.setVisibility(View.VISIBLE);
-            return messagesLoader;
-        }
-
-        @Override
-        public void onLoadFinished(final Loader<List<VkModelMessagesK>> pLoader, final List<VkModelMessagesK> pData) {
-
-            if (MESSAGES_HISTORY_SIZE == 0) {
-                MESSAGES_HISTORY_SIZE = pData.get(0).getCountMessagesHistory();
-            }
-
-            synchronized (mLock) {
-                mVkModelMessagesList.addAll(pData);
-                mAdapter.notifyDataSetChanged();
-            }
-            mAdapter.setLoaded();
-            mProgressBar.setVisibility(View.INVISIBLE);
-        }
-
-        @Override
-        public void onLoaderReset(final Loader<List<VkModelMessagesK>> pLoader) {
-
-        }
-    };
-
-    View.OnClickListener mSendMessageOnClickListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(final View v) {
-
-            final String text;
-            text = String.valueOf(mMessageEditText.getText());
-            mMessageEditText.getText().clear();
-            final int requestId;
-
-            if (!text.equals(Constants.Parser.EMPTY_STRING)) {
-                if (mChatId == 0) {
-                    requestId = mUserHistoryId;
-                } else {
-                    requestId = mChatId;
-                }
-
-                final Thread thread = new Thread(new Runnable() {
-
-                    @Override
-                    public void run() {
-
-                        try {
-                            final String response = VkApiMethods.sendMessage(requestId, text);
-                            final JSONObject jsonResponse = new JSONObject(response);
-                            if (!jsonResponse.has(Constants.Parser.RESPONSE)) {
-                                Toast.makeText(MessagesHistoryViewImpl.this, Constants.ERROR_TO_SEND_MESSAGE, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (InterruptedException | ExecutionException | IOException | JSONException pE) {
-                            Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
-                        }
-                    }
-                });
-                thread.start();
-            }
-        }
-    };
-
-    class LoadLongPollMessage implements Runnable {
-
-        String mTsKey;
-        private VkModelMessagesK mVkModelMessages;
-
-        LoadLongPollMessage(final String pTsKey) {
-            mTsKey = pTsKey;
-        }
-
-        @Override
-        public void run() {
-
-            try {
-                mVkModelMessages = getLongPollMessage(mTsKey);
-            } catch (JSONException | InterruptedException | ExecutionException | IOException pE) {
-                Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
-            }
-
-            runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    synchronized (mLock) {
-                        mVkModelMessagesList.add(0, mVkModelMessages);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }
-            });
-        }
-
-        VkModelMessagesK getLongPollMessage(final String pTsKey) throws JSONException, InterruptedException, ExecutionException, IOException {
-            final VkModelMessagesK vkModelMessages;
-            final JSONObject jsonObject = new JSONObject(VkApiMethods.getLongPollHistory(pTsKey));
-            vkModelMessages = new VkModelMessagesK(jsonObject.getJSONObject(Constants.Parser.RESPONSE).
-                    getJSONObject(Constants.Parser.MESSAGES).getJSONArray(Constants.Parser.ITEMS).getJSONObject(0));
-            vkModelMessages.setVkModelUser(new VkModelUser(jsonObject.getJSONObject(Constants.Parser.RESPONSE).
-                    getJSONArray(Constants.Parser.PROFILES).getJSONObject(0)));
-            return vkModelMessages;
-        }
-    }
 }
