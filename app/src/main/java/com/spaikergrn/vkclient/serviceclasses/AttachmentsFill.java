@@ -45,7 +45,7 @@ public class AttachmentsFill {
 
         sPhotoSize = PreferenceManager
                 .getDefaultSharedPreferences(pContext)
-                .getString(Constants.PreferencesKeys.PHOTO_SIZE, Constants.Parser.EMPTY_STRING);
+                .getString(Constants.PreferencesKeys.PHOTO_SIZE, Constants.Parser.PHOTO_256);
 
         sIsLoadPhoto = PreferenceManager
                 .getDefaultSharedPreferences(pContext)
@@ -53,8 +53,7 @@ public class AttachmentsFill {
     }
 
     public void inflateAttachments(final VkAttachmentsI pVkModelAttachment,
-                                   final LinearLayout pParentLinearLayout, final int pWidth,
-                                   final LayoutInflater pInflater, final Context pContext, final int pScale) {
+                                   final LinearLayout pParentLinearLayout, final int pWidth, final Context pContext, final int pScale) {
 
         if (pVkModelAttachment == null) {
             return;
@@ -88,7 +87,7 @@ public class AttachmentsFill {
         for (int i = 0; i < pVkAttachmentsList.size(); i++) {
             type = pVkAttachmentsList.get(i).getType();
             if (Constants.Parser.TYPE_AUDIO.equals(type)) {
-                inflateAudio(pVkAttachmentsList.get(i), pParentLinearLayout, pInflater, pContext);
+                inflateAudio(pVkAttachmentsList.get(i), pParentLinearLayout, pContext);
             }
         }
 
@@ -229,10 +228,15 @@ public class AttachmentsFill {
         }
     }
 
-    private void inflateAudio(final VkModelAttachmentsI pVkModelAttachments, final LinearLayout mParentLinearLayout,
-                              final LayoutInflater pInflater, final Context pContext) {
+    private void inflateAudio(final VkModelAttachmentsI pVkModelAttachments, final LinearLayout mParentLinearLayout, final Context pContext) {
 
         final VkModelAudioK vkModelAudio = (VkModelAudioK) pVkModelAttachments;
+        final LayoutInflater pInflater = (LayoutInflater) pContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        if (pInflater == null){
+            return;
+        }
+
         final View view = pInflater.inflate(R.layout.audio_layout, mParentLinearLayout, false);
         final TextView textViewAlbum = view.findViewById(R.id.artist_text_view);
         textViewAlbum.setText(vkModelAudio.getArtist());
@@ -378,7 +382,7 @@ public class AttachmentsFill {
 
         @Override
         public void onClick(final View pView) {
-            FullScreenImageViewActivity.start(ContextHolder.getContext(),(String) pView.getTag(R.string.key_tag_photo));
+            FullScreenImageViewActivity.start(ContextHolder.getContext(),((String) pView.getTag(R.string.key_tag_photo)));
         }
     };
 

@@ -6,6 +6,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.spaikergrn.vkclient.clients.HttpUrlClient;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.GetUsersHelper;
 import com.spaikergrn.vkclient.tools.ParseUtils;
@@ -44,7 +45,7 @@ public class ParsingDialogsAsyncTask extends AsyncTaskLoader<List<VkModelDialogK
         final SparseArray<VkModelUser> vkModelUserMap;
 
         try {
-            final String request = VkApiMethods.getDialogs(mStartMessageId, mCount);
+            final String request = new HttpUrlClient().getRequestWithErrorCheck(VkApiMethods.getDialogs(mStartMessageId, mCount));
             final int DIALOGS_SIZE = getDialogsCount(request);
             final JSONArray itemsArray = ParseUtils.getJSONArrayItems(request);
             assert itemsArray != null;

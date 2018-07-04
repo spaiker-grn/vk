@@ -1,5 +1,8 @@
 package com.spaikergrn.vkclient.activity.messagehistoryactivity;
 
+import com.spaikergrn.vkclient.activity.messagehistoryactivity.messageshistorycontract.MessagesHistoryModel;
+import com.spaikergrn.vkclient.activity.messagehistoryactivity.messageshistorycontract.MessagesHistoryView;
+import com.spaikergrn.vkclient.activity.messagehistoryactivity.messageshistorycontract.MessagesHistoryViewPresenter;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelMessagesK;
 

@@ -1,8 +1,11 @@
 package com.spaikergrn.vkclient.tools;
 
+import android.content.Intent;
 import android.util.Log;
 
+import com.spaikergrn.vkclient.activity.LoginActivity;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.serviceclasses.ContextHolder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,5 +43,18 @@ public final class ParseUtils {
 
         }
         return null;
+    }
+
+    public static String checkError(final String pResponse) throws JSONException {
+        final JSONObject jsonObject = new JSONObject(pResponse);
+        if (jsonObject.has(Constants.Parser.ERROR)) {
+            if (jsonObject.getJSONObject(Constants.Parser.ERROR).optInt(Constants.Parser.ERROR_CODE) == Constants.ERROR_CODE_AUTH) {
+
+                ContextHolder.getContext().startActivity(new Intent(ContextHolder.getContext(), LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                return Constants.RELOAD;
+            }
+            return Constants.ERROR;
+        }
+        return pResponse;
     }
 }

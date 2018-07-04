@@ -1,4 +1,4 @@
-package com.spaikergrn.vkclient.activity.messagehistoryactivity;
+package com.spaikergrn.vkclient.activity.messagehistoryactivity.messageshistorycontract;
 
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelMessagesK;
 

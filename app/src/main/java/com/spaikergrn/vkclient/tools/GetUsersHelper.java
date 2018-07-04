@@ -30,7 +30,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 public final class GetUsersHelper {
 
@@ -65,7 +64,7 @@ public final class GetUsersHelper {
         map.put(Constants.Parser.CODE, code);
         Log.d(Constants.MY_TAG, vkApi.buildUrl(Constants.VkApiMethods.EXECUTE, map));
         final IHttpUrlClient httpUrlClient = new HttpUrlClient();
-        final String response = httpUrlClient.getRequest(vkApi.buildUrl(Constants.VkApiMethods.EXECUTE, map));
+        final String response = httpUrlClient.getRequestWithErrorCheck(vkApi.buildUrl(Constants.VkApiMethods.EXECUTE, map));
         final JSONArray itemsArray = ParseUtils.getJSONArrayItems(response);
 
         assert itemsArray != null;

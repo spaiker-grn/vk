@@ -18,7 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.spaikergrn.vkclient.R;
-import com.spaikergrn.vkclient.activity.messagehistoryactivity.MessagesHistoryView;
 import com.spaikergrn.vkclient.activity.messagehistoryactivity.MessagesHistoryViewImpl;
 import com.spaikergrn.vkclient.fragments.IFragmentAdapterRefresh;
 import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;

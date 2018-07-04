@@ -15,17 +15,16 @@ import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.LikesOnClickListener;
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelPhotoK;
 
-public class FullScreenImageViewActivity extends AppCompatActivity implements FullScreenImageView {
+public class FullScreenImageViewActivity extends AppCompatActivity implements FullScreenImageViewContract.FullScreenImageView {
 
     private ToggleButton mLikesToggleButton;
-    private ImageView mCommentsImageView;
     private ImageView mFullScreenImageView;
     private String mPhotoSize;
-    private FullScreenImageViewPresenter mPresenter;
+    private FullScreenImageViewContract.FullScreenImageViewPresenter mPresenter;
 
     public static void start(final Context pContext, final String pPhotoId) {
         final Intent intent = new Intent(pContext, FullScreenImageViewActivity.class);
-        intent.putExtra(pPhotoId, Constants.FULL_SCREEN_IMAGE_VIEW)
+        intent.putExtra(Constants.FULL_SCREEN_IMAGE_VIEW, pPhotoId)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         pContext.startActivity(intent);
     }
@@ -34,7 +33,7 @@ public class FullScreenImageViewActivity extends AppCompatActivity implements Fu
     protected void onCreate(@Nullable final Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_full_sreen_image_view);
-        mPresenter = new FullScreenImageViewPresenterImpl(this);
+        mPresenter = new FullScreenImageViewPresenterImpl(this, new FullScreenImageViewModelImpl());
         initViews();
         mPhotoSize = mPresenter.getPhotoSize();
         final String photoId = getIntent().getStringExtra(Constants.FULL_SCREEN_IMAGE_VIEW);
@@ -49,7 +48,6 @@ public class FullScreenImageViewActivity extends AppCompatActivity implements Fu
 
     private void initViews() {
         mLikesToggleButton = findViewById(R.id.likes_count_toggle_button);
-        mCommentsImageView = findViewById(R.id.commend_image_view);
         mFullScreenImageView = findViewById(R.id.full_screen_image_view);
     }
 

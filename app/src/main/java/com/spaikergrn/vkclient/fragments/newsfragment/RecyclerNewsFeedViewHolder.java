@@ -3,9 +3,7 @@ package com.spaikergrn.vkclient.fragments.newsfragment;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
-
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,7 +16,6 @@ import com.spaikergrn.vkclient.serviceclasses.AttachmentsFill;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.LikesOnClickListener;
 import com.spaikergrn.vkclient.tools.TimesUtils;
-
 import com.spaikergrn.vkclient.vkapi.vkapimodels.VkModelUser;
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelCopyHistoryPostK;
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelGroupK;
@@ -38,7 +35,6 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
     private final LinearLayout mLinearLayoutAttachments;
     private final int mWidth;
     private final Context mContext;
-    private final LayoutInflater mInflater;
     private final TextView mCopyHistoryNameTextView;
     private final TextView mCopyHistoryTextTextView;
     private final LinearLayout mCopyHistoryLLAttachments;
@@ -63,7 +59,6 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
         mCopyHistoryLLAttachments = pItemView.findViewById(R.id.attachment_copy_history);
         mVkModelNewsFeeds = pVkModelNewsFeeds;
         mContext = mNewsFragment.getContext();
-        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mWidth = getWidthCardView(mContext);
         ImageLoader.with(mContext).setPlaceHolder(R.drawable.ic_images);
     }
@@ -115,9 +110,9 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
                 final VkModelUser vkModelUser = mVkModelNewsFeeds.getUserMap().get(vkModelPostHistory.getFromId());
                 mCopyHistoryNameTextView.setText(vkModelUser.getFullName());
             }
-            attachmentsFill.inflateAttachments(vkModelPostHistory.getVkAttachmentsI(), mLinearLayoutAttachments, mWidth, mInflater, mContext, SCALE);
+            attachmentsFill.inflateAttachments(vkModelPostHistory.getVkAttachmentsI(), mLinearLayoutAttachments, mWidth, mContext, SCALE);
         }
-        attachmentsFill.inflateAttachments(pVkModelNewsPost.getVkAttachments(), mLinearLayoutAttachments, mWidth, mInflater, mContext, SCALE);
+        attachmentsFill.inflateAttachments(pVkModelNewsPost.getVkAttachments(), mLinearLayoutAttachments, mWidth, mContext, SCALE);
     }
 
     private int getWidthCardView(final Context pContext) {

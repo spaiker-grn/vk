@@ -67,12 +67,9 @@ public final class Constants {
 
     public interface LoadersKeys{
 
-        String PHOTO_LOADER_BUNDLE = "photo loader bundle";
         int LOADER_USERS_BY_ID = 1;
         int NEWS_LOADER_ID = 2;
         int DIALOGS_LOADER_ID = 3;
-        int HISTORY_MESSAGE_LOADER_ID = 4;
-        int PHOTO_LOADER_ID = 5;
     }
 
     public interface ImgLoader{

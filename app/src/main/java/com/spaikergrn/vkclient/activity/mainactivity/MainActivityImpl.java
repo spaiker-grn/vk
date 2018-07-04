@@ -23,11 +23,11 @@ import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.services.LongPollService;
 import com.spaikergrn.vkclient.tools.NetworkUtil;
 
-public class MainActivityImpl extends AppCompatActivity implements MainActivity {
+public class MainActivityImpl extends AppCompatActivity implements MainActivityContract.MainActivityView {
 
     private TextView mCheckConnectionTextView;
     private TabsPagerFragmentAdapter mTabsPagerFragmentAdapter;
-    private final MainActivityPresenter mPresenter = new MainActivityPresenterImpl(this);
+    private final MainActivityContract.MainActivityPresenter mPresenter = new MainActivityPresenterImpl(this);
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -35,7 +35,6 @@ public class MainActivityImpl extends AppCompatActivity implements MainActivity 
         setContentView(R.layout.activity_main);
         mTabsPagerFragmentAdapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
         initTabs();
-        mPresenter.onCreate();
     }
 
     private void initTabs() {
@@ -83,7 +82,6 @@ public class MainActivityImpl extends AppCompatActivity implements MainActivity 
         super.onDestroy();
         LongPollService.stop(getApplicationContext());
         unregisterReceiver(networkStateReceiver);
-        mPresenter.onDestroy();
     }
 
     @NonNull

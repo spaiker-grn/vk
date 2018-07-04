@@ -4,25 +4,10 @@ import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelPhotoK;
 
 import io.reactivex.observers.DisposableObserver;
 
-public class FullScreenImageViewPresenterImpl implements FullScreenImageViewPresenter {
+public class FullScreenImageViewPresenterImpl implements FullScreenImageViewContract.FullScreenImageViewPresenter {
 
-    private final FullScreenImageView mFullScreenImageView;
-    private final FullScreenImageViewModel mFullScreenImageViewModel;
-
-    FullScreenImageViewPresenterImpl(final FullScreenImageView pFullScreenImageView) {
-        mFullScreenImageView = pFullScreenImageView;
-        mFullScreenImageViewModel = new FullScreenImageViewModelImpl();
-    }
-
-    @Override
-    public String getPhotoSize() {
-        return mFullScreenImageViewModel.getPhotoSize();
-    }
-
-    @Override
-    public void loadVkModelPhoto(final String pPhotoId) {
-        mFullScreenImageViewModel.getVkModelPhoto(pPhotoId, mDisposableObserver);
-    }
+    private final FullScreenImageViewContract.FullScreenImageView mFullScreenImageView;
+    private final FullScreenImageViewContract.FullScreenImageViewModel mFullScreenImageViewModel;
 
     private final DisposableObserver<VkModelPhotoK> mDisposableObserver = new DisposableObserver<VkModelPhotoK>() {
 
@@ -42,9 +27,25 @@ public class FullScreenImageViewPresenterImpl implements FullScreenImageViewPres
         }
     };
 
+    public FullScreenImageViewPresenterImpl(final FullScreenImageViewContract.FullScreenImageView pFullScreenImageView,
+                                            final FullScreenImageViewContract.FullScreenImageViewModel pScreenImageViewModel) {
+        mFullScreenImageView = pFullScreenImageView;
+        mFullScreenImageViewModel = pScreenImageViewModel;
+    }
+
+    @Override
+    public String getPhotoSize() {
+        return mFullScreenImageViewModel.getPhotoSize();
+    }
+
+    @Override
+    public void loadVkModelPhoto(final String pPhotoId) {
+        mFullScreenImageViewModel.getVkModelPhoto(pPhotoId, mDisposableObserver);
+    }
 
     @Override
     public void onPause() {
         mDisposableObserver.dispose();
     }
+
 }

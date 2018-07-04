@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
+import com.spaikergrn.vkclient.clients.HttpUrlClient;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.vkapi.VkApiMethods;
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelNewsFeedsK;
@@ -13,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 public class ParsingNewsAsyncTask extends AsyncTaskLoader<VkModelNewsFeedsK> {
 
@@ -31,9 +31,9 @@ public class ParsingNewsAsyncTask extends AsyncTaskLoader<VkModelNewsFeedsK> {
     public VkModelNewsFeedsK loadInBackground() {
 
         try {
-            final String request = VkApiMethods.getNews(mStartFrom);
+            final String request = new HttpUrlClient().getRequestWithErrorCheck(VkApiMethods.getNews(mStartFrom));
             mVkModelNewsFeeds = new VkModelNewsFeedsK(new JSONObject(request));
-        } catch (InterruptedException | ExecutionException | IOException | JSONException pE) {
+        } catch (IOException | JSONException pE) {
             Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
         }
         return mVkModelNewsFeeds;

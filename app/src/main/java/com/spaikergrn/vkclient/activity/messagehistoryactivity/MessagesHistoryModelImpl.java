@@ -1,5 +1,9 @@
 package com.spaikergrn.vkclient.activity.messagehistoryactivity;
 
+import com.spaikergrn.vkclient.activity.messagehistoryactivity.messageshistorycontract.MessagesHistoryModel;
+import com.spaikergrn.vkclient.callablemodels.CallLongPollMessage;
+import com.spaikergrn.vkclient.callablemodels.CallMessagesHistory;
+import com.spaikergrn.vkclient.callablemodels.CallSendMessage;
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelMessagesK;
 
 import org.json.JSONObject;
@@ -7,8 +11,6 @@ import org.json.JSONObject;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;

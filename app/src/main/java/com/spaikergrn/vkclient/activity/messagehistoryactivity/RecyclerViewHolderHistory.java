@@ -27,7 +27,6 @@ class RecyclerViewHolderHistory extends RecyclerView.ViewHolder {
     private final TextView mMessageTextView;
     private final TextView mTimeTextView;
     private final ImageView mImageView;
-    private final LayoutInflater mInflater;
     private final int mWidth;
     private final LinearLayout mAttachmentLayout;
 
@@ -38,7 +37,6 @@ class RecyclerViewHolderHistory extends RecyclerView.ViewHolder {
         mTimeTextView = pItemView.findViewById(R.id.time_history_text_view);
         mImageView = pItemView.findViewById(R.id.user_history_image_view);
         mAttachmentLayout = pItemView.findViewById(R.id.attachment_message_history);
-        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mWidth = getWidthCardView(mContext);
     }
 
@@ -85,8 +83,8 @@ class RecyclerViewHolderHistory extends RecyclerView.ViewHolder {
             mMessageTextView.setOnClickListener(new ForwardMessagesOnClickListener(pVkModelMessages, mContext));
         }
 
-        if (pVkModelMessages.getAttachments() != null && pVkModelMessages.getAttachments().getAttachmentsList().size() >= 1) {
-            attachmentsFill.inflateAttachments(pVkModelMessages.getAttachments(), mAttachmentLayout, mWidth, mInflater, mContext, 3);  //fill attachments
+        if (pVkModelMessages.getAttachments() != null && !pVkModelMessages.getAttachments().getAttachmentsList().isEmpty()) {
+            attachmentsFill.inflateAttachments(pVkModelMessages.getAttachments(), mAttachmentLayout, mWidth, mContext, 3);  //fill attachments
         }
     }
 

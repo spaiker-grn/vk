@@ -32,6 +32,8 @@
     <string name="clear_users_db">Clear UsersDB</string>
     <string name="forward_image_view">forward image view</string>
     <string name="watchers_count">watchers count</string>
+    <string name="main_attachment_image">Main Image</string>
+    <string name="sticker">Sticker</string>
 
     <string-array name="pref_photo_size_titles">
         <item>Photo 130</item>

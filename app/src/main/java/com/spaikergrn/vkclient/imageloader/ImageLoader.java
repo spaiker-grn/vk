@@ -215,6 +215,7 @@ public final class ImageLoader {
 
             Result result = null;
             final Bitmap bitmap;
+            InputStream inputStream = null;
 
             try {
                 final Request request = mDeque.takeFirst();
@@ -228,12 +229,12 @@ public final class ImageLoader {
                         }
                     }
                 } catch (final FileNotFoundException pE) {
-                    Log.e(Constants.ERROR, pE.getMessage());
+                    Log.e(Constants.ERROR, pE.getMessage(), pE);
                 }
 
-                final InputStream inputStream = new HttpUrlClient().getInputStream(request.url);
+                inputStream = new HttpUrlClient().getInputStream(request.url);
                 bitmap = getScaledBitmap(inputStream, request.width, request.height);
-                Util.closeSilently(inputStream);
+
 
                 if (bitmap != null) {
 
@@ -258,6 +259,8 @@ public final class ImageLoader {
                 Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
 
                 return result;
+            } finally {
+                Util.closeSilently(inputStream);
             }
         }
 
@@ -268,22 +271,25 @@ public final class ImageLoader {
     }
 
     private Result getFromDiskCache(final Request pRequest) throws IOException {
+        InputStream fileStream = null;
 
-        final Result result = new Result(pRequest);
-        final Bitmap bitmap;
-        final File file = mBaseDiskCache.get(pRequest.url);
-        if (!file.exists()) {
-            throw new FileNotFoundException(Constants.FILE_NOT_EXIST);
+        try {
+            final Result result = new Result(pRequest);
+            final Bitmap bitmap;
+            final File file = mBaseDiskCache.get(pRequest.url);
+            if (!file.exists()) {
+                throw new FileNotFoundException(Constants.FILE_NOT_EXIST);
+            }
+            fileStream = IoUtils.getIsFromFile(file);
+            bitmap = getScaledBitmap(fileStream, pRequest.width, pRequest.height);
+
+            if (bitmap != null) {
+                result.setBitmap(bitmap);
+            }
+            return result;
+        } finally {
+            Util.closeSilently(fileStream);
         }
-        final InputStream fileStream = IoUtils.getIsFromFile(file);
-        bitmap = getScaledBitmap(fileStream, pRequest.width, pRequest.height);
-
-        Util.closeSilently(fileStream);
-
-        if (bitmap != null) {
-            result.setBitmap(bitmap);
-        }
-        return result;
     }
 
 }

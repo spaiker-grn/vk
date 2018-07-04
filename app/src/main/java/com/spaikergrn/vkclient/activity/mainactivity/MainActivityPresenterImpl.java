@@ -10,12 +10,12 @@ import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.serviceclasses.ContextHolder;
 import com.spaikergrn.vkclient.serviceclasses.ProfileInfoHolder;
 
-public class MainActivityPresenterImpl implements MainActivityPresenter {
+public class MainActivityPresenterImpl implements MainActivityContract.MainActivityPresenter {
 
-    private final MainActivity mView;
+    private final MainActivityContract.MainActivityView mView;
 
-    MainActivityPresenterImpl(final MainActivity pMainActivity) {
-        mView = pMainActivity;
+    MainActivityPresenterImpl(final MainActivityContract.MainActivityView pMainActivityView) {
+        mView = pMainActivityView;
     }
 
     @Override
@@ -44,22 +44,4 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
         mView.startLoginActivity();
     }
 
-    @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-
-    }
-
-    @Override
-    public void onResume() {
-    }
-
-    @Override
-    public void onPause() {
-
-    }
 }

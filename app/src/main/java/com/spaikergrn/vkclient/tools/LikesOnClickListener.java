@@ -3,15 +3,14 @@ package com.spaikergrn.vkclient.tools;
 import android.util.Log;
 import android.view.View;
 
+import com.spaikergrn.vkclient.clients.HttpUrlClient;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.vkapi.VkApiMethods;
-import com.spaikergrn.vkclient.vkapi.vkapimodels.ILikeAble;
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.ILikeAbleK;
 
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -43,14 +42,14 @@ public class LikesOnClickListener implements View.OnClickListener {
 
             try {
                 if (!mLikeAble.getUserLike()) {
-                    VkApiMethods.addLike(mType, mOwnerId, mItemId);
+                    new HttpUrlClient().getRequestWithErrorCheck(VkApiMethods.addLike(mType, mOwnerId, mItemId));
                     mLikeAble.setUserLike(true);
 
                 } else {
-                    VkApiMethods.deleteLike(mType, mOwnerId, mItemId);
+                    new HttpUrlClient().getRequestWithErrorCheck(VkApiMethods.deleteLike(mType, mOwnerId, mItemId));
                     mLikeAble.setUserLike(false);
                 }
-            } catch (IOException | InterruptedException | ExecutionException | JSONException pE) {
+            } catch (final IOException | JSONException pE) {
                 Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
             }
 

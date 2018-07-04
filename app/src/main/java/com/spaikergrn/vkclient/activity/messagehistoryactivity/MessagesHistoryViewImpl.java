@@ -16,6 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.spaikergrn.vkclient.R;
+import com.spaikergrn.vkclient.activity.messagehistoryactivity.messageshistorycontract.MessagesHistoryView;
+import com.spaikergrn.vkclient.activity.messagehistoryactivity.messageshistorycontract.MessagesHistoryViewPresenter;
 import com.spaikergrn.vkclient.fragments.recyclersutils.ILoadMore;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.vkapi.vkapimodelskotlin.VkModelMessagesK;

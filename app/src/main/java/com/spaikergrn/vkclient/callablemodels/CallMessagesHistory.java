@@ -1,8 +1,9 @@
-package com.spaikergrn.vkclient.activity.messagehistoryactivity;
+package com.spaikergrn.vkclient.callablemodels;
 
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.spaikergrn.vkclient.clients.HttpUrlClient;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.GetUsersHelper;
 import com.spaikergrn.vkclient.tools.ParseUtils;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 import io.reactivex.ObservableEmitter;
@@ -46,7 +46,7 @@ public class CallMessagesHistory implements ObservableOnSubscribe<List<VkModelMe
 
         try {
 
-            messagesList = getVkModelMessages(VkApiMethods.getMessageHistory(mHistoryId, mStartMessageId, mCount));
+            messagesList = getVkModelMessages(new HttpUrlClient().getRequestWithErrorCheck(VkApiMethods.getMessageHistory(mHistoryId, mStartMessageId, mCount)));
 
             if (messagesList.isEmpty()) {
                 emitter.onNext(messagesList);
@@ -118,7 +118,7 @@ public class CallMessagesHistory implements ObservableOnSubscribe<List<VkModelMe
     private void initChatHistoryIfExist(final List<VkModelMessagesK> pMessageList) throws InterruptedException, ExecutionException, JSONException, IOException {
 
         if (pMessageList.get(0).getChatId() != 0) {
-            final String chatById = VkApiMethods.getChatById(pMessageList.get(0).getChatId());
+            final String chatById = new HttpUrlClient().getRequestWithErrorCheck(VkApiMethods.getChatById(pMessageList.get(0).getChatId()));
             final VkModelChatK chat = new VkModelChatK(new JSONObject(chatById).getJSONObject(Constants.Parser.RESPONSE));
 
             if (chat.getUsers() != null) {

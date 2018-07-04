@@ -1,6 +1,6 @@
-package com.spaikergrn.vkclient.activity.messagehistoryactivity;
+package com.spaikergrn.vkclient.activity.messagehistoryactivity.messageshistorycontract;
 
-interface MessagesHistoryViewPresenter {
+public interface MessagesHistoryViewPresenter {
 
     void getMessages(int pRequestId, int pStartMessageId, int pCount);
 

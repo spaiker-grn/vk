@@ -1,5 +1,6 @@
-package com.spaikergrn.vkclient.activity.messagehistoryactivity;
+package com.spaikergrn.vkclient.callablemodels;
 
+import com.spaikergrn.vkclient.clients.HttpUrlClient;
 import com.spaikergrn.vkclient.vkapi.VkApiMethods;
 
 import org.json.JSONObject;
@@ -19,7 +20,7 @@ public class CallSendMessage implements ObservableOnSubscribe<JSONObject> {
 
     @Override
     public void subscribe(final ObservableEmitter<JSONObject> pEmitter) throws Exception {
-        final String response = VkApiMethods.sendMessage(mChatId, mText);
+        final String response = new HttpUrlClient().getRequestWithErrorCheck(VkApiMethods.sendMessage(mChatId, mText));
 
         pEmitter.onNext(new JSONObject(response));
         pEmitter.onComplete();

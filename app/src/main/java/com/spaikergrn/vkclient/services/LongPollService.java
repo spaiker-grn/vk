@@ -72,7 +72,7 @@ public class LongPollService extends Service {
             String s;
 
             try {
-                final JSONObject jsonObjectServer = new JSONObject(VkApiMethods.getLongPollServer());
+                final JSONObject jsonObjectServer = new JSONObject(new HttpUrlClient().getRequestWithErrorCheck(VkApiMethods.getLongPollServer()));
                 final VkModelLongPollServerK longPollServer = new VkModelLongPollServerK(jsonObjectServer);
                 mTs = longPollServer.getTs();
                 do {
@@ -99,12 +99,12 @@ public class LongPollService extends Service {
                     Log.d(Constants.MY_TAG, "Long POLL RESPONSE" + s);
                 } while (!mJsonObjectPollRequest.has(Constants.Parser.FAILED));
 
-            } catch (ExecutionException | IOException | InterruptedException | JSONException pE) {
-                Log.e(Constants.ERROR, "Long Poll Service: ", pE.getCause());
+            } catch (IOException  | JSONException pE) {
+                Log.e(Constants.ERROR, "Long Poll Service: ", pE);
                 try {
                     Thread.sleep(Constants.SLEEP_TIME);
                 } catch (final InterruptedException pEs) {
-                    Log.e(Constants.ERROR, pE.getMessage(), pE.initCause(pE.getCause()));
+                    Log.e(Constants.ERROR, pE.getMessage(), pE);
                 }
                 if (NetworkUtil.getConnectivityStatus(getApplicationContext())){
                     startService(new Intent(getApplicationContext(), LongPollService.class));

@@ -1,6 +1,10 @@
 package com.spaikergrn.vkclient.clients;
 
+import com.spaikergrn.vkclient.imageloader.Utils.Util;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
+import com.spaikergrn.vkclient.tools.ParseUtils;
+
+import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -14,15 +18,28 @@ public class HttpUrlClient implements IHttpUrlClient {
 
     private static final int BUFFER_SIZE = 1024;
 
-    public String getRequest(final String pRequest) throws IOException {
+    public String getRequestWithErrorCheck(final String pRequest) throws IOException, JSONException {
 
-        final InputStream inputStream = getInputStream(pRequest);
-        final ByteArrayOutputStream result = new ByteArrayOutputStream();
-        final byte[] buffer = new byte[BUFFER_SIZE];
-        int length;
-        while ((length = inputStream.read(buffer)) != -1) {
-            result.write(buffer, 0, length);
+        return ParseUtils.checkError(getRequest(pRequest));
+    }
+
+    private String getRequest(final String pRequest) throws IOException {
+
+        final ByteArrayOutputStream result;
+        InputStream inputStream = null;
+
+        try {
+            inputStream = getInputStream(pRequest);
+            result = new ByteArrayOutputStream();
+            final byte[] buffer = new byte[BUFFER_SIZE];
+            int length;
+            while ((length = inputStream.read(buffer)) != -1) {
+                result.write(buffer, 0, length);
+            }
+        } finally {
+            Util.closeSilently(inputStream);
         }
+
         return result.toString(Constants.UTF_8);
     }
 
@@ -35,8 +52,7 @@ public class HttpUrlClient implements IHttpUrlClient {
         URLConnection.setRequestMethod(Constants.URL_BUILDER.POST);
         URLConnection.setDoInput(true);
 
-        if (URLConnection.getResponseCode()== HttpURLConnection.HTTP_OK)
-        {
+        if (URLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
             final InputStream inputStream = URLConnection.getInputStream();
             final ByteArrayOutputStream result = new ByteArrayOutputStream();
             final byte[] buffer = new byte[BUFFER_SIZE];
@@ -44,6 +60,7 @@ public class HttpUrlClient implements IHttpUrlClient {
             while ((length = inputStream.read(buffer)) != -1) {
                 result.write(buffer, 0, length);
             }
+
             return result.toString(Constants.UTF_8);
         }
         return null;
@@ -53,6 +70,8 @@ public class HttpUrlClient implements IHttpUrlClient {
     public InputStream getInputStream(final String pRequest) throws IOException {
         final URL url = new URL(pRequest);
         final HttpsURLConnection URLConnection = (HttpsURLConnection) url.openConnection();
+
         return URLConnection.getInputStream();
     }
+
 }
