@@ -71,11 +71,18 @@
             android:paddingRight="@dimen/padding_card_views_news"
             tools:text="@tools:sample/lorem"/>
 
-        <LinearLayout
-            android:id="@+id/attachment_fragment"
+        <!--        <LinearLayout
+                    android:id="@+id/attachment_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>-->
+
+
+        <com.spaikergrn.vkclient.serviceclasses.AttachmentsView
+            android:id="@+id/attachment_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:layout_height="wrap_content"/>
+
 
         <RelativeLayout
             android:id="@+id/news_bottom_bar_relative_layout"
@@ -99,11 +106,11 @@
                 style="@style/news_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/watchers_count_image_view"
-                android:layout_toEndOf="@+id/watchers_count_image_view"
                 android:layout_margin="@dimen/margin_card_views_news"
-                tools:text="@tools:sample/us_zipcodes"
-                tools:ignore="RelativeOverlap"/>
+                android:layout_toEndOf="@+id/watchers_count_image_view"
+                android:layout_toRightOf="@+id/watchers_count_image_view"
+                tools:ignore="RelativeOverlap"
+                tools:text="@tools:sample/us_zipcodes"/>
 
             <ImageView
                 android:id="@+id/commend_image_view"
@@ -114,8 +121,8 @@
                 android:layout_marginRight="@dimen/margin_drawable_bottom_news_bar"
                 android:layout_toLeftOf="@+id/likes_count_toggle_button"
                 android:layout_toStartOf="@+id/likes_count_toggle_button"
-                app:srcCompat="@drawable/ic_comment"
-                android:contentDescription="@string/comments_image_view"/>
+                android:contentDescription="@string/comments_image_view"
+                app:srcCompat="@drawable/ic_comment"/>
 
             <ToggleButton
                 android:id="@+id/likes_count_toggle_button"

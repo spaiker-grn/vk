@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/attachment_main_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="0dp"
+        android:paddingBottom="4dp"
+
+        android:contentDescription="@string/main_attachment_image"/>
+
+    <LinearLayout
+        android:id="@+id/attachment_images_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/link_text_view"
+        style="@style/text_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:padding="4dp"
+        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
+        android:visibility="gone"
+        tools:ignore="RtlSymmetry"
+        tools:text="link"
+        tools:visibility="visible"/>
+
+    <include
+        android:id="@+id/attachment_audio_layout"
+        layout="@layout/audio_layout"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/attachment_sticker"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:contentDescription="@string/sticker"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/attachment_gift"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:contentDescription="@string/sticker"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/attachment_doc_text_view"
+        style="@style/news_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:layout_marginBottom="4dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/attachment_wall_text_view"
+        style="@style/news_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:layout_marginBottom="4dp"
+        android:visibility="gone"/>
+
+</android.widget.LinearLayout>

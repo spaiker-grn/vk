@@ -13,6 +13,7 @@ import android.widget.ToggleButton;
 import com.spaikergrn.vkclient.R;
 import com.spaikergrn.vkclient.imageloader.ImageLoader;
 import com.spaikergrn.vkclient.serviceclasses.AttachmentsFill;
+import com.spaikergrn.vkclient.serviceclasses.AttachmentsView;
 import com.spaikergrn.vkclient.serviceclasses.Constants;
 import com.spaikergrn.vkclient.tools.LikesOnClickListener;
 import com.spaikergrn.vkclient.tools.TimesUtils;
@@ -32,7 +33,7 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
     private final TextView mWatchersCount;
     private final TextView mLikesTextView;
     private final NewsFragment mNewsFragment;
-    private final LinearLayout mLinearLayoutAttachments;
+    //private final LinearLayout mLinearLayoutAttachments;
     private final int mWidth;
     private final Context mContext;
     private final TextView mCopyHistoryNameTextView;
@@ -41,6 +42,7 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
     private final VkModelNewsFeedsK mVkModelNewsFeeds;
     private final View mCopyHistory;
     private final ToggleButton mLikesToggleButton;
+    private final AttachmentsView mAttachmentView;
 
     RecyclerNewsFeedViewHolder(final NewsFragment pNewsFragment, final VkModelNewsFeedsK pVkModelNewsFeeds, final View pItemView) {
         super(pItemView);
@@ -52,7 +54,7 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
         mWatchersCount = pItemView.findViewById(R.id.watchers_count_text_view);
         mLikesTextView = pItemView.findViewById(R.id.likes_count_text_view);
         mLikesToggleButton = pItemView.findViewById(R.id.likes_count_toggle_button);
-        mLinearLayoutAttachments = pItemView.findViewById(R.id.attachment_fragment);
+        //mLinearLayoutAttachments = pItemView.findViewById(R.id.attachment_fragment);
         mCopyHistory = pItemView.findViewById(R.id.copy_history_layout);
         mCopyHistoryNameTextView = pItemView.findViewById(R.id.card_news_name_copy_history_text_view);
         mCopyHistoryTextTextView = pItemView.findViewById(R.id.text_copy_history_text_view);
@@ -61,12 +63,14 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
         mContext = mNewsFragment.getContext();
         mWidth = getWidthCardView(mContext);
         ImageLoader.with(mContext).setPlaceHolder(R.drawable.ic_images);
+        mAttachmentView = pItemView.findViewById(R.id.attachment_view);
     }
 
     void bind(final VkModelNewsPostK pVkModelNewsPost) {
 
         final AttachmentsFill attachmentsFill = new AttachmentsFill(mContext);
-        mLinearLayoutAttachments.removeAllViews();
+        //mLinearLayoutAttachments.removeAllViews();
+        mAttachmentView.clearViews();
         mCopyHistoryLLAttachments.removeAllViews();
         mLikesToggleButton.setOnClickListener(new LikesOnClickListener(pVkModelNewsPost.getPostType(),
                 pVkModelNewsPost.getSourceID(), pVkModelNewsPost.getPostID(), pVkModelNewsPost));
@@ -110,10 +114,15 @@ class RecyclerNewsFeedViewHolder extends RecyclerView.ViewHolder {
                 final VkModelUser vkModelUser = mVkModelNewsFeeds.getUserMap().get(vkModelPostHistory.getFromId());
                 mCopyHistoryNameTextView.setText(vkModelUser.getFullName());
             }
-            attachmentsFill.inflateAttachments(vkModelPostHistory.getVkAttachmentsI(), mLinearLayoutAttachments, mWidth, mContext, SCALE);
+            mAttachmentView.initAttachment(vkModelPostHistory.getVkAttachmentsI(), mWidth);
+            //attachmentsFill.inflateAttachments(vkModelPostHistory.getVkAttachmentsI(), mLinearLayoutAttachments, mWidth, mContext, SCALE);
         }
-        attachmentsFill.inflateAttachments(pVkModelNewsPost.getVkAttachments(), mLinearLayoutAttachments, mWidth, mContext, SCALE);
+        //attachmentsFill.inflateAttachments(pVkModelNewsPost.getVkAttachments(), mLinearLayoutAttachments, mWidth, mContext, SCALE);
+        if (pVkModelNewsPost.getVkAttachments() != null){
+            mAttachmentView.initAttachment(pVkModelNewsPost.getVkAttachments(), mWidth);
+        }
     }
+
 
     private int getWidthCardView(final Context pContext) {
         final DisplayMetrics metrics = new DisplayMetrics();
