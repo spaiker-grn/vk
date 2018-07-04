@@ -45,7 +45,7 @@ public class AttachmentsFill {
 
         sPhotoSize = PreferenceManager
                 .getDefaultSharedPreferences(pContext)
-                .getString(Constants.PreferencesKeys.PHOTO_SIZE, Constants.Parser.PHOTO_256);
+                .getString(Constants.PreferencesKeys.PHOTO_SIZE, Constants.Parser.PHOTO_604);
 
         sIsLoadPhoto = PreferenceManager
                 .getDefaultSharedPreferences(pContext)

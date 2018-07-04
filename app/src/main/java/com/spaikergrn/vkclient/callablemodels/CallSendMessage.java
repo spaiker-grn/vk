@@ -13,7 +13,7 @@ public class CallSendMessage implements ObservableOnSubscribe<JSONObject> {
     private final int mChatId;
     private final String mText;
 
-    CallSendMessage(final int pChatId, final String pText) {
+    public CallSendMessage(final int pChatId, final String pText) {
         mChatId = pChatId;
         mText = pText;
     }

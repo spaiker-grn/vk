@@ -18,7 +18,7 @@ public class CallLongPollMessage implements ObservableOnSubscribe<VkModelMessage
 
     private final String mTsKey;
 
-    CallLongPollMessage(final String pTsKey) {
+    public CallLongPollMessage(final String pTsKey) {
         mTsKey = pTsKey;
     }
 

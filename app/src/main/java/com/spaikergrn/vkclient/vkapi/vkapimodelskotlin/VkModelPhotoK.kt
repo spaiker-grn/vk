@@ -63,7 +63,7 @@ import org.json.JSONObject
 
     fun getPhotoBySize(pSize: String): String? {
 
-        val size = if (pSize == Constants.Parser.EMPTY_STRING) Constants.Parser.PHOTO_604 else pSize
+        val size = if (pSize.isEmpty()) Constants.Parser.PHOTO_604 else pSize
 
         when (size) {
             Constants.Parser.PHOTO_1280 -> return if (!TextUtils.isEmpty(photo1280)) {

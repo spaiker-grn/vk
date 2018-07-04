@@ -33,7 +33,7 @@ public class CallMessagesHistory implements ObservableOnSubscribe<List<VkModelMe
     private final int mCount;
     private final GetUsersHelper mGetUsersHelper = new GetUsersHelper();
 
-    CallMessagesHistory(final int pHistoryId, final int pStartMessageId, final int pCount) {
+    public CallMessagesHistory(final int pHistoryId, final int pStartMessageId, final int pCount) {
         mStartMessageId = pStartMessageId;
         mHistoryId = pHistoryId;
         mCount = pCount;

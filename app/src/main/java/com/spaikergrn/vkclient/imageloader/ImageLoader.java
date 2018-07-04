@@ -78,6 +78,10 @@ public final class ImageLoader {
     }
 
     public Request.Builder load(final String pUrl) {
+        if (pUrl == null || pUrl.isEmpty()){
+            throw new IllegalArgumentException("Url can`t be null");
+        }
+
         return new Request.Builder(this).load(pUrl);
     }
 
