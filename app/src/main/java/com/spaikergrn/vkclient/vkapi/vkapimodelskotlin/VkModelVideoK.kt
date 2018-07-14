@@ -3,9 +3,18 @@ package com.spaikergrn.vkclient.vkapi.vkapimodelskotlin
 import com.spaikergrn.vkclient.serviceclasses.Constants
 import com.spaikergrn.vkclient.tools.ParseUtils
 import com.spaikergrn.vkclient.tools.ParseUtils.parseBoolean
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkImageAttachment
 import org.json.JSONObject
 
-class VkModelVideoK(jsonObject: JSONObject): VkAttachmentsK.VkModelAttachments {
+class VkModelVideoK(jsonObject: JSONObject) : VkAttachmentsK.VkModelAttachments, VkImageAttachment {
+
+    override fun getImageWidth(): Int {
+        return width
+    }
+
+    override fun getImageHeight(): Int {
+        return height
+    }
 
     var id: Int = 0
     var ownerId: Int = 0
@@ -75,6 +84,7 @@ class VkModelVideoK(jsonObject: JSONObject): VkAttachmentsK.VkModelAttachments {
         return null
     }
 
+    override
     fun getSmallPhotoForNews(): String? {
 
         if (photo320 != Constants.Parser.EMPTY_STRING) {
@@ -85,7 +95,8 @@ class VkModelVideoK(jsonObject: JSONObject): VkAttachmentsK.VkModelAttachments {
         return getFirstFrameForNews()
     }
 
-    fun getPhotoForNews(): String? {
+    override
+    fun getMainPhotoForNews(size: String): String? {
 
         if (photo800 != Constants.Parser.EMPTY_STRING) {
             return photo800

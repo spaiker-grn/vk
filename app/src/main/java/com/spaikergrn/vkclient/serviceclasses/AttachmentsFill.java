@@ -169,7 +169,7 @@ public class AttachmentsFill {
 
             mParentLinearLayout.setGravity(Gravity.CENTER);
             imageView = initMainImageView(mParentLinearLayout, vkModelPhoto, pWidth, pContext);
-            ImageLoader.with(pContext).load(vkModelPhoto.getPhotoBySize(sPhotoSize)).into(imageView);
+            ImageLoader.with(pContext).load(vkModelPhoto.getMainPhotoForNews(sPhotoSize)).into(imageView);
 
         } else {
             if (mParentLinearLayout.getChildCount() > 1 && mParentLinearLayout.getChildAt(mParentLinearLayout.getChildCount() - 1) instanceof LinearLayout) {
@@ -177,7 +177,7 @@ public class AttachmentsFill {
 
                 if (linearLayoutForPhotos.getChildCount() > 0 && linearLayoutForPhotos.getChildCount() < pScale) {
                     imageView = initSmallImageView(linearLayoutForPhotos, pWidth, pScale, vkModelPhoto, pContext);
-                    ImageLoader.with(pContext).load(vkModelPhoto.getPhotoBySize(sPhotoSize)).into(imageView);
+                    ImageLoader.with(pContext).load(vkModelPhoto.getMainPhotoForNews(sPhotoSize)).into(imageView);
                     return;
                 }
             }
@@ -211,7 +211,7 @@ public class AttachmentsFill {
             paramsImageView.setMargins(0, 0, 0, 4);
             imageView.setLayoutParams(paramsImageView);
             mParentLinearLayout.addView(imageView, paramsImageView);
-            ImageLoader.with(pContext).load(vkModelVideo.getPhotoForNews()).into(imageView);
+            ImageLoader.with(pContext).load(vkModelVideo.getMainPhotoForNews("")).into(imageView);
 
         } else {
             if (mParentLinearLayout.getChildCount() > 1 && mParentLinearLayout.getChildAt(mParentLinearLayout.getChildCount() - 1) instanceof LinearLayout) {
@@ -264,7 +264,7 @@ public class AttachmentsFill {
         final VkModelLinkK vkModelLink = (VkModelLinkK) pVkModelAttachments;
         if (mParentLinearLayout.getChildCount() == 0 && vkModelLink.getVkModelPhoto() != null) {
             final ImageView imageView = initMainImageView(mParentLinearLayout, vkModelLink.getVkModelPhoto(), pWidth, pContext);
-            ImageLoader.with(pContext).load(vkModelLink.getVkModelPhoto().getPhotoBySize(sPhotoSize)).into(imageView);
+            ImageLoader.with(pContext).load(vkModelLink.getVkModelPhoto().getMainPhotoForNews(sPhotoSize)).into(imageView);
         }
 
         final TextView linkTextView = new TextView(pContext);

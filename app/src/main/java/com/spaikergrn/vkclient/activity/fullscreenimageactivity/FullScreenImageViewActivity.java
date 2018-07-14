@@ -56,7 +56,7 @@ public class FullScreenImageViewActivity extends AppCompatActivity implements Fu
 
         if (pVkModelPhotoK != null) {
             mLikesToggleButton.setOnClickListener(new LikesOnClickListener(pVkModelPhotoK.getType(), pVkModelPhotoK.getOwnerId(), pVkModelPhotoK.getId(), pVkModelPhotoK));
-            ImageLoader.with(this).load(pVkModelPhotoK.getPhotoBySize(mPhotoSize)).into(mFullScreenImageView);
+            ImageLoader.with(this).load(pVkModelPhotoK.getMainPhotoForNews(mPhotoSize)).into(mFullScreenImageView);
 
             if (pVkModelPhotoK.getUserLike()) {
                 mLikesToggleButton.setChecked(true);

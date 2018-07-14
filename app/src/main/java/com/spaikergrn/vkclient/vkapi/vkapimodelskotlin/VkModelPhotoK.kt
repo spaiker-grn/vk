@@ -4,9 +4,17 @@ import android.text.TextUtils
 import com.spaikergrn.vkclient.serviceclasses.Constants
 import com.spaikergrn.vkclient.tools.ParseUtils.parseBoolean
 import com.spaikergrn.vkclient.tools.ParseUtils.parseInt
+import com.spaikergrn.vkclient.vkapi.vkapimodels.VkImageAttachment
 import org.json.JSONObject
 
- class VkModelPhotoK(jsonObject: JSONObject) : VkAttachmentsK.VkModelAttachments, ILikeAbleK {
+class VkModelPhotoK(jsonObject: JSONObject) : VkAttachmentsK.VkModelAttachments, ILikeAbleK, VkImageAttachment {
+    override fun getImageWidth(): Int {
+        return width
+    }
+
+    override fun getImageHeight(): Int {
+        return height
+    }
 
     override fun getType(): String = Constants.Parser.TYPE_PHOTO
 
@@ -34,7 +42,7 @@ import org.json.JSONObject
     var tags: Int = 0
     var accessKey: String? = null
 
-    override fun parse(pJSONObject: JSONObject) : VkModelPhotoK  {
+    override fun parse(pJSONObject: JSONObject): VkModelPhotoK {
 
         albumId = pJSONObject.optInt(Constants.Parser.ALBUM_ID)
         date = pJSONObject.optLong(Constants.Parser.DATE)
@@ -61,25 +69,26 @@ import org.json.JSONObject
         return this@VkModelPhotoK
     }
 
-    fun getPhotoBySize(pSize: String): String? {
+    override
+    fun getMainPhotoForNews(size: String): String? {
 
-        val size = if (pSize.isEmpty()) Constants.Parser.PHOTO_604 else pSize
+        val sizze = if (size.isEmpty()) Constants.Parser.PHOTO_604 else size
 
-        when (size) {
+        when (sizze) {
             Constants.Parser.PHOTO_1280 -> return if (!TextUtils.isEmpty(photo1280)) {
                 photo1280
             } else {
-                getPhotoBySize(Constants.Parser.PHOTO_807)
+                getMainPhotoForNews(Constants.Parser.PHOTO_807)
             }
             Constants.Parser.PHOTO_807 -> return if (!TextUtils.isEmpty(photo807)) {
                 photo807
             } else {
-                getPhotoBySize(Constants.Parser.PHOTO_604)
+                getMainPhotoForNews(Constants.Parser.PHOTO_604)
             }
             Constants.Parser.PHOTO_604 -> return if (!TextUtils.isEmpty(photo604)) {
                 photo604
             } else {
-                getPhotoBySize(Constants.Parser.PHOTO_130)
+                getMainPhotoForNews(Constants.Parser.PHOTO_130)
             }
             Constants.Parser.PHOTO_130 -> if (!TextUtils.isEmpty(photo130)) {
                 return photo130
@@ -88,6 +97,7 @@ import org.json.JSONObject
         return null
     }
 
+    override
     fun getSmallPhotoForNews(): String? {
 
         return when {
@@ -97,11 +107,11 @@ import org.json.JSONObject
         }
     }
 
-     override fun setUserLike(pUserLike: Boolean) {
-         userLikes = pUserLike
-     }
+    override fun setUserLike(pUserLike: Boolean) {
+        userLikes = pUserLike
+    }
 
-     override fun getUserLike(): Boolean {
-         return userLikes
-     }
+    override fun getUserLike(): Boolean {
+        return userLikes
+    }
 }
